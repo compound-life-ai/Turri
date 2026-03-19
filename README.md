@@ -43,9 +43,9 @@ The bundle is designed for OpenClaw + Telegram and installs as a managed bundle 
 - [Repo Layout](#repo-layout)
 - [Docs](#docs)
 
-## Agent Install Instruction
+## Copy And Paste To Your OpenClaw To Install (Recommended)
 
-If you are an agent reading this and you need to install this bundle on the user's device, do this:
+Use the following block as a copy-paste instruction for an OpenClaw agent that should install this bundle on the user's device:
 
 ```text
 1. Clone this repository to a stable local path.
