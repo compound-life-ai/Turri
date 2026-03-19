@@ -1,0 +1,17 @@
+{
+  "name": "Health News Digest",
+  "schedule": { "kind": "cron", "expr": "5 7 * * *", "tz": "America/Los_Angeles" },
+  "sessionTarget": "isolated",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "agentTurn",
+    "lightContext": true,
+    "message": "Use the news skill to fetch today's curated digest. Summarize only the highest-signal items for nutrition, sleep, exercise, aging, and self-experimentation. Keep the message concise and mention the source for each item."
+  },
+  "delivery": {
+    "mode": "announce",
+    "channel": "telegram",
+    "to": "__TELEGRAM_DM_CHAT_ID__",
+    "bestEffort": true
+  }
+}

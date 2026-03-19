@@ -1,0 +1,1 @@
+"""Curated news fetching helpers."""

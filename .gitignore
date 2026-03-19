@@ -1,1 +1,9 @@
 .gstack
+__pycache__/
+.pytest_cache/
+*.pyc
+longevityOS-data/nutrition/*.csv
+longevityOS-data/health/*.json
+longevityOS-data/insights/*.json
+longevityOS-data/news/*.json
+!longevityOS-data/**/.gitkeep

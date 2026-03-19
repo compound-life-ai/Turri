@@ -1,0 +1,17 @@
+{
+  "name": "Health Morning Brief",
+  "schedule": { "kind": "cron", "expr": "0 7 * * *", "tz": "America/Los_Angeles" },
+  "sessionTarget": "isolated",
+  "wakeMode": "next-heartbeat",
+  "payload": {
+    "kind": "agentTurn",
+    "lightContext": true,
+    "message": "Use the health and insights skills to create today's morning brief. Summarize yesterday's nutrition totals, the latest Apple Health sleep/activity context, 1-2 lifestyle recommendations, and include the active experiment check-in if relevant. Reply in the user's language and keep it compact."
+  },
+  "delivery": {
+    "mode": "announce",
+    "channel": "telegram",
+    "to": "__TELEGRAM_DM_CHAT_ID__",
+    "bestEffort": true
+  }
+}
