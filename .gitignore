@@ -1,3 +1,5 @@
+.vercel
+
 .gstack
 __pycache__/
 .pytest_cache/
