@@ -127,7 +127,7 @@ function ChatMock({ messages }: { messages: { role: "user" | "assistant"; text: 
             className={`rounded-lg px-3 py-1.5 max-w-[90%] ${
               m.role === "user"
                 ? "bg-claw-red/20 text-claw-coral border border-claw-red/20"
-                : "bg-claw-bg-elevated text-claw-text-muted border border-claw-border-subtle"
+                : "bg-claw-border/60 text-claw-text border border-claw-border"
             }`}
             dangerouslySetInnerHTML={{ __html: m.text }}
           />
@@ -212,10 +212,14 @@ export default function Home() {
                 description="Send a food photo or describe what you ate. The agent breaks it down into ingredients with full micronutrient detail."
                 tag="conversational"
               >
-                <ChatMock messages={[
-                  { role: "user", text: "had salmon with brown rice and broccoli for lunch" },
-                  { role: "assistant", text: "<b>logged</b> &mdash; lunch &bull; 495 kcal &bull; 53g protein<br/><span style='opacity:0.7'>Zn 3.2mg · Ca 58mg · VitD 16.4µg · Se 73mcg · Fe 1.8mg · Folate 57µg · Omega-3 1.98g</span>" },
-                ]} />
+                <div className="bg-claw-bg rounded-lg p-3 border border-claw-border-subtle text-xs space-y-2 font-mono">
+                  <div className="flex justify-end">
+                    <img src="/meal-snap-demo.jpg" alt="Salmon with rice and vegetables" className="rounded-lg max-w-[75%] border border-claw-red/20" />
+                  </div>
+                  <div className="flex justify-start">
+                    <div className="rounded-lg px-3 py-1.5 max-w-[90%] bg-claw-border/60 text-claw-text border border-claw-border" dangerouslySetInnerHTML={{ __html: "<b>logged</b> &mdash; lunch &bull; 495 kcal &bull; 53g protein<br/><span style='opacity:0.7'>Zn 3.2mg &middot; Ca 58mg &middot; VitD 16.4&micro;g &middot; Se 73mcg &middot; Omega-3 1.98g</span><br/><br/><span style='opacity:0.5'>today so far: 1,240 / 2,500 kcal<br/>protein 98 / 140g &#10003; &middot; fiber 12 / 38g &#9888;</span>" }} />
+                  </div>
+                </div>
               </FeatureCard>
 
               <FeatureCard
@@ -225,8 +229,10 @@ export default function Home() {
                 tag="conversational"
               >
                 <ChatMock messages={[
-                  { role: "user", text: "I want to improve my sleep. No caffeine after 2pm." },
-                  { role: "assistant", text: "Got it. Goals updated: <b>improve sleep quality</b>. Constraint added: <b>no caffeine after 14:00</b>. Want me to import your Apple Health data for a sleep baseline?" },
+                  { role: "user", text: "I'm trying to hit 140g protein daily and sleep better" },
+                  { role: "assistant", text: "Goals saved. A few quick questions &mdash; any dietary restrictions or allergies?" },
+                  { role: "user", text: "lactose intolerant, no shellfish" },
+                  { role: "assistant", text: "Noted. I'll factor those into all food suggestions. Upload your Apple Health export when ready &mdash; I'll build your full baseline." },
                 ]} />
               </FeatureCard>
             </div>
@@ -247,7 +253,7 @@ export default function Home() {
                 tagColor="green"
               >
                 <ChatMock messages={[
-                  { role: "assistant", text: "<b>morning digest</b> &mdash; Mar 19<br/><span style='opacity:0.7'>&bull; Senolytics trial shows 12% improvement in grip strength (Fight Aging!)<br/>&bull; High-protein breakfast linked to better satiety markers (NIA)<br/>&bull; Sleep fragmentation accelerates cognitive decline (ScienceDaily)</span>" },
+                  { role: "assistant", text: "<b>relevant to your sleep goal</b> &mdash;<br/><br/><span style='opacity:0.7'>New study: sleep fragmentation (waking 3+ times) accelerates cognitive decline even when total sleep is 7+ hours.<br/><br/>Your data shows 2.1 avg wake episodes &mdash; just below the risk threshold. Worth monitoring.</span><br/><br/><span style='opacity:0.5'>2 more items in today's digest &rarr;</span>" },
                 ]} />
               </FeatureCard>
 
@@ -259,7 +265,7 @@ export default function Home() {
                 tagColor="green"
               >
                 <ChatMock messages={[
-                  { role: "assistant", text: "<b>pattern detected</b> &mdash; sleep + caffeine<br/><span style='opacity:0.7'>Past 14 days: 4 nights deep sleep &lt;1hr &mdash; 3 had caffeine after 15:00.<br/>Late eating (after 21:00) → resting HR +5bpm avg.<br/>Want me to set up an experiment to test an earlier cutoff?</span>" },
+                  { role: "assistant", text: "<b>pattern detected</b> &mdash; sleep + caffeine<br/><br/><span style='opacity:0.7'>Past 14 days:<br/>&bull; 4 nights deep sleep &lt;1hr &mdash; 3 had caffeine after 15:00<br/>&bull; Late eating (after 21:00) &rarr; resting HR +5bpm avg</span><br/><br/>Want me to set up a 14-day experiment with an earlier caffeine cutoff?" },
                 ]} />
               </FeatureCard>
 
@@ -271,7 +277,7 @@ export default function Home() {
                 tagColor="amber"
               >
                 <ChatMock messages={[
-                  { role: "assistant", text: "<b>good morning</b> &mdash; Mar 19<br/><span style='opacity:0.7'>Sleep 7h15m · HRV 52ms (↑8%) · RHR 56bpm<br/>Yesterday: 1,850 kcal · protein 134g ✓ · zinc low<br/><b>Try:</b> pumpkin seeds or beef today for zinc<br/>Experiment day 8/14: caffeine cutoff ✓</span>" },
+                  { role: "assistant", text: "<b>good morning</b> &mdash; Mar 19<br/><br/><span style='opacity:0.7'>overnight: 7h15m sleep &middot; HRV 52ms (&uarr;8% vs 7-day avg) &middot; RHR 56bpm<br/><br/>yesterday: 1,850 kcal &middot; 134g protein &#10003;<br/>gaps: zinc 42% &middot; calcium 58% of RDA<br/><br/>action: add pumpkin seeds or yogurt<br/><br/>news: protein at breakfast improves satiety all day (NIA) &rarr; your goal<br/><br/>experiment: caffeine cutoff day 8/14 &#10003;</span>" },
                 ]} />
               </FeatureCard>
             </div>
