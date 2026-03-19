@@ -13,8 +13,21 @@ It currently provides:
 
 The bundle is designed for OpenClaw + Telegram and installs as a managed bundle under `~/.openclaw/bundles/compound-clawskill`.
 
+## Core Features
+
+- `/snap` turns food photos or meal descriptions into structured meal logs. The agent identifies likely ingredients and portions, asks for confirmation when confidence is low, and records an ingredient-level meal entry instead of a vague free-text note.
+- Nutrition logging is backed by deterministic enrichment code rather than fully model-invented numbers. Ingredient names are normalized to canonical forms, nutrient values are filled from local nutrition data and cache, and the stored rows record where those values came from.
+- `/health` builds a reusable health profile from Apple Health exports and structured questionnaire-style inputs. That profile becomes shared context for future recommendations instead of forcing the user to restate the same baseline every time.
+- `/news` produces a curated digest focused on health, longevity, nutrition, sleep, exercise, and related research, using predefined sources instead of generic open-ended news search.
+- `/insights` is designed for structured self-experimentation. It tracks hypotheses, interventions, check-ins, and follow-up analysis, and it is intentionally allowed to say “not enough data yet” instead of pretending to know the answer.
+- Morning automation is supported through separate cron-driven health and news messages, so the system can proactively send a daily brief and a separate curated digest instead of waiting for the user to ask each time.
+- Everything is local-first. Runtime state lives under `longevityOS-data/`, which keeps meal logs, health profile data, experiment state, and cached news separate from unrelated OpenClaw workspace data.
+
+[Back to top](#top)
+
 ## Table Of Contents
 
+- [Core Features](#core-features)
 - [Agent Install Instruction](#agent-install-instruction)
 - [Install](#install)
 - [Install Verification](#install-verification)
