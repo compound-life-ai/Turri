@@ -157,6 +157,213 @@ longevityOS-data/
 
 This keeps the bundle’s state separate from unrelated workspace data.
 
+## Data Shapes
+
+There is no separate schema file yet. The current storage contract is defined by the Python scripts in `scripts/`.
+
+### Nutrition
+
+Path:
+
+- `longevityOS-data/nutrition/meals.csv`
+
+This is ingredient-centric, not meal-centric. One meal can produce multiple rows that share the same `meal_id`.
+
+CSV columns:
+
+- `timestamp`
+- `date`
+- `meal_id`
+- `meal_type`
+- `source`
+- `ingredient_name`
+- `portion_text`
+- `calories_kcal`
+- `protein_g`
+- `carbs_g`
+- `fat_g`
+- `fiber_g`
+- `micronutrients_json`
+- `ingredient_confidence`
+- `meal_confidence`
+- `notes`
+- `photo_ref`
+
+`micronutrients_json` is a JSON object serialized into a CSV cell, for example:
+
+```json
+{
+  "selenium_mcg": 54,
+  "vitamin_d_iu": 540
+}
+```
+
+### Health Profile
+
+Path:
+
+- `longevityOS-data/health/profile.json`
+
+Top-level shape:
+
+```json
+{
+  "updated_at": "2026-03-19T05:22:15+00:00",
+  "goals": ["better sleep"],
+  "constraints": ["no late caffeine"],
+  "preferences": {
+    "language": "bilingual"
+  },
+  "questionnaire": {
+    "sleep_notes": "wake up once",
+    "training_notes": "hard sessions on Tue/Thu",
+    "diet_notes": "more protein"
+  },
+  "apple_health": {},
+  "imports": [
+    {
+      "source": "apple_health_export_xml",
+      "imported_at": "2026-03-19T05:22:15+00:00",
+      "file_name": "export.xml"
+    }
+  ]
+}
+```
+
+`apple_health` stores the normalized importer summary, currently shaped like:
+
+```json
+{
+  "imported_at": "2026-03-19T05:22:15+00:00",
+  "source": "apple_health_export_xml",
+  "file_name": "export.xml",
+  "counts": {
+    "records": 3170057,
+    "workouts": 544,
+    "days_with_steps": 1745,
+    "days_with_sleep": 1338
+  },
+  "activity": {
+    "daily_steps_avg": 9740,
+    "daily_active_energy_kcal_avg": 393.53,
+    "daily_basal_energy_kcal_avg": 1686.23,
+    "daily_exercise_minutes_avg": 31.94,
+    "daily_walking_running_distance_avg_km": 6.91,
+    "daily_cycling_distance_avg_km": 2.93,
+    "step_days": 1745
+  },
+  "sleep": {
+    "daily_sleep_hours_avg": 6.32,
+    "sleep_days": 1338,
+    "daily_sleep_hours_values": [5.95, 5.09, 7.46]
+  },
+  "heart": {
+    "resting_heart_rate_avg": 63.17,
+    "heart_rate_avg": 92.12,
+    "walking_heart_rate_avg": 99.29,
+    "heart_rate_variability_sdnn_avg": 42.91,
+    "oxygen_saturation_avg": 0.96,
+    "respiratory_rate_avg": 15.9,
+    "vo2_max_avg": 45.6,
+    "sample_count": 734625
+  },
+  "workouts": {
+    "workout_count": 544,
+    "average_workout_minutes": 27.03,
+    "by_type": {
+      "HKWorkoutActivityTypeRunning": 66,
+      "HKWorkoutActivityTypeCycling": 117
+    }
+  }
+}
+```
+
+### Insights
+
+Paths:
+
+- `longevityOS-data/insights/experiments.json`
+- `longevityOS-data/insights/checkins.json`
+
+`experiments.json` shape:
+
+```json
+{
+  "active_experiment_id": "uuid",
+  "items": [
+    {
+      "id": "uuid",
+      "title": "Earlier caffeine cutoff",
+      "domain": "sleep",
+      "hypothesis": "Stopping caffeine at noon improves sleep quality.",
+      "null_hypothesis": "Stopping caffeine at noon does not change sleep quality.",
+      "intervention": "No caffeine after 12:00.",
+      "primary_outcome": "sleep_quality",
+      "secondary_outcomes": [],
+      "baseline_window": "7d",
+      "intervention_window": "14d",
+      "checkin_questions": [],
+      "status": "active",
+      "created_at": "2026-03-19T05:22:15+00:00",
+      "started_at": "2026-03-19T05:22:15+00:00",
+      "ended_at": null,
+      "analysis_summary": "",
+      "next_action": ""
+    }
+  ]
+}
+```
+
+`checkins.json` shape:
+
+```json
+[
+  {
+    "id": "uuid",
+    "experiment_id": "uuid",
+    "timestamp": "2026-03-19T05:22:15+00:00",
+    "compliance": 1,
+    "primary_outcome_scores": {
+      "sleep_quality": 7
+    },
+    "confounders": ["late workout"],
+    "note": "Fell asleep faster than usual."
+  }
+]
+```
+
+### News Cache
+
+Path:
+
+- `longevityOS-data/news/cache.json`
+
+Shape:
+
+```json
+{
+  "fetched_at": "2026-03-19T05:22:15+00:00",
+  "sources": [
+    {
+      "name": "Fight Aging!",
+      "feed": "https://www.fightaging.org/feed/",
+      "site": "https://www.fightaging.org/"
+    }
+  ],
+  "errors": [],
+  "items": [
+    {
+      "source": "Fight Aging!",
+      "title": "Example title",
+      "url": "https://example.com/article",
+      "summary": "Example summary",
+      "published_at": "Tue, 18 Mar 2026 10:00:00 GMT",
+      "score": 6
+    }
+  ]
+}
+```
+
 ## Development
 
 Run the deterministic test suite:
