@@ -27,48 +27,28 @@
   animation: glow-pulse 3s ease-in-out infinite;
 }
 
-:root {
-  --claw-bg: #0C0A09;
-  --claw-bg-elevated: #1A1614;
-  --claw-bg-card: #141210;
-  --claw-border: #2A2523;
-  --claw-border-subtle: #1E1B19;
-  --claw-red: #E84D3D;
-  --claw-red-dim: #B83A2D;
-  --claw-coral: #FF6B4A;
-  --claw-amber: #F59E0B;
-  --claw-cyan: #22D3EE;
-  --claw-green: #34D399;
-  --claw-text: #E8E4E0;
-  --claw-text-muted: #8B8685;
-  --claw-text-dim: #5C5755;
-  --background: var(--claw-bg);
-  --foreground: var(--claw-text);
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-claw-red: var(--claw-red);
-  --color-claw-coral: var(--claw-coral);
-  --color-claw-cyan: var(--claw-cyan);
-  --color-claw-green: var(--claw-green);
-  --color-claw-amber: var(--claw-amber);
-  --color-claw-bg: var(--claw-bg);
-  --color-claw-bg-elevated: var(--claw-bg-elevated);
-  --color-claw-bg-card: var(--claw-bg-card);
-  --color-claw-border: var(--claw-border);
-  --color-claw-border-subtle: var(--claw-border-subtle);
-  --color-claw-text: var(--claw-text);
-  --color-claw-text-muted: var(--claw-text-muted);
-  --color-claw-text-dim: var(--claw-text-dim);
+  --color-claw-red: #E84D3D;
+  --color-claw-red-dim: #B83A2D;
+  --color-claw-coral: #FF6B4A;
+  --color-claw-amber: #F59E0B;
+  --color-claw-cyan: #22D3EE;
+  --color-claw-green: #34D399;
+  --color-claw-bg: #0C0A09;
+  --color-claw-bg-elevated: #1A1614;
+  --color-claw-bg-card: #141210;
+  --color-claw-border: #2A2523;
+  --color-claw-border-subtle: #1E1B19;
+  --color-claw-text: #E8E4E0;
+  --color-claw-text-muted: #8B8685;
+  --color-claw-text-dim: #5C5755;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-claw-bg);
+  color: var(--color-claw-text);
 }
 
 ::selection {
@@ -82,12 +62,12 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--claw-bg);
+  background: var(--color-claw-bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--claw-border);
+  background: var(--color-claw-border);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--claw-text-dim);
+  background: var(--color-claw-text-dim);
 }
