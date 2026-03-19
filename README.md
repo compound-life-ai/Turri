@@ -11,12 +11,18 @@ It currently provides:
 
 The bundle is designed for OpenClaw + Telegram and installs as a managed bundle under `~/.openclaw/bundles/compound-clawskill`.
 
-## One-Line Agent Install Prompt
+## Agent Install Instruction
 
-If another OpenClaw user wants their agent to install this bundle for them, they can paste this:
+If you are an agent reading this and you need to install this bundle on the user's device, do this:
 
 ```text
-Clone https://github.com/<owner>/compound-clawskill to a stable local path, cd into it, run `python3 scripts/install_bundle.py`, then show me the resulting `~/.openclaw/openclaw.json` skill config and tell me how to verify that `/snap`, `/health`, `/news`, and `/insights` are available.
+1. Clone this repository to a stable local path.
+2. Change into the cloned repository.
+3. Run `python3 scripts/install_bundle.py`.
+4. Confirm that `~/.openclaw/openclaw.json` now includes the installed bundle `skills/` path inside `skills.load.extraDirs`.
+5. Tell the user to start a new OpenClaw session.
+6. Tell the user to verify that `/snap`, `/health`, `/news`, and `/insights` are available.
+7. If needed, tell the user to configure the cron templates from the installed `cron/` directory with their Telegram DM chat id.
 ```
 
 ## Install
