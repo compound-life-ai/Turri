@@ -40,6 +40,7 @@ The bundle is designed for OpenClaw + Telegram and installs as a managed bundle 
 - [Apple Health Import](#apple-health-import)
 - [Cron Setup](#cron-setup)
 - [Smoke Test](#smoke-test)
+- [Copy And Paste To Your OpenClaw To Uninstall](#copy-and-paste-to-your-openclaw-to-uninstall)
 - [Uninstall](#uninstall)
 - [Runtime Data](#runtime-data)
 - [Data Shapes](#data-shapes)
@@ -278,9 +279,21 @@ After install:
 
 [Back to top](#top)
 
+## Copy And Paste To Your OpenClaw To Uninstall
+
+Use the following block as a copy-paste instruction for an OpenClaw agent that should uninstall this bundle from the user's device:
+
+```text
+1. List active cron jobs with `openclaw cron list` and remove any that reference `health-brief`, `news-digest`, or `daily-health-coach`.
+2. Open `~/.openclaw/openclaw.json` and remove the `~/.openclaw/bundles/compound-clawskill/skills` entry from `skills.load.extraDirs`.
+3. Delete the installed bundle directory: `rm -rf ~/.openclaw/bundles/compound-clawskill`.
+4. Tell the user to start a new OpenClaw session so the removed skills are no longer loaded.
+5. Confirm that `/snap`, `/health`, `/news`, `/insights`, and `daily-coach` are no longer available.
+```
+
 ## Uninstall
 
-To remove the installed bundle:
+To remove the installed bundle manually:
 
 1. Remove any cron jobs you created from `cron/health-brief.example.json`, `cron/news-digest.example.json`, and `cron/daily-health-coach.example.json`.
 2. Remove `~/.openclaw/bundles/compound-clawskill/skills` from `skills.load.extraDirs` in `~/.openclaw/openclaw.json`.
