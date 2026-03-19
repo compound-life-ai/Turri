@@ -1,5 +1,33 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+function Typewriter({ text, speed = 100 }: { text: string; speed?: number }) {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      setDisplayed(text.slice(0, i));
+      if (i >= text.length) {
+        clearInterval(interval);
+        setDone(true);
+      }
+    }, speed);
+    return () => clearInterval(interval);
+  }, [text, speed]);
+
+  return (
+    <>
+      {displayed}
+      <span
+        className={`inline-block w-[2px] h-[0.9em] bg-claw-red align-middle ml-0.5 ${done ? "animate-blink" : ""}`}
+        aria-hidden="true"
+      />
+    </>
+  );
+}
 
 const installText = `1. Clone \`https://github.com/compound-life-ai/longClaw\` to a stable local path.
 2. Change into the cloned repository.
@@ -20,181 +48,268 @@ function CopyButton() {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       }}
-      className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-300 text-xs font-semibold rounded-lg transition-colors"
+      className="flex items-center gap-1.5 px-3 py-1.5 bg-claw-bg-card hover:bg-claw-border text-claw-text-muted hover:text-claw-text text-xs font-mono rounded border border-claw-border transition-all duration-200"
     >
       {copied ? (
         <>
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500"><polyline points="20 6 9 17 4 12"/></svg>
-          Copied!
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-claw-green"><polyline points="20 6 9 17 4 12"/></svg>
+          copied
         </>
       ) : (
         <>
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          Copy Prompt
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          copy
         </>
       )}
     </button>
   );
 }
 
+function StatusDot({ color = "green" }: { color?: "green" | "red" | "amber" }) {
+  const colorMap = {
+    green: "bg-claw-green shadow-[0_0_6px_rgba(52,211,153,0.5)]",
+    red: "bg-claw-red shadow-[0_0_6px_rgba(232,77,61,0.5)]",
+    amber: "bg-claw-amber shadow-[0_0_6px_rgba(245,158,11,0.5)]",
+  };
+  return <span className={`inline-block h-1.5 w-1.5 rounded-full ${colorMap[color]}`} />;
+}
+
+function FeatureCard({
+  icon,
+  title,
+  command,
+  description,
+  tag,
+  tagColor = "default",
+  children,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  command?: string;
+  description: string;
+  tag: string;
+  tagColor?: "default" | "green" | "amber";
+  children: React.ReactNode;
+}) {
+  const tagStyles = {
+    default: "border-claw-border text-claw-text-muted",
+    green: "border-claw-green/30 text-claw-green",
+    amber: "border-claw-amber/30 text-claw-amber",
+  };
+  return (
+    <div className="group flex flex-col rounded-lg border border-claw-border bg-claw-bg-card p-5 transition-all duration-300 hover:border-claw-red/40 hover:shadow-[0_0_20px_rgba(232,77,61,0.06)]">
+      <div className="mb-3 flex justify-between items-start">
+        <div className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-claw-bg-elevated border border-claw-border text-claw-red">
+          {icon}
+        </div>
+        <span className={`text-[10px] font-mono px-2 py-0.5 border rounded ${tagStyles[tagColor]} flex items-center gap-1.5`}>
+          {tagColor === "green" && <StatusDot color="green" />}
+          {tagColor === "amber" && <StatusDot color="amber" />}
+          {tag}
+        </span>
+      </div>
+      {command && (
+        <code className="text-xs font-mono text-claw-coral mb-1">{command}</code>
+      )}
+      <h3 className="text-base font-semibold mb-1.5 font-mono text-claw-text">{title}</h3>
+      <p className="text-sm text-claw-text-muted leading-relaxed mb-4">{description}</p>
+      <div className="mt-auto">{children}</div>
+    </div>
+  );
+}
+
+function ChatMock({ messages }: { messages: { role: "user" | "assistant"; text: string }[] }) {
+  return (
+    <div className="bg-claw-bg rounded-lg p-3 border border-claw-border-subtle text-xs space-y-2 font-mono">
+      {messages.map((m, i) => (
+        <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+          <div
+            className={`rounded-lg px-3 py-1.5 max-w-[90%] ${
+              m.role === "user"
+                ? "bg-claw-red/20 text-claw-coral border border-claw-red/20"
+                : "bg-claw-bg-elevated text-claw-text-muted border border-claw-border-subtle"
+            }`}
+            dangerouslySetInnerHTML={{ __html: m.text }}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Home() {
   return (
-    <main className="flex flex-col min-h-screen dark:bg-zinc-950 dark:text-zinc-50">
-      {/* Hero Section */}
-      <section className="px-6 py-24 md:py-32 max-w-5xl mx-auto w-full text-center">
-        <div className="inline-flex items-center rounded-full border border-zinc-200 bg-zinc-100 px-3 py-1 text-sm text-zinc-600 mb-8 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
-          <span className="flex h-2 w-2 rounded-full bg-emerald-500 mr-2"></span>
-          OpenClaw Skill Bundle
+    <main className="flex flex-col min-h-screen bg-claw-bg text-claw-text relative overflow-hidden">
+      {/* Subtle grid background */}
+      <div
+        className="pointer-events-none fixed inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `linear-gradient(rgba(232,77,61,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(232,77,61,0.3) 1px, transparent 1px)`,
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      {/* Hero */}
+      <section className="relative px-6 py-24 md:py-32 max-w-5xl mx-auto w-full text-center">
+        <div className="inline-flex items-center rounded border border-claw-border bg-claw-bg-card px-3 py-1 text-xs font-mono text-claw-text-muted mb-8 gap-2">
+          <StatusDot color="green" />
+          <span>openclaw skill bundle</span>
+          <span className="text-claw-text-dim">|</span>
+          <span className="text-claw-red">v1.0</span>
         </div>
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 font-serif">
-          Longevity OS
+
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 font-mono text-claw-text">
+          <Typewriter text="Longevity OS" speed={120} />
         </h1>
-        <p className="text-xl md:text-2xl text-zinc-600 dark:text-zinc-400 max-w-3xl mx-auto leading-relaxed font-serif">
-          A personal health companion designed for Telegram and OpenClaw. 
-          Focusing on deterministic nutrition, structured health profiles, curated longevity news, and rigorous self-experiments.
+
+        <p className="text-lg md:text-xl text-claw-text-muted max-w-3xl mx-auto leading-relaxed">
+          A personal health companion for{" "}
+          <span className="text-claw-coral">OpenClaw</span> &{" "}
+          <span className="text-claw-cyan">Telegram</span>.
+          Deterministic nutrition, structured health profiles, curated longevity news, and rigorous self-experiments.
         </p>
+
         <div className="mt-10 flex justify-center gap-4">
-          <a href="#install" className="rounded-full bg-zinc-900 text-white px-6 py-3 font-medium hover:bg-zinc-800 transition-colors dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200">
-            Install via OpenClaw
+          <a
+            href="#install"
+            className="group rounded-md bg-claw-red text-white px-6 py-3 text-sm font-mono font-medium transition-all duration-200 hover:bg-claw-coral hover:shadow-[0_0_24px_rgba(232,77,61,0.3)]"
+          >
+            $ install
           </a>
-          <a href="https://github.com/compound-life-ai/longClaw" target="_blank" rel="noreferrer" className="rounded-full bg-white text-zinc-900 border border-zinc-200 px-6 py-3 font-medium hover:bg-zinc-50 transition-colors dark:bg-zinc-950 dark:text-white dark:border-zinc-800 dark:hover:bg-zinc-900">
-            View on GitHub
+          <a
+            href="https://github.com/compound-life-ai/longClaw"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-md bg-claw-bg-card text-claw-text border border-claw-border px-6 py-3 text-sm font-mono font-medium transition-all duration-200 hover:border-claw-text-dim hover:text-white"
+          >
+            view source
           </a>
         </div>
       </section>
 
       {/* Features */}
-      <section id="features" className="px-6 py-20 bg-white dark:bg-zinc-900 w-full border-t border-zinc-100 dark:border-zinc-800">
+      <section id="features" className="px-6 py-20 w-full border-t border-claw-border">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold font-serif mb-4">Core Capabilities</h2>
-            <p className="text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto text-lg">
-              Five specialized modules designed to bring structure to your longevity journey. Two you invoke, three that come to you.
+          <div className="text-center mb-14">
+            <h2 className="text-2xl font-bold font-mono mb-3 text-claw-text">
+              <span className="text-claw-red">&gt;</span> core_capabilities
+            </h2>
+            <p className="text-claw-text-muted max-w-2xl mx-auto">
+              Five specialized modules. Two you invoke, three that come to you.
             </p>
           </div>
 
-          {/* Row 1: Interactive Skills */}
+          {/* Interactive Skills */}
           <div className="mb-6">
-            <p className="text-xs font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-600 mb-4">You Invoke</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <p className="text-[10px] font-mono uppercase tracking-widest text-claw-text-dim mb-4 flex items-center gap-2">
+              <span className="w-8 h-px bg-claw-border inline-block" />
+              user-initiated
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FeatureCard
+                icon={<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>}
+                title="Meal Snap"
+                command="/snap"
+                description="Turns food photos into structured logs with deterministic macro/micronutrient data."
+                tag="user-initiated"
+              >
+                <ChatMock messages={[
+                  { role: "user", text: "[photo: salmon fillet]" },
+                  { role: "assistant", text: "<b>logged</b> &mdash; 150g Salmon &bull; 380 kcal<br/><span style='opacity:0.7'>Notable: Vitamin D, Omega-3</span>" },
+                ]} />
+              </FeatureCard>
 
-              {/* /snap */}
-              <div className="flex flex-col group rounded-2xl border border-zinc-200 bg-zinc-50 p-6 transition-all hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950">
-                <div className="mb-4 flex justify-between items-start">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-                  </div>
-                  <span className="text-[10px] font-medium px-2 py-1 bg-zinc-200 text-zinc-700 rounded-full dark:bg-zinc-800 dark:text-zinc-300">User-Initiated</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2 font-serif">/snap</h3>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">Turns food photos into structured logs, enriching them with deterministic macro/micronutrient data.</p>
-                <div className="mt-auto bg-white dark:bg-zinc-900 rounded-xl p-3 border border-zinc-200 dark:border-zinc-800 shadow-sm text-xs space-y-2 font-sans">
-                  <div className="flex justify-end"><div className="bg-emerald-500 text-white rounded-2xl rounded-tr-sm px-3 py-1.5 max-w-[90%]">📸 [Photo of salmon]</div></div>
-                  <div className="flex justify-start"><div className="bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-2xl rounded-tl-sm px-3 py-1.5 max-w-[90%]"><p className="font-medium">✅ Logged</p><p className="opacity-80">150g Salmon • 380 kcal | Notable: Vitamin D</p></div></div>
-                </div>
-              </div>
-
-              {/* /health */}
-              <div className="flex flex-col group rounded-2xl border border-zinc-200 bg-zinc-50 p-6 transition-all hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950">
-                <div className="mb-4 flex justify-between items-start">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-rose-100 text-rose-600 dark:bg-rose-900/30 dark:text-rose-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M12 5 9.04 9.53a11.38 11.38 0 0 0-1.98 4.14"/></svg>
-                  </div>
-                  <span className="text-[10px] font-medium px-2 py-1 bg-zinc-200 text-zinc-700 rounded-full dark:bg-zinc-800 dark:text-zinc-300">User-Initiated</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2 font-serif">/health</h3>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">Builds a reusable health profile from Apple Health XML exports and structured questionnaire inputs.</p>
-                <div className="mt-auto bg-white dark:bg-zinc-900 rounded-xl p-3 border border-zinc-200 dark:border-zinc-800 shadow-sm text-xs space-y-2 font-sans">
-                  <div className="flex justify-end"><div className="bg-emerald-500 text-white rounded-2xl rounded-tr-sm px-3 py-1.5 max-w-[90%]">/health</div></div>
-                  <div className="flex justify-start"><div className="bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-2xl rounded-tl-sm px-3 py-1.5 max-w-[90%]">What is your primary health goal right now?</div></div>
-                  <div className="flex justify-end"><div className="bg-emerald-500 text-white rounded-2xl rounded-tr-sm px-3 py-1.5 max-w-[90%]">Improve sleep.</div></div>
-                </div>
-              </div>
-
+              <FeatureCard
+                icon={<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>}
+                title="Health Profile"
+                command="/health"
+                description="Builds a reusable health profile from Apple Health XML exports and structured questionnaire inputs."
+                tag="user-initiated"
+              >
+                <ChatMock messages={[
+                  { role: "user", text: "/health" },
+                  { role: "assistant", text: "What is your primary health goal?" },
+                  { role: "user", text: "Improve sleep quality." },
+                ]} />
+              </FeatureCard>
             </div>
           </div>
 
-          {/* Row 2: Proactive Skills */}
+          {/* Proactive Skills */}
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-600 mb-4">Comes to You</p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <p className="text-[10px] font-mono uppercase tracking-widest text-claw-text-dim mb-4 flex items-center gap-2">
+              <span className="w-8 h-px bg-claw-border inline-block" />
+              proactive
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <FeatureCard
+                icon={<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>}
+                title="Curated News"
+                description="Automated daily digest from high-signal longevity, health, and exercise sources."
+                tag="proactive"
+                tagColor="green"
+              >
+                <ChatMock messages={[
+                  { role: "assistant", text: "<b>morning digest</b><br/><span style='opacity:0.7'>&bull; TRF shows metabolic benefits<br/>&bull; Resistance training lowers mortality</span>" },
+                ]} />
+              </FeatureCard>
 
-              {/* /news */}
-              <div className="flex flex-col group rounded-2xl border border-zinc-200 bg-zinc-50 p-6 transition-all hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950">
-                <div className="mb-4 flex justify-between items-start">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
-                  </div>
-                  <span className="text-[10px] font-medium px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full dark:bg-emerald-900/30 dark:text-emerald-400 flex items-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1"></span> Proactive
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold mb-2 font-serif">Curated News</h3>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">Automated daily digest focused on health, longevity, and exercise from high-signal sources.</p>
-                <div className="mt-auto bg-white dark:bg-zinc-900 rounded-xl p-3 border border-zinc-200 dark:border-zinc-800 shadow-sm text-xs font-sans">
-                  <div className="flex justify-start"><div className="bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-2xl rounded-tl-sm px-3 py-2 max-w-[90%]"><p className="font-medium mb-1">📰 Morning Digest</p><ul className="space-y-1 list-disc pl-3 opacity-80"><li>TRF shows metabolic benefits</li><li>Resistance training lowers mortality</li></ul></div></div>
-                </div>
-              </div>
+              <FeatureCard
+                icon={<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>}
+                title="Experiment Insights"
+                description="Tracks hypotheses and actively reaches out for daily check-ins."
+                tag="automated"
+                tagColor="green"
+              >
+                <ChatMock messages={[
+                  { role: "assistant", text: "Sleep quality last night (1-10)?" },
+                  { role: "user", text: "7. Late workout." },
+                  { role: "assistant", text: "Logged. 3 more days needed." },
+                ]} />
+              </FeatureCard>
 
-              {/* /insights */}
-              <div className="flex flex-col group rounded-2xl border border-zinc-200 bg-zinc-50 p-6 transition-all hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950">
-                <div className="mb-4 flex justify-between items-start">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
-                  </div>
-                  <span className="text-[10px] font-medium px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full dark:bg-emerald-900/30 dark:text-emerald-400 flex items-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1"></span> Automated
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold mb-2 font-serif">Experiment Insights</h3>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">Tracks hypotheses and actively reaches out for daily check-ins.</p>
-                <div className="mt-auto bg-white dark:bg-zinc-900 rounded-xl p-3 border border-zinc-200 dark:border-zinc-800 shadow-sm text-xs space-y-2 font-sans">
-                  <div className="flex justify-start"><div className="bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-2xl rounded-tl-sm px-3 py-1.5 max-w-[90%]">Sleep quality last night (1-10)?</div></div>
-                  <div className="flex justify-end"><div className="bg-emerald-500 text-white rounded-2xl rounded-tr-sm px-3 py-1.5 max-w-[90%]">7. Late workout.</div></div>
-                  <div className="flex justify-start"><div className="bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-2xl rounded-tl-sm px-3 py-1.5 max-w-[90%]">Logged. 3 more days needed.</div></div>
-                </div>
-              </div>
-
-              {/* Daily Coach */}
-              <div className="flex flex-col group rounded-2xl border border-amber-200 bg-amber-50/50 p-6 transition-all hover:shadow-md dark:border-amber-900/50 dark:bg-amber-950/10">
-                <div className="mb-4 flex justify-between items-start">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                  </div>
-                  <span className="text-[10px] font-medium px-2 py-1 bg-amber-200 text-amber-800 rounded-full dark:bg-amber-900/40 dark:text-amber-400 flex items-center">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1"></span> Coaching
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold mb-2 font-serif">Daily Health Coach</h3>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">Combines health data, experiments, and news into personalized daily guidance.</p>
-                <div className="mt-auto bg-white/80 dark:bg-zinc-900 rounded-xl p-3 border border-amber-200/50 dark:border-zinc-800 shadow-sm text-xs font-sans">
-                  <div className="flex justify-start"><div className="bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-2xl rounded-tl-sm px-3 py-2 max-w-[90%]"><p className="font-medium mb-1">☀️ Good morning!</p><p className="opacity-90">1,850 kcal, 7h 15m sleep.</p><p className="opacity-90 mt-1"><b>Tip:</b> HRV is up. Train heavy today.</p></div></div>
-                </div>
-              </div>
-
+              <FeatureCard
+                icon={<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>}
+                title="Daily Health Coach"
+                description="Combines health data, experiments, and news into personalized daily guidance."
+                tag="coaching"
+                tagColor="amber"
+              >
+                <ChatMock messages={[
+                  { role: "assistant", text: "<b>good morning</b><br/><span style='opacity:0.7'>1,850 kcal &bull; 7h 15m sleep<br/><b>tip:</b> HRV is up. Train heavy today.</span>" },
+                ]} />
+              </FeatureCard>
             </div>
           </div>
-
         </div>
       </section>
 
-      {/* Installation Prompt Section */}
-      <section id="install" className="px-6 py-20 w-full bg-zinc-100 dark:bg-zinc-900/50">
+      {/* Installation */}
+      <section id="install" className="px-6 py-20 w-full border-t border-claw-border bg-claw-bg-elevated/50">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold font-serif mb-4">Install to Your OpenClaw</h2>
-            <p className="text-zinc-600 dark:text-zinc-400 text-lg">
-              It takes less than a minute. Ask your OpenClaw agent to install this bundle using the prompt below.
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-bold font-mono mb-3 text-claw-text">
+              <span className="text-claw-red">&gt;</span> install
+            </h2>
+            <p className="text-claw-text-muted">
+              Ask your OpenClaw agent to install this bundle using the prompt below.
             </p>
           </div>
-          
-          <div className="bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-sm overflow-hidden">
-            <div className="px-4 py-3 bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center">
-              <span className="text-sm font-medium text-zinc-600 dark:text-zinc-400">Installation Prompt</span>
+
+          <div className="bg-claw-bg border border-claw-border rounded-lg overflow-hidden">
+            <div className="px-4 py-2.5 bg-claw-bg-card border-b border-claw-border flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <div className="flex gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-claw-red/60" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-claw-amber/60" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-claw-green/60" />
+                </div>
+                <span className="text-xs font-mono text-claw-text-dim">installation_prompt.md</span>
+              </div>
               <CopyButton />
             </div>
-            <div className="p-6 overflow-x-auto">
-              <pre className="text-sm font-mono text-zinc-800 dark:text-zinc-300 whitespace-pre-wrap">
+            <div className="p-5 overflow-x-auto">
+              <pre className="text-sm font-mono text-claw-text-muted whitespace-pre-wrap leading-relaxed">
 {installText}
               </pre>
             </div>
@@ -202,34 +317,44 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Local-First Banner */}
-      <section className="px-6 py-20 w-full bg-zinc-50 dark:bg-zinc-950">
+      {/* Local-First Architecture */}
+      <section className="px-6 py-20 w-full border-t border-claw-border">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6 font-serif">100% Local-First Architecture</h2>
-          <p className="text-zinc-600 dark:text-zinc-400 text-lg mb-8">
-            All your health metrics, meal logs, and active experiments stay on your machine inside <code className="bg-zinc-200 dark:bg-zinc-800 px-2 py-1 rounded text-sm">longevityOS-data/</code>. 
-            No cloud telemetry, no forced subscriptions.
+          <h2 className="text-2xl font-bold font-mono mb-4 text-claw-text">
+            <span className="text-claw-red">&gt;</span> local_first
+          </h2>
+          <p className="text-claw-text-muted mb-8">
+            All health metrics, meal logs, and experiments stay on your machine inside{" "}
+            <code className="bg-claw-bg-card border border-claw-border px-1.5 py-0.5 rounded text-xs font-mono text-claw-coral">longevityOS-data/</code>.
+            No cloud telemetry. No forced subscriptions.
           </p>
-          <div className="text-left bg-zinc-900 rounded-xl p-6 shadow-xl text-zinc-300 font-mono text-sm overflow-x-auto border border-zinc-800">
-            <pre>
+          <div className="text-left bg-claw-bg-card rounded-lg p-5 border border-claw-border font-mono text-sm overflow-x-auto">
+            <div className="text-claw-text-dim mb-2 text-xs">$ tree longevityOS-data/</div>
+            <pre className="text-claw-text-muted leading-relaxed">
 {`longevityOS-data/
 ├── nutrition/
-│   └── meals.csv        # Ingredient-centric determinism
+│   └── meals.csv        `}<span className="text-claw-text-dim"># deterministic macros</span>{`
 ├── health/
-│   └── profile.json     # Apple Health XML aggregation
+│   └── profile.json     `}<span className="text-claw-text-dim"># Apple Health aggregation</span>{`
 ├── insights/
-│   ├── experiments.json # Hypothesis & interventions
-│   └── checkins.json    # Daily compliance logs
+│   ├── experiments.json `}<span className="text-claw-text-dim"># hypotheses & interventions</span>{`
+│   └── checkins.json    `}<span className="text-claw-text-dim"># daily compliance logs</span>{`
 └── news/
-    └── cache.json       # Off-grid reading cache`}
+    └── cache.json       `}<span className="text-claw-text-dim"># off-grid reading cache</span>
             </pre>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-200 dark:border-zinc-800 py-12 px-6 text-center text-zinc-500">
-        <p>© {new Date().getFullYear()} Longevity OS. Built with Next.js & Tailwind CSS.</p>
+      <footer className="border-t border-claw-border py-10 px-6 text-center">
+        <p className="text-xs font-mono text-claw-text-dim">
+          <span className="text-claw-red">longevity-os</span>
+          <span className="mx-2">/</span>
+          {new Date().getFullYear()}
+          <span className="mx-2">/</span>
+          built with next.js + tailwind
+        </p>
       </footer>
     </main>
   );

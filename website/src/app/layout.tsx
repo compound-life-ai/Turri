@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Source_Serif_4 } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -7,8 +7,8 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const sourceSerif = Source_Serif_4({
-  variable: "--font-source-serif",
+const jetbrains = JetBrains_Mono({
+  variable: "--font-jetbrains",
   subsets: ["latin"],
 });
 
@@ -25,9 +25,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${sourceSerif.variable} antialiased`}
+      className={`${inter.variable} ${jetbrains.variable} antialiased`}
     >
-      <body className="min-h-screen flex flex-col font-sans bg-zinc-50 text-zinc-900 selection:bg-zinc-200">
+      <body className="min-h-screen flex flex-col font-sans bg-claw-bg text-claw-text selection:bg-claw-red/30">
         {children}
       </body>
     </html>
