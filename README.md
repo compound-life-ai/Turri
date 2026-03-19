@@ -1,3 +1,5 @@
+<a id="top"></a>
+
 # compound-clawskill
 
 OpenClaw skill bundle for a personal health companion.
@@ -10,6 +12,23 @@ It currently provides:
 - `/insights` for structured self-experiments and gap-aware recommendations
 
 The bundle is designed for OpenClaw + Telegram and installs as a managed bundle under `~/.openclaw/bundles/compound-clawskill`.
+
+## Table Of Contents
+
+- [Agent Install Instruction](#agent-install-instruction)
+- [Install](#install)
+- [Install Verification](#install-verification)
+- [Fresh Session Required](#fresh-session-required)
+- [Telegram Command Note](#telegram-command-note)
+- [Apple Health Import](#apple-health-import)
+- [Cron Setup](#cron-setup)
+- [Smoke Test](#smoke-test)
+- [Uninstall](#uninstall)
+- [Runtime Data](#runtime-data)
+- [Data Shapes](#data-shapes)
+- [Development](#development)
+- [Repo Layout](#repo-layout)
+- [Docs](#docs)
 
 ## Agent Install Instruction
 
@@ -25,6 +44,8 @@ If you are an agent reading this and you need to install this bundle on the user
 7. Tell the user to verify that `/snap`, `/health`, `/news`, and `/insights` are available and usable.
 8. If needed, tell the user to configure the cron templates from the installed `cron/` directory with their Telegram DM chat id.
 ```
+
+[Back to top](#top)
 
 ## Install
 
@@ -58,6 +79,8 @@ The installer:
 - initializes `longevityOS-data/`
 - registers the installed `skills/` directory in `skills.load.extraDirs`
 
+[Back to top](#top)
+
 ## Install Verification
 
 Checking `openclaw.json` is necessary, but not sufficient.
@@ -86,9 +109,13 @@ Expected result:
 
 - each skill shows `Ready`
 
+[Back to top](#top)
+
 ## Fresh Session Required
 
 OpenClaw snapshots eligible skills at session start. After installation, start a fresh OpenClaw session before testing commands. Staying in an older session can make command behavior look stale or inconsistent.
+
+[Back to top](#top)
 
 ## Telegram Command Note
 
@@ -100,6 +127,8 @@ Two separate things can happen:
 - commands appear in Telegram's slash picker/menu
 
 Telegram may hide some commands when the menu is crowded. If a command does not appear in the picker, try typing it manually first.
+
+[Back to top](#top)
 
 ## Apple Health Import
 
@@ -117,6 +146,8 @@ python3 scripts/health/import_apple_health.py --input-zip ~/Downloads/export.zip
 python3 scripts/health/import_apple_health.py --input-xml /path/to/apple_health_export/export.xml
 ```
 
+[Back to top](#top)
+
 ## Cron Setup
 
 The templates are not usable until you replace `__TELEGRAM_DM_CHAT_ID__`.
@@ -133,6 +164,8 @@ openclaw cron add --from-file cron/health-brief.example.json
 openclaw cron add --from-file cron/news-digest.example.json
 ```
 
+[Back to top](#top)
+
 ## Smoke Test
 
 After install:
@@ -143,6 +176,8 @@ After install:
 4. Run `/health`.
 5. Run `/insights`.
 
+[Back to top](#top)
+
 ## Uninstall
 
 To remove the installed bundle:
@@ -151,6 +186,8 @@ To remove the installed bundle:
 2. Remove `~/.openclaw/bundles/compound-clawskill/skills` from `skills.load.extraDirs` in `~/.openclaw/openclaw.json`.
 3. Delete `~/.openclaw/bundles/compound-clawskill` to remove the installed skills, copied files, and `longevityOS-data/`.
 4. Start a fresh OpenClaw session.
+
+[Back to top](#top)
 
 ## Runtime Data
 
@@ -165,6 +202,8 @@ longevityOS-data/
 ```
 
 This keeps the bundle’s state separate from unrelated workspace data.
+
+[Back to top](#top)
 
 ## Data Shapes
 
@@ -399,6 +438,8 @@ Shape:
 }
 ```
 
+[Back to top](#top)
+
 ## Development
 
 Run the deterministic test suite:
@@ -408,6 +449,8 @@ python3 -m unittest discover -s tests -v
 ```
 
 The Apple Health importer was tested against a real Apple Health export and now uses streaming XML parsing so large `export.xml` files remain practical.
+
+[Back to top](#top)
 
 ## Repo Layout
 
@@ -419,6 +462,8 @@ longevityOS-data/   Runtime data directories
 tests/              Deterministic unit and CLI tests
 docs/               Architecture, install, and design notes
 ```
+
+[Back to top](#top)
 
 ## Docs
 
@@ -432,3 +477,5 @@ Reference notes:
 
 - [docs/longevity-os-reference-notes.md](docs/longevity-os-reference-notes.md)
 - [docs/news-sources.md](docs/news-sources.md)
+
+[Back to top](#top)
