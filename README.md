@@ -56,7 +56,8 @@ Use the following block as a copy-paste instruction for an OpenClaw agent that s
 5. Confirm that `~/.openclaw/openclaw.json` includes the installed bundle `skills/` path inside `skills.load.extraDirs`.
 6. Tell the user to start a new OpenClaw session.
 7. Tell the user to verify that `/snap`, `/health`, `/news`, and `/insights` are available and usable.
-8. If needed, tell the user to configure the cron templates from the installed `cron/` directory with their Telegram DM chat id.
+8. Tell the user to verify that `daily-coach` is loaded with `openclaw skills info daily-coach`.
+9. If needed, tell the user to configure the cron templates from the installed `cron/` directory with their Telegram DM chat id, including `cron/daily-health-coach.example.json` for proactive daily coaching.
 ```
 
 [Back to top](#top)
