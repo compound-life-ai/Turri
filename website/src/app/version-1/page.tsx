@@ -242,8 +242,7 @@ export default function VersionOne() {
 
           {/* Showcase Card 1 — Weekly Nutrition Review */}
           <div className="relative mb-8">
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-400 rounded-3xl blur opacity-20" />
-            <div className="relative rounded-2xl border border-white/10 bg-[#0a0615] overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center gap-8 p-6 lg:p-10 shadow-2xl backdrop-blur-sm">
+            <div className="relative rounded-xl border border-white/5 bg-[#0a0615] overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center gap-8 p-6 lg:p-10 shadow-2xl backdrop-blur-sm">
               <div className="lg:col-span-7 relative z-10 order-2 lg:order-1">
                 <div className="flex items-center gap-2 mb-3 ml-1">
                   <span className="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-widest">Weekly Review</span>
@@ -309,8 +308,7 @@ export default function VersionOne() {
 
           {/* Showcase Card 2 — Pattern & Correlation Discovery */}
           <div className="relative mb-8">
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-400 rounded-3xl blur opacity-15" />
-            <div className="relative rounded-2xl border border-white/10 bg-[#0a0615] overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center gap-8 p-6 lg:p-10 shadow-2xl backdrop-blur-sm">
+            <div className="relative rounded-xl border border-white/5 bg-[#0a0615] overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center gap-8 p-6 lg:p-10 shadow-2xl backdrop-blur-sm">
               <div className="lg:col-span-5 flex justify-center relative min-h-[280px]">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-purple-500/10 blur-[100px] pointer-events-none rounded-full" />
                 <img src="/showcase-patterns.png" alt="" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] object-contain pointer-events-none" />
@@ -358,8 +356,7 @@ export default function VersionOne() {
 
           {/* Showcase Card 3 — Deep Data Integration */}
           <div className="relative group mb-8">
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-400 rounded-3xl blur opacity-20" />
-            <div className="relative rounded-2xl border border-white/10 bg-[#0a0615] overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center gap-8 p-6 lg:p-10 shadow-2xl backdrop-blur-sm">
+            <div className="relative rounded-xl border border-white/5 bg-[#0a0615] overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center gap-8 p-6 lg:p-10 shadow-2xl backdrop-blur-sm">
               <div className="lg:col-span-7 relative z-10 order-2 lg:order-1">
                 <div className="flex items-center gap-2 mb-3 ml-1">
                   <span className="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-widest">New Data Unlocked</span>
@@ -458,8 +455,7 @@ export default function VersionOne() {
             </div>
 
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-400 rounded-2xl blur opacity-25" />
-              <div className="relative bg-[#0a0615] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+              <div className="relative bg-[#0a0615] border border-white/5 rounded-xl overflow-hidden shadow-2xl">
                 <div className="px-5 py-3 bg-white/[0.02] border-b border-white/5 flex justify-between items-center backdrop-blur-sm">
                   <div className="flex items-center gap-3">
                     <div className="flex gap-1.5">
@@ -492,8 +488,7 @@ export default function VersionOne() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center pb-8">
             
             <div className="relative group order-2 lg:order-1">
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-400 rounded-2xl blur opacity-20" />
-              <div className="relative bg-[#0a0615] border border-white/10 rounded-xl p-6 lg:p-8 font-mono text-sm overflow-x-auto shadow-2xl backdrop-blur-sm">
+              <div className="relative bg-[#0a0615] border border-white/5 rounded-xl p-6 lg:p-8 font-mono text-sm overflow-x-auto shadow-2xl backdrop-blur-sm">
                 <div className="flex items-center gap-2 mb-6 pb-4 border-b border-white/5">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-500"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                   <span className="text-gray-300">longevityOS-data/</span>
