@@ -168,7 +168,7 @@ export default function VersionOne() {
           </div>
 
           {/* SurrealDB-style pillar cards — 3 staggered with 3D illustrations */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pb-8">
             {/* Card 1 — Nutrition */}
             <div className="relative overflow-hidden rounded-xl border border-white/5 bg-[#13111a] p-6 pb-8 min-h-[340px]">
               <p className="text-xs font-bold uppercase tracking-widest text-purple-400 mb-2">Nutrition</p>
@@ -209,13 +209,9 @@ export default function VersionOne() {
             </div>
           </div>
 
-          {/* Purple glow strip beneath cards (like SurrealDB) */}
-          <div
-            className="pointer-events-none h-24 -mt-4 relative z-0"
-            style={{
-              background: "linear-gradient(180deg, transparent 0%, rgba(168,85,247,0.15) 40%, rgba(168,85,247,0.25) 60%, transparent 100%)",
-            }}
-          />
+          {/* Purple glow strip beneath cards */}
+          <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[1px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
+          <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-24 -translate-y-1/2 bg-purple-500/20 blur-[50px] -z-10" />
         </div>
       </section>
 
