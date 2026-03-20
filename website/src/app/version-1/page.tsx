@@ -75,7 +75,7 @@ export default function VersionOne() {
       {/* Hero reflection glow — SurrealDB style */}
       <div className="pointer-events-none absolute inset-x-0 top-0 z-0 flex justify-center overflow-hidden" style={{ maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)" }}>
         <img
-          src="/hero-reflection.jpg"
+          src="/hero-reflection-compound.jpg"
           alt=""
           className="w-[200vw] max-w-none -mt-[10%]"
           style={{ mixBlendMode: "lighten" }}
@@ -184,7 +184,7 @@ export default function VersionOne() {
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
               </button>
             </div>
-            <img src="/card-memory.png" alt="" className="absolute -right-8 -bottom-4 w-[280px] h-[280px] object-contain pointer-events-none z-0 opacity-80" />
+            <img src="/card-memory-compound.png" alt="" className="absolute -right-8 -bottom-4 w-[280px] h-[280px] object-contain pointer-events-none z-0 opacity-80" />
           </div>
 
           {/* Card 2 — Wearables */}
@@ -199,7 +199,7 @@ export default function VersionOne() {
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
               </button>
             </div>
-            <img src="/card-context.png" alt="" className="absolute -right-8 -bottom-4 w-[280px] h-[280px] object-contain pointer-events-none z-0 opacity-80" />
+            <img src="/card-context-compound.png" alt="" className="absolute -right-8 -bottom-4 w-[280px] h-[280px] object-contain pointer-events-none z-0 opacity-80" />
           </div>
 
           {/* Card 3 — Coaching */}
@@ -214,7 +214,7 @@ export default function VersionOne() {
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
               </button>
             </div>
-            <img src="/card-storage.png" alt="" className="absolute -right-8 -bottom-4 w-[280px] h-[280px] object-contain pointer-events-none z-0 opacity-80" />
+            <img src="/card-storage-compound.png" alt="" className="absolute -right-8 -bottom-4 w-[280px] h-[280px] object-contain pointer-events-none z-0 opacity-80" />
           </div>
           </div>
 
@@ -309,7 +309,7 @@ export default function VersionOne() {
 
               <div className="lg:col-span-5 flex justify-center relative min-h-[280px] order-1 lg:order-2">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-purple-500/20 blur-[100px] pointer-events-none rounded-full" />
-                <img src="/showcase-nutrition.png" alt="" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] object-contain pointer-events-none" />
+                <img src="/showcase-nutrition-compound.png" alt="" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] object-contain pointer-events-none" />
               </div>
             </div>
           </div>
@@ -319,7 +319,7 @@ export default function VersionOne() {
             <div className="relative rounded-xl border border-white/5 bg-[#0a0615] overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center gap-8 p-6 lg:p-10 shadow-2xl backdrop-blur-sm">
               <div className="lg:col-span-5 flex justify-center relative min-h-[280px]">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-purple-500/10 blur-[100px] pointer-events-none rounded-full" />
-                <img src="/showcase-patterns.png" alt="" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] object-contain pointer-events-none" />
+                <img src="/showcase-patterns-compound.png" alt="" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] object-contain pointer-events-none" />
               </div>
 
               <div className="lg:col-span-7 relative z-10">
@@ -437,7 +437,7 @@ export default function VersionOne() {
 
               <div className="lg:col-span-5 flex justify-center relative min-h-[280px] order-1 lg:order-2">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-purple-500/10 blur-[100px] pointer-events-none rounded-full" />
-                <img src="/showcase-integration.png" alt="" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] object-contain pointer-events-none" />
+                <img src="/showcase-integration-compound.png" alt="" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] object-contain pointer-events-none" />
               </div>
             </div>
           </div>
