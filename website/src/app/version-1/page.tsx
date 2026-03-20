@@ -73,7 +73,7 @@ export default function VersionOne() {
       style={{ backgroundColor: "#0e0c14" }}
     >
       {/* Hero reflection glow — SurrealDB style */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-0 flex justify-center overflow-hidden">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-0 flex justify-center overflow-hidden" style={{ maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, black 70%, transparent 100%)" }}>
         <img
           src="/hero-reflection.jpg"
           alt=""
