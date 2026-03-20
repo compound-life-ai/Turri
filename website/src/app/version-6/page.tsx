@@ -255,7 +255,7 @@ function NutrientBar({ name, actual, rda, unit }: { name: string; actual: number
   const statusIcon = pct >= 90 ? "\u2713" : pct >= 60 ? "~" : "\u2717";
   const statusColor = pct >= 90 ? "text-claw-green" : pct >= 60 ? "text-claw-amber" : "text-claw-red";
   return (
-    <div className="grid grid-cols-[100px_1fr_55px_50px_40px] items-center gap-2 text-xs font-mono py-1.5 border-b border-claw-border-subtle last:border-0">
+    <div className="grid grid-cols-[100px_1fr_55px_50px_40px] items-center gap-2 text-xs font-sans py-1.5 border-b border-claw-border-subtle last:border-0">
       <span className="text-claw-text">{name}</span>
       <div className="h-1.5 rounded-full bg-claw-bg-elevated overflow-hidden">
         <div className={`h-full rounded-full ${color} transition-all duration-700`} style={{ width: `${Math.min(pct, 100)}%` }} />
@@ -273,7 +273,7 @@ function BiomarkerRow({ name, oct, dec, unit, trend, status }: { name: string; o
   const trendColor = status === "optimal" ? "text-claw-green" : status === "good" ? "text-claw-amber" : "text-claw-red";
   const statusBg = status === "optimal" ? "bg-claw-green/15 text-claw-green border-claw-green/20" : status === "good" ? "bg-claw-amber/15 text-claw-amber border-claw-amber/20" : "bg-claw-red/15 text-claw-red border-claw-red/20";
   return (
-    <div className="grid grid-cols-[1fr_65px_65px_30px_65px] items-center gap-2 text-xs font-mono py-2 border-b border-claw-border-subtle last:border-0">
+    <div className="grid grid-cols-[1fr_65px_65px_30px_65px] items-center gap-2 text-xs font-sans py-2 border-b border-claw-border-subtle last:border-0">
       <span className="text-claw-text">{name}</span>
       <span className="text-claw-text-dim text-right">{oct} {unit}</span>
       <span className="text-claw-text text-right font-semibold">{dec} {unit}</span>
@@ -328,7 +328,7 @@ function ShowcaseTabs() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(i)}
-            className={`w-full flex items-center justify-center gap-1.5 px-2 py-2.5 rounded-md text-xs font-mono transition-all duration-200 ${
+            className={`w-full flex items-center justify-center gap-1.5 px-2 py-2.5 rounded-md text-xs font-sans transition-all duration-200 ${
               i === activeTab
                 ? "bg-claw-red/15 text-claw-coral border border-claw-red/30"
                 : "text-claw-text-muted hover:text-claw-text hover:bg-claw-bg-elevated border border-transparent"
@@ -353,8 +353,8 @@ function ShowcaseTabs() {
               <div className="max-w-[90%] bg-claw-bg-elevated border border-claw-border rounded-2xl rounded-bl-md px-4 py-3">
                 <div className="flex items-center gap-2 mb-1.5">
                   <Dot color="green" />
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-claw-green">weekly review</span>
-                  <span className="text-[10px] font-mono text-claw-text-dim ml-auto">Sun, Mar 19</span>
+                  <span className="text-[10px] font-sans uppercase tracking-widest text-claw-green">weekly review</span>
+                  <span className="text-[10px] font-sans text-claw-text-dim ml-auto">Sun, Mar 19</span>
                 </div>
                 <div className="text-[14px] font-sans text-claw-text font-semibold mb-0.5">Weekly Nutrition Review &mdash; Mar 13&ndash;19</div>
                 <div className="text-xs font-sans text-claw-text-muted">Profile: 186 cm / 82 kg / male / muscle gain goal</div>
@@ -364,7 +364,7 @@ function ShowcaseTabs() {
             <div className="flex items-end gap-2">
               <div className="w-7" />
               <div className="max-w-[90%] bg-claw-bg-elevated border border-claw-border rounded-2xl rounded-bl-md px-4 py-3">
-                <div className="grid grid-cols-[100px_1fr_55px_50px_40px] items-center gap-2 text-[10px] font-mono uppercase tracking-wider text-claw-text-dim pb-2 mb-1 border-b border-claw-border">
+                <div className="grid grid-cols-[100px_1fr_55px_50px_40px] items-center gap-2 text-[10px] font-sans uppercase tracking-wider text-claw-text-dim pb-2 mb-1 border-b border-claw-border">
                   <span>Nutrient</span><span>Progress</span><span className="text-right">Actual</span><span className="text-right">RDA</span><span className="text-right">%</span>
                 </div>
                 <NutrientBar name="Protein" actual={128} rda={140} unit="g" />
@@ -382,7 +382,7 @@ function ShowcaseTabs() {
             <div className="flex items-end gap-2">
               <div className="w-7" />
               <div className="max-w-[90%] bg-claw-red/8 border border-claw-red/20 rounded-2xl rounded-bl-md px-4 py-3">
-                <div className="text-xs font-mono text-claw-coral font-semibold flex items-center gap-2 mb-2">
+                <div className="text-xs font-sans text-claw-coral font-semibold flex items-center gap-2 mb-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
                   Personalized Recommendations
                 </div>
@@ -392,7 +392,7 @@ function ShowcaseTabs() {
                   <p><span className="text-claw-amber font-bold">Vitamin D ~</span> &mdash; Hitting RDA, but fat intake is low. Vitamin D is fat-soluble &mdash; <span className="text-claw-coral">add olive oil or nuts to breakfast</span> when taking D3.</p>
                   <p><span className="text-claw-red font-bold">Calcium &#10007;</span> &mdash; 52% of RDA. Since you&apos;re lactose intolerant: try sardines (382 mg/can), fortified oat milk, or bok choy.</p>
                 </div>
-                <div className="text-[10px] font-mono text-claw-text-dim mt-3">Based on 19 meals logged across 7 days &middot; next review: Mar 26</div>
+                <div className="text-[10px] font-sans text-claw-text-dim mt-3">Based on 19 meals logged across 7 days &middot; next review: Mar 26</div>
               </div>
             </div>
             {/* User reply */}
@@ -422,8 +422,8 @@ function ShowcaseTabs() {
               <div className="max-w-[90%] bg-claw-bg-elevated border border-claw-border rounded-2xl rounded-bl-md px-4 py-3">
                 <div className="flex items-center gap-2 mb-1.5">
                   <Dot color="amber" />
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-claw-amber">pattern alert</span>
-                  <span className="text-[10px] font-mono text-claw-text-dim ml-auto">Tue, Mar 18</span>
+                  <span className="text-[10px] font-sans uppercase tracking-widest text-claw-amber">pattern alert</span>
+                  <span className="text-[10px] font-sans text-claw-text-dim ml-auto">Tue, Mar 18</span>
                 </div>
                 <div className="text-[14px] font-sans text-claw-text leading-relaxed">Hey &mdash; I noticed you&apos;ve been pushing yourself pretty hard lately.</div>
               </div>
@@ -432,8 +432,8 @@ function ShowcaseTabs() {
             <div className="flex items-end gap-2">
               <div className="w-7" />
               <div className="max-w-[90%] bg-claw-bg-elevated border border-claw-border rounded-2xl rounded-bl-md px-4 py-3">
-                <div className="text-xs font-mono text-claw-amber font-semibold mb-2">Sleep + Caffeine Correlation</div>
-                <div className="space-y-1.5 text-xs font-mono text-claw-text-muted">
+                <div className="text-xs font-sans text-claw-amber font-semibold mb-2">Sleep + Caffeine Correlation</div>
+                <div className="space-y-1.5 text-xs font-sans text-claw-text-muted">
                   <div><span className="text-claw-red">3 nights</span> with sleep &lt; 5 hours &mdash; all had caffeine after 4:00 PM</div>
                   <div className="grid grid-cols-7 gap-1 mt-2">
                     {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d, i) => {
@@ -456,8 +456,8 @@ function ShowcaseTabs() {
             <div className="flex items-end gap-2">
               <div className="w-7" />
               <div className="max-w-[90%] bg-claw-bg-elevated border border-claw-border rounded-2xl rounded-bl-md px-4 py-3">
-                <div className="text-xs font-mono text-claw-coral font-semibold mb-2">Travel Impact on Recovery</div>
-                <div className="space-y-1.5 text-xs font-mono text-claw-text-muted">
+                <div className="text-xs font-sans text-claw-coral font-semibold mb-2">Travel Impact on Recovery</div>
+                <div className="space-y-1.5 text-xs font-sans text-claw-text-muted">
                   <div><span className="text-claw-red">2 flights</span> this week &mdash; HRV dropped significantly, deep sleep &lt; 40 min on both nights</div>
                   <div className="grid grid-cols-2 gap-3 mt-2">
                     <div className="bg-claw-bg rounded p-2 border border-claw-border-subtle">
@@ -478,14 +478,14 @@ function ShowcaseTabs() {
             <div className="flex items-end gap-2">
               <div className="w-7" />
               <div className="max-w-[90%] bg-claw-green/5 border border-claw-green/20 rounded-2xl rounded-bl-md px-4 py-3">
-                <div className="text-xs font-mono text-claw-green font-semibold mb-2">Proposed Experiment</div>
+                <div className="text-xs font-sans text-claw-green font-semibold mb-2">Proposed Experiment</div>
                 <div className="text-[13px] font-sans text-claw-text leading-relaxed space-y-1">
                   <div className="flex gap-2"><span className="text-claw-green shrink-0">1.</span> <span><b className="text-claw-text">Caffeine cutoff test</b> &mdash; 14 days, no caffeine after 2 PM.</span></div>
                   <div className="flex gap-2"><span className="text-claw-green shrink-0">2.</span> <span><b className="text-claw-text">Travel recovery kit</b> &mdash; magnesium glycinate, 30-min walk on landing, no screens 1 hr before sleep.</span></div>
                 </div>
                 <div className="flex gap-2 mt-3">
-                  <button className="px-3 py-1.5 rounded-full bg-claw-green/15 border border-claw-green/30 text-claw-green text-[10px] font-mono">Start both experiments</button>
-                  <button className="px-3 py-1.5 rounded-full bg-claw-bg border border-claw-border text-claw-text-muted text-[10px] font-mono">Just caffeine cutoff</button>
+                  <button className="px-3 py-1.5 rounded-full bg-claw-green/15 border border-claw-green/30 text-claw-green text-[10px] font-sans">Start both experiments</button>
+                  <button className="px-3 py-1.5 rounded-full bg-claw-bg border border-claw-border text-claw-text-muted text-[10px] font-sans">Just caffeine cutoff</button>
                 </div>
               </div>
             </div>
@@ -516,8 +516,8 @@ function ShowcaseTabs() {
               <div className="max-w-[90%] bg-claw-bg-elevated border border-claw-border rounded-2xl rounded-bl-md px-4 py-3">
                 <div className="flex items-center gap-2 mb-1.5">
                   <Dot color="green" />
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-claw-green">new data integrated</span>
-                  <span className="text-[10px] font-mono text-claw-text-dim ml-auto">Thu, Dec 24</span>
+                  <span className="text-[10px] font-sans uppercase tracking-widest text-claw-green">new data integrated</span>
+                  <span className="text-[10px] font-sans text-claw-text-dim ml-auto">Thu, Dec 24</span>
                 </div>
                 <div className="text-[14px] font-sans text-claw-text font-semibold mb-0.5">New blood work detected &mdash; cross-analyzed with 2 months of training and nutrition data.</div>
                 <div className="text-xs font-sans text-claw-text-muted">Triglycerides and Lp(a) now fill in the missing metabolic markers.</div>
@@ -527,8 +527,8 @@ function ShowcaseTabs() {
             <div className="flex items-end gap-2">
               <div className="w-7" />
               <div className="max-w-[90%] bg-claw-bg-elevated border border-claw-border rounded-2xl rounded-bl-md px-4 py-3">
-                <div className="text-[10px] font-mono uppercase tracking-wider text-claw-text-dim mb-3">Biomarker Comparison &mdash; Oct vs Dec</div>
-                <div className="grid grid-cols-[1fr_65px_65px_30px_65px] items-center gap-2 text-[10px] font-mono uppercase tracking-wider text-claw-text-dim pb-2 mb-1 border-b border-claw-border">
+                <div className="text-[10px] font-sans uppercase tracking-wider text-claw-text-dim mb-3">Biomarker Comparison &mdash; Oct vs Dec</div>
+                <div className="grid grid-cols-[1fr_65px_65px_30px_65px] items-center gap-2 text-[10px] font-sans uppercase tracking-wider text-claw-text-dim pb-2 mb-1 border-b border-claw-border">
                   <span>Marker</span><span className="text-right">Oct</span><span className="text-right">Dec</span><span className="text-center">\u0394</span><span className="text-center">Status</span>
                 </div>
                 <BiomarkerRow name="LDL-C" oct="118" dec="95" unit="mg/dL" trend="down" status="good" />
@@ -556,13 +556,13 @@ function ShowcaseTabs() {
             <div className="flex items-end gap-2">
               <div className="w-7" />
               <div className="max-w-[90%] bg-claw-red/8 border border-claw-coral/20 rounded-2xl rounded-bl-md px-4 py-3">
-                <div className="text-xs font-mono text-claw-coral font-semibold mb-2">For the perfectionist in you</div>
+                <div className="text-xs font-sans text-claw-coral font-semibold mb-2">For the perfectionist in you</div>
                 <div className="text-[13px] font-sans text-claw-text leading-relaxed">
                   <p>ApoB at 78 mg/dL &mdash; already good, but Peter Attia&apos;s gold standard is below 60 mg/dL: <span className="text-claw-coral">&ldquo;infant-grade arterial purity.&rdquo;</span> Swap some saturated fat (cheese, red meat) for monounsaturated (olive oil, avocado, macadamia). I&apos;ll track the impact.</p>
                 </div>
                 <div className="flex gap-2 mt-3">
-                  <button className="px-3 py-1.5 rounded-full bg-claw-red/15 border border-claw-red/30 text-claw-coral text-[10px] font-mono">Optimize fat profile plan</button>
-                  <button className="px-3 py-1.5 rounded-full bg-claw-bg border border-claw-border text-claw-text-muted text-[10px] font-mono">Schedule next blood draw</button>
+                  <button className="px-3 py-1.5 rounded-full bg-claw-red/15 border border-claw-red/30 text-claw-coral text-[10px] font-sans">Optimize fat profile plan</button>
+                  <button className="px-3 py-1.5 rounded-full bg-claw-bg border border-claw-border text-claw-text-muted text-[10px] font-sans">Schedule next blood draw</button>
                 </div>
               </div>
             </div>
@@ -588,7 +588,7 @@ function ShowcaseTabs() {
           <div className="p-5 sm:p-6">
             <div className="flex items-center gap-2 mb-1">
               <Dot color="green" />
-              <span className="text-[10px] font-mono uppercase tracking-widest text-claw-green">conversational &middot; instant</span>
+              <span className="text-[10px] font-sans uppercase tracking-widest text-claw-green">conversational &middot; instant</span>
             </div>
             <div className="mt-4">
               <AnimatedChat
@@ -615,7 +615,7 @@ function ShowcaseTabs() {
           <div className="p-5 sm:p-6">
             <div className="flex items-center gap-2 mb-1">
               <Dot color="amber" />
-              <span className="text-[10px] font-mono uppercase tracking-widest text-claw-amber">conversational &middot; 23:47</span>
+              <span className="text-[10px] font-sans uppercase tracking-widest text-claw-amber">conversational &middot; 23:47</span>
             </div>
             <div className="mt-4">
               <AnimatedChat
@@ -782,7 +782,7 @@ export default function Version6() {
               href="https://compound.zeabur.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[10px] text-claw-text-dim ml-0.5 hidden sm:inline font-mono hover:text-claw-text transition-colors underline-offset-2 hover:underline"
+              className="text-[10px] text-claw-text-dim ml-0.5 hidden sm:inline font-sans hover:text-claw-text transition-colors underline-offset-2 hover:underline"
             >
               by Compound
             </a>
@@ -815,10 +815,18 @@ export default function Version6() {
             <Logo size={52} />
           </div>
 
-          <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-center mb-3 font-sans">
+          <h1
+            className="text-4xl sm:text-6xl font-bold tracking-tight text-center mb-3 font-sans pb-2"
+            style={{
+              background: "linear-gradient(180deg, #ffffff, #a1a1aa)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
             LongevityOS
           </h1>
-          <p className="text-[13px] text-claw-text-dim tracking-widest mb-6 font-mono uppercase">
+          <p className="text-[13px] text-claw-text-dim tracking-widest mb-6 font-sans uppercase">
             Your AI Health Intelligence
           </p>
           <p className="text-base sm:text-lg text-claw-text-muted max-w-2xl text-center leading-relaxed mb-10 font-sans">
@@ -836,9 +844,9 @@ export default function Version6() {
               Join the Waitlist
             </button>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] text-claw-text-dim font-mono">Personal Health Agent Team</span>
+              <span className="text-[11px] text-claw-text-dim font-sans">Personal Health Agent Team</span>
               <span className="text-claw-text-dim">&middot;</span>
-              <span className="text-[11px] text-claw-coral font-mono">Works with OpenClaw</span>
+              <span className="text-[11px] text-claw-coral font-sans">Works with OpenClaw</span>
             </div>
           </div>
         </div>
@@ -848,7 +856,7 @@ export default function Version6() {
       <section className="relative z-10 pt-8 pb-10">
         <div className="flex items-center justify-center gap-6 mb-10 w-full max-w-5xl mx-auto px-5">
           <div className="h-[1px] bg-gradient-to-r from-transparent via-claw-border to-claw-border/60 flex-1" />
-          <p className="text-[10px] uppercase tracking-widest text-claw-text-dim shrink-0 font-mono">Built for</p>
+          <p className="text-[10px] uppercase tracking-widest text-claw-text-dim shrink-0 font-sans">Built for</p>
           <div className="h-[1px] bg-gradient-to-l from-transparent via-claw-border to-claw-border/60 flex-1" />
         </div>
         <div className="max-w-5xl mx-auto px-5">
@@ -869,7 +877,7 @@ export default function Version6() {
           ref={featuresRef}
           className={`max-w-5xl mx-auto px-5 transition-all duration-1000 ${featuresInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
-          <p className="text-[10px] font-mono uppercase tracking-widest text-claw-red mb-2 text-center">see it in action</p>
+          <p className="text-[10px] font-sans uppercase tracking-widest text-claw-red mb-2 text-center">see it in action</p>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-center mb-3 font-sans">What It Does</h2>
           <p className="text-claw-text-muted text-center mb-12 text-sm max-w-md mx-auto font-sans">
             It doesn&apos;t wait for commands. Some features you invoke. Most come to you.
@@ -910,13 +918,13 @@ export default function Version6() {
                     className="flex items-start gap-3 p-3.5 rounded-lg text-left transition-all duration-300 border bg-claw-bg-card/60 border-claw-red/20"
                   >
                     <div
-                      className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold font-mono tracking-wider transition-all duration-300 bg-claw-red/15 text-claw-coral border border-claw-red/30"
+                      className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold font-sans tracking-wider transition-all duration-300 bg-claw-red/15 text-claw-coral border border-claw-red/30"
                     >
                       {i + 1}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-0.5">
-                        <span className="text-[10px] font-bold font-mono tracking-widest text-claw-coral">
+                        <span className="text-[10px] font-bold font-sans tracking-widest text-claw-coral">
                           {step.label}
                         </span>
                       </div>
@@ -980,7 +988,7 @@ export default function Version6() {
               View on GitHub
             </button>
           </div>
-          <p className="text-[9px] text-claw-text-dim mt-5 tracking-widest font-mono uppercase">Open Source &middot; APAC Focused &middot; 2026</p>
+          <p className="text-[9px] text-claw-text-dim mt-5 tracking-widest font-sans uppercase">Open Source &middot; APAC Focused &middot; 2026</p>
         </div>
       </section>
 
@@ -1001,7 +1009,7 @@ export default function Version6() {
               </a>
             </span>
           </div>
-          <span className="text-[10px] text-claw-text-dim font-mono">Open Source</span>
+          <span className="text-[10px] text-claw-text-dim font-sans">Open Source</span>
         </div>
       </footer>
     </main>
