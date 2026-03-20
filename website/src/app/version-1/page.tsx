@@ -88,7 +88,7 @@ export default function VersionOne() {
           <img src="/logo-light.svg" alt="Longevity OS" className="h-8 w-8 rounded-lg" />
           <span className="text-lg font-bold tracking-tight">Longevity OS</span>
         </div>
-        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8 text-sm text-gray-400">
+        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8 text-sm text-white/70">
           <a href="#features" className="hover:text-white transition-colors">Features</a>
           <a href="#install" className="hover:text-white transition-colors">Install</a>
           <a href="https://github.com/compound-life-ai/longClaw" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
