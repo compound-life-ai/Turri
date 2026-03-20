@@ -132,9 +132,13 @@ export default function VersionOne() {
       </section>
 
       {/* ============ LOGO STRIP ============ */}
-      <section className="relative z-10 border-t border-white/5 pt-16 pb-10 mt-8">
+      <section className="relative z-10 pt-8 pb-10 mt-8">
+        <div className="flex items-center justify-center gap-6 mb-10 w-full max-w-7xl mx-auto px-6">
+          <div className="h-[1px] bg-gradient-to-r from-transparent via-white/5 to-white/10 flex-1" />
+          <p className="text-xs uppercase tracking-widest text-gray-500 shrink-0">Built for</p>
+          <div className="h-[1px] bg-gradient-to-l from-transparent via-white/5 to-white/10 flex-1" />
+        </div>
         <div className="max-w-5xl mx-auto px-6">
-          <p className="text-center text-xs uppercase tracking-widest text-gray-600 mb-6">Built for</p>
           <div className="flex items-center justify-center gap-12 flex-wrap text-gray-600">
             <span className="text-lg font-bold tracking-wider">OpenClaw</span>
             <span className="text-lg font-bold tracking-wider">Telegram</span>
@@ -244,8 +248,12 @@ export default function VersionOne() {
           <div className="relative mb-8">
             <div className="relative rounded-xl border border-white/5 bg-[#0a0615] overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center gap-8 p-6 lg:p-10 shadow-2xl backdrop-blur-sm">
               <div className="lg:col-span-7 relative z-10 order-2 lg:order-1">
-                <div className="flex items-center gap-2 mb-3 ml-1">
-                  <span className="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-widest">Weekly Review</span>
+                <div className="flex items-center gap-3 mb-3 ml-1">
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]" />
+                    <span className="text-purple-400 text-xs font-mono uppercase tracking-widest">Weekly Review</span>
+                  </div>
+                  <span className="text-gray-600 font-mono text-xs">/</span>
                   <span className="text-gray-500 text-xs font-mono">Sunday 8:00 AM</span>
                 </div>
 
@@ -315,8 +323,12 @@ export default function VersionOne() {
               </div>
 
               <div className="lg:col-span-7 relative z-10">
-                <div className="flex items-center gap-2 mb-3 ml-1">
-                  <span className="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-widest">Pattern Detected</span>
+                <div className="flex items-center gap-3 mb-3 ml-1">
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]" />
+                    <span className="text-purple-400 text-xs font-mono uppercase tracking-widest">Pattern Detected</span>
+                  </div>
+                  <span className="text-gray-600 font-mono text-xs">/</span>
                   <span className="text-gray-500 text-xs font-mono">Wednesday 7:15 AM</span>
                 </div>
 
@@ -358,8 +370,12 @@ export default function VersionOne() {
           <div className="relative group mb-8">
             <div className="relative rounded-xl border border-white/5 bg-[#0a0615] overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center gap-8 p-6 lg:p-10 shadow-2xl backdrop-blur-sm">
               <div className="lg:col-span-7 relative z-10 order-2 lg:order-1">
-                <div className="flex items-center gap-2 mb-3 ml-1">
-                  <span className="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-widest">New Data Unlocked</span>
+                <div className="flex items-center gap-3 mb-3 ml-1">
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]" />
+                    <span className="text-purple-400 text-xs font-mono uppercase tracking-widest">New Data Unlocked</span>
+                  </div>
+                  <span className="text-gray-600 font-mono text-xs">/</span>
                   <span className="text-gray-500 text-xs font-mono">Oct 25, 3:42 PM</span>
                 </div>
 
