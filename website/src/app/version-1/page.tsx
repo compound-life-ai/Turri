@@ -308,16 +308,16 @@ export default function VersionOne() {
 
           {/* Showcase Card 2 — Pattern & Correlation Discovery */}
           <div className="relative mb-8">
-            <div className="absolute -inset-1 bg-gradient-to-r from-amber-600 to-orange-500 rounded-3xl blur opacity-15" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-400 rounded-3xl blur opacity-15" />
             <div className="relative rounded-2xl border border-white/10 bg-[#0a0615] overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center gap-8 p-6 lg:p-10 shadow-2xl backdrop-blur-sm">
               <div className="lg:col-span-5 flex justify-center relative min-h-[280px]">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-amber-500/10 blur-[100px] pointer-events-none rounded-full" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-purple-500/10 blur-[100px] pointer-events-none rounded-full" />
                 <img src="/showcase-patterns.png" alt="" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] object-contain pointer-events-none" />
               </div>
 
               <div className="lg:col-span-7 relative z-10">
                 <div className="flex items-center gap-2 mb-5">
-                  <span className="px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[10px] font-bold uppercase tracking-widest">Pattern Detected</span>
+                  <span className="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-widest">Pattern Detected</span>
                   <span className="text-gray-500 text-xs font-mono">Wednesday 7:15 AM</span>
                 </div>
 
@@ -355,11 +355,11 @@ export default function VersionOne() {
 
           {/* Showcase Card 3 — Deep Data Integration */}
           <div className="relative group mb-8">
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-600 to-blue-500 rounded-3xl blur opacity-20" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-400 rounded-3xl blur opacity-20" />
             <div className="relative rounded-2xl border border-white/10 bg-[#0a0615] overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center gap-8 p-6 lg:p-10 shadow-2xl backdrop-blur-sm">
               <div className="lg:col-span-7 relative z-10 order-2 lg:order-1">
                 <div className="flex items-center gap-2 mb-5">
-                  <span className="px-2.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] font-bold uppercase tracking-widest">New Data Unlocked</span>
+                  <span className="px-2.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-widest">New Data Unlocked</span>
                   <span className="text-gray-500 text-xs font-mono">Oct 25, 3:42 PM</span>
                 </div>
 
@@ -418,7 +418,7 @@ export default function VersionOne() {
               </div>
 
               <div className="lg:col-span-5 flex justify-center relative min-h-[280px] order-1 lg:order-2">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-cyan-500/10 blur-[100px] pointer-events-none rounded-full" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-purple-500/10 blur-[100px] pointer-events-none rounded-full" />
                 <img src="/showcase-integration.png" alt="" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] object-contain pointer-events-none" />
               </div>
             </div>
@@ -487,10 +487,10 @@ export default function VersionOne() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center pb-8">
             
             <div className="relative group order-2 lg:order-1">
-              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-2xl blur opacity-20" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-400 rounded-2xl blur opacity-20" />
               <div className="relative bg-[#0a0615] border border-white/10 rounded-xl p-6 lg:p-8 font-mono text-sm overflow-x-auto shadow-2xl backdrop-blur-sm">
                 <div className="flex items-center gap-2 mb-6 pb-4 border-b border-white/5">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-cyan-500"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-500"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
                   <span className="text-gray-300">longevityOS-data/</span>
                 </div>
                 <pre className="text-gray-300 leading-relaxed text-xs sm:text-sm">
@@ -508,7 +508,7 @@ export default function VersionOne() {
             </div>
 
             <div className="order-1 lg:order-2">
-              <p className="text-sm font-mono uppercase tracking-widest text-cyan-400 mb-3">Architecture</p>
+              <p className="text-sm font-mono uppercase tracking-widest text-purple-400 mb-3">Architecture</p>
               <h2 className="text-3xl md:text-5xl font-bold mb-6">
                 Local-first.<br />No cloud required.
               </h2>
@@ -517,22 +517,22 @@ export default function VersionOne() {
               </p>
               <ul className="space-y-4">
                 <li className="flex items-center gap-3 text-gray-300">
-                  <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.8)]" /> Portable CSV & JSON formats
+                  <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.8)]" /> Portable CSV & JSON formats
                 </li>
                 <li className="flex items-center gap-3 text-gray-300">
-                  <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.8)]" /> Works completely offline
+                  <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.8)]" /> Works completely offline
                 </li>
                 <li className="flex items-center gap-3 text-gray-300">
-                  <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.8)]" /> Easily scriptable with Python/Bash
+                  <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.8)]" /> Easily scriptable with Python/Bash
                 </li>
               </ul>
             </div>
             
           </div>
 
-          {/* Cyan glow strip beneath local-first section */}
-          <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
-          <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-24 -translate-y-1/2 bg-cyan-500/20 blur-[50px] -z-10" />
+          {/* Purple glow strip beneath local-first section */}
+          <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[1px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
+          <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-24 -translate-y-1/2 bg-purple-500/20 blur-[50px] -z-10" />
         </div>
       </section>
 
