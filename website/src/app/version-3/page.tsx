@@ -76,7 +76,7 @@ function ShowcaseCard({ title, description, tag, tagColor = "default", children 
       <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-claw-red/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-3">
-          <h3 className="text-base font-semibold font-mono text-claw-text">{title}</h3>
+          <h3 className="text-base font-semibold font-sans text-claw-text">{title}</h3>
           <span className={`text-[10px] font-mono px-2 py-0.5 border rounded-full ${tc[tagColor]} flex items-center gap-1.5`}>
             {tagColor === "green" && <Dot color="green" />}
             {tagColor === "amber" && <Dot color="amber" />}
@@ -96,17 +96,17 @@ function Nav() {
     <nav className="sticky top-0 z-50 border-b border-claw-border bg-claw-bg/80 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-claw-red font-mono font-bold text-lg">&#x2666;</span>
-          <span className="font-mono font-semibold text-sm text-claw-text">Longevity OS</span>
+          <span className="text-claw-red font-sans font-bold text-lg">&#x2666;</span>
+          <span className="font-sans font-semibold text-sm text-claw-text">Longevity OS</span>
           <span className="text-[10px] font-mono text-claw-text-dim ml-1 px-1.5 py-0.5 border border-claw-border rounded">v1.0</span>
         </div>
-        <div className="hidden md:flex items-center gap-6 text-xs font-mono text-claw-text-muted">
+        <div className="hidden md:flex items-center gap-6 text-xs font-sans text-claw-text-muted">
           <a href="#features" className="hover:text-claw-text transition-colors">features</a>
           <a href="#dashboard" className="hover:text-claw-text transition-colors">dashboard</a>
           <a href="#install" className="hover:text-claw-text transition-colors">install</a>
           <a href="https://github.com/compound-life-ai/longClaw" target="_blank" rel="noreferrer" className="hover:text-claw-text transition-colors">github</a>
         </div>
-        <a href="#install" className="rounded-md bg-claw-red text-white px-4 py-1.5 text-xs font-mono font-medium hover:bg-claw-coral hover:shadow-[0_0_20px_rgba(232,77,61,0.3)] transition-all duration-200">
+        <a href="#install" className="rounded-md bg-claw-red text-white px-4 py-1.5 text-xs font-sans font-medium hover:bg-claw-coral hover:shadow-[0_0_20px_rgba(232,77,61,0.3)] transition-all duration-200">
           $ install
         </a>
       </div>
@@ -195,7 +195,7 @@ function ShowcaseTabs() {
                   <span className="text-xs font-mono text-claw-text-dim">longevity-os agent</span>
                   <span className="text-[10px] font-mono text-claw-text-dim ml-auto">Sun, Mar 19 &middot; 09:00</span>
                 </div>
-                <div className="text-sm font-mono text-claw-text font-semibold mb-1">Weekly Nutrition Review — Mar 13–19</div>
+                <div className="text-sm font-sans text-claw-text font-semibold mb-1">Weekly Nutrition Review — Mar 13–19</div>
                 <div className="text-xs font-mono text-claw-text-muted">Profile: 186 cm / 82 kg / male / muscle gain goal</div>
               </div>
 
@@ -222,7 +222,7 @@ function ShowcaseTabs() {
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                   Personalized Recommendations
                 </div>
-                <div className="text-xs font-mono text-claw-text leading-relaxed space-y-2">
+                <div className="text-xs font-sans text-claw-text leading-relaxed space-y-2">
                   <p><span className="text-claw-green font-bold">Protein ✓</span> — 91% of target. Solid for a bulk phase. You're averaging 1.56 g/kg, close to the 1.7 g/kg sweet spot for muscle gain at your height.</p>
                   <p><span className="text-claw-red font-bold">Carbs ✗</span> — Only 60% of target. On heavy lifting days, you need the fuel. Post-workout, grab an extra <span className="text-claw-coral">steamed bun or two</span> — easy carbs, fast glycogen replenishment.</p>
                   <p><span className="text-claw-amber font-bold">Vitamin D ~</span> — You're hitting RDA, but your fat intake is low. Vitamin D is fat-soluble — without enough dietary fat at the same meal, absorption drops significantly. <span className="text-claw-coral">Add a drizzle of olive oil or some nuts to your breakfast</span> when you take your D3.</p>
@@ -250,7 +250,7 @@ function ShowcaseTabs() {
                   <span className="text-xs font-mono text-claw-text-dim">longevity-os agent</span>
                   <span className="text-[10px] font-mono text-claw-text-dim ml-auto">Tue, Mar 18 &middot; 08:15</span>
                 </div>
-                <div className="text-sm font-mono text-claw-text font-semibold mb-2">Hey — I noticed you've been pushing yourself pretty hard lately.</div>
+                <div className="text-sm font-sans text-claw-text font-semibold mb-2">Hey — I noticed you've been pushing yourself pretty hard lately.</div>
               </div>
 
               {/* Pattern data */}
@@ -310,7 +310,7 @@ function ShowcaseTabs() {
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
                   Proposed Experiment
                 </div>
-                <div className="text-xs font-mono text-claw-text leading-relaxed">
+                <div className="text-xs font-sans text-claw-text leading-relaxed">
                   <p className="mb-2">Want to find your personal caffeine metabolism cutoff and build a post-flight recovery protocol? Here's what I suggest:</p>
                   <div className="space-y-1 text-claw-text-muted">
                     <div className="flex gap-2"><span className="text-claw-green shrink-0">1.</span> <span><b className="text-claw-text">Caffeine cutoff test</b> — 14 days, no caffeine after 2 PM. I'll track deep sleep and HRV delta vs. your current baseline.</span></div>
@@ -343,7 +343,7 @@ function ShowcaseTabs() {
                   <span className="text-xs font-mono text-claw-text-dim">longevity-os agent</span>
                   <span className="text-[10px] font-mono text-claw-text-dim ml-auto">Thu, Dec 24 &middot; 14:30</span>
                 </div>
-                <div className="text-sm font-mono text-claw-text font-semibold mb-2">New blood work detected — I've cross-analyzed with your last 2 months of training and nutrition data.</div>
+                <div className="text-sm font-sans text-claw-text font-semibold mb-2">New blood work detected — I've cross-analyzed with your last 2 months of training and nutrition data.</div>
                 <div className="text-xs font-mono text-claw-text-muted">This fills in the metabolic markers I was missing (triglycerides, Lp(a)). Now I can give you a much deeper picture.</div>
               </div>
 
@@ -369,7 +369,7 @@ function ShowcaseTabs() {
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
                   Analysis
                 </div>
-                <div className="text-xs font-mono text-claw-text leading-relaxed space-y-2">
+                <div className="text-xs font-sans text-claw-text leading-relaxed space-y-2">
                   <p>The results are <span className="text-claw-green font-bold">extremely encouraging</span>. Your metabolic markers are excellent — confirming that your diet protocol and Zone 2 training over the last two months are working.</p>
                   <p><span className="text-claw-green font-bold">Triglycerides at 68</span> and <span className="text-claw-green font-bold">Lp(a) at 12</span> — both well within optimal range. These were the "missing indicators" for your metabolic profile. Now I have the full picture.</p>
                   <p><span className="text-claw-amber font-bold">hsCRP dropped from 1.1 → 0.4</span> — systemic inflammation is way down. Zone 2 cardio is likely the biggest driver here.</p>
@@ -379,7 +379,7 @@ function ShowcaseTabs() {
               {/* Next-level recommendation */}
               <div className="bg-claw-bg-elevated rounded-lg border border-claw-coral/20 p-4">
                 <div className="text-xs font-mono text-claw-coral font-semibold mb-2">For the perfectionist in you</div>
-                <div className="text-xs font-mono text-claw-text leading-relaxed space-y-2">
+                <div className="text-xs font-sans text-claw-text leading-relaxed space-y-2">
                   <p>Your ApoB is at 78 mg/dL — already good, but if you want to chase the gold standard that longevity experts like Peter Attia advocate: get it below 60 mg/dL. That's what he calls <span className="text-claw-coral">"infant-grade arterial purity."</span></p>
                   <p>A small tweak to your fat profile could get you there: swap some of the saturated fat sources (cheese, red meat fat) for monounsaturated (olive oil, avocado, macadamia nuts). I'll track the impact over the next blood draw cycle.</p>
                 </div>
@@ -434,7 +434,7 @@ export default function Version3() {
             <span className="text-claw-red">v1.0</span>
           </div>
 
-          <h1 className="text-5xl md:text-8xl font-bold tracking-tight mb-6 font-mono text-claw-text">
+          <h1 className="text-5xl md:text-8xl font-bold tracking-tight mb-6 font-sans leading-[1.15] pb-2" style={{ background: "linear-gradient(180deg, #ffffff, #a1a1aa)", backgroundClip: "text", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             <Typewriter text="Longevity OS" speed={100} />
           </h1>
 
@@ -443,10 +443,10 @@ export default function Version3() {
           </p>
 
           <div className="flex justify-center gap-4">
-            <a href="#install" className="group rounded-lg bg-claw-red text-white px-8 py-3.5 text-sm font-mono font-medium transition-all duration-200 hover:bg-claw-coral hover:shadow-[0_0_40px_rgba(232,77,61,0.35)]">
+            <a href="#install" className="group rounded-lg bg-claw-red text-white px-8 py-3.5 text-sm font-sans font-medium transition-all duration-200 hover:bg-claw-coral hover:shadow-[0_0_40px_rgba(232,77,61,0.35)]">
               $ install longevity-os
             </a>
-            <a href="https://github.com/compound-life-ai/longClaw" target="_blank" rel="noreferrer" className="rounded-lg bg-claw-bg-card/80 backdrop-blur-sm text-claw-text border border-claw-border px-8 py-3.5 text-sm font-mono font-medium transition-all duration-200 hover:border-claw-text-dim hover:text-white">
+            <a href="https://github.com/compound-life-ai/longClaw" target="_blank" rel="noreferrer" className="rounded-lg bg-claw-bg-card/80 backdrop-blur-sm text-claw-text border border-claw-border px-8 py-3.5 text-sm font-sans font-medium transition-all duration-200 hover:border-claw-text-dim hover:text-white">
               view source &rarr;
             </a>
           </div>
@@ -459,7 +459,7 @@ export default function Version3() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <p className="text-[10px] font-mono uppercase tracking-widest text-claw-red mb-3">how it works</p>
-              <h2 className="text-2xl md:text-3xl font-bold font-mono text-claw-text mb-4">
+              <h2 className="text-2xl md:text-3xl font-bold font-sans text-claw-text mb-4">
                 One Agent.<br />All Your Health Data.
               </h2>
               <p className="text-claw-text-muted leading-relaxed mb-6">
@@ -472,7 +472,7 @@ export default function Version3() {
                   { icon: "🫀", text: "HRV & heart rate pattern detection" },
                   { icon: "🏃", text: "Activity and recovery insights" },
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3 text-sm text-claw-text-muted font-mono">
+                  <div key={i} className="flex items-center gap-3 text-sm text-claw-text-muted font-sans">
                     <span className="text-base">{item.icon}</span>
                     <span>{item.text}</span>
                   </div>
@@ -492,7 +492,7 @@ export default function Version3() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-[10px] font-mono uppercase tracking-widest text-claw-red mb-2">real-time health telemetry</p>
-            <h2 className="text-2xl md:text-3xl font-bold font-mono text-claw-text mb-3">
+            <h2 className="text-2xl md:text-3xl font-bold font-sans text-claw-text mb-3">
               Mission Control for Your Body
             </h2>
             <p className="text-claw-text-muted max-w-xl mx-auto">
@@ -521,7 +521,7 @@ export default function Version3() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <p className="text-[10px] font-mono uppercase tracking-widest text-claw-red mb-2">see it in action</p>
-            <h2 className="text-2xl md:text-3xl font-bold font-mono mb-3 text-claw-text">
+            <h2 className="text-2xl md:text-3xl font-bold font-sans mb-3 text-claw-text">
               <span className="text-claw-red">&gt;</span> live_showcase
             </h2>
             <p className="text-claw-text-muted max-w-2xl mx-auto">
@@ -538,7 +538,7 @@ export default function Version3() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
             <p className="text-[10px] font-mono uppercase tracking-widest text-claw-red mb-2">get started</p>
-            <h2 className="text-2xl md:text-3xl font-bold font-mono mb-3 text-claw-text">
+            <h2 className="text-2xl md:text-3xl font-bold font-sans mb-3 text-claw-text">
               <span className="text-claw-red">&gt;</span> install
             </h2>
             <p className="text-claw-text-muted">Copy this prompt and give it to your OpenClaw agent.</p>
@@ -565,7 +565,7 @@ export default function Version3() {
       <section className="px-6 py-20 w-full border-t border-claw-border">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-[10px] font-mono uppercase tracking-widest text-claw-red mb-2">architecture</p>
-          <h2 className="text-2xl md:text-3xl font-bold font-mono mb-4 text-claw-text">
+          <h2 className="text-2xl md:text-3xl font-bold font-sans mb-4 text-claw-text">
             <span className="text-claw-red">&gt;</span> local_first
           </h2>
           <p className="text-claw-text-muted mb-8">All data stays on your machine. No cloud telemetry. No forced subscriptions.</p>
