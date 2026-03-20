@@ -133,7 +133,7 @@ export default function VersionOne() {
       </section>
 
       {/* ============ LOGO STRIP ============ */}
-      <section className="relative z-10 border-t border-white/5 py-10">
+      <section className="relative z-10 border-t border-white/5 pt-16 pb-10 mt-8">
         <div className="max-w-5xl mx-auto px-6">
           <p className="text-center text-xs uppercase tracking-widest text-gray-600 mb-6">Built for</p>
           <div className="flex items-center justify-center gap-12 flex-wrap text-gray-600">
