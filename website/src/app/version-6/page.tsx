@@ -156,39 +156,49 @@ function AnimatedChat({
   return (
     <div
       ref={containerRef}
-      className="bg-claw-bg rounded-lg p-4 border border-claw-border-subtle space-y-3 font-mono text-[12px] sm:text-[13px] max-h-[340px] overflow-y-auto"
+      className="space-y-2.5 max-h-[380px] overflow-y-auto py-2"
     >
-      {messages.map((msg, i) => (
-        <div
-          key={i}
-          className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"} transition-all duration-500`}
-          style={{
-            opacity: i < visibleCount ? 1 : 0,
-            transform: i < visibleCount ? "translateY(0)" : "translateY(8px)",
-          }}
-        >
-          {msg.role === "agent" && (
-            <div className="flex-shrink-0 mr-2 mt-1">
-              <Logo size={18} />
-            </div>
-          )}
+      {messages.map((msg, i) => {
+        const visible = i < visibleCount;
+        const isUser = msg.role === "user";
+        return (
           <div
-            className={`rounded-xl px-3.5 py-2.5 max-w-[85%] leading-relaxed ${
-              msg.role === "user"
-                ? "bg-claw-red/10 text-claw-coral border border-claw-red/20"
-                : "bg-claw-bg-elevated text-claw-text border border-claw-border"
-            }`}
+            key={i}
+            className={`flex items-end gap-2 transition-all duration-500 ${isUser ? "justify-end" : "justify-start"}`}
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(12px)",
+            }}
           >
-            {msg.text}
+            {/* Agent avatar */}
+            {!isUser && (
+              <div className="flex-shrink-0 w-7">
+                <Logo size={28} />
+              </div>
+            )}
+            {/* Bubble */}
+            <div
+              className={`max-w-[85%] px-4 py-3 text-[13px] sm:text-[14px] leading-relaxed font-sans ${
+                isUser
+                  ? "bg-claw-red/15 border border-claw-red/25 text-claw-coral rounded-2xl rounded-br-md"
+                  : "bg-claw-bg-elevated border border-claw-border text-claw-text-muted rounded-2xl rounded-bl-md"
+              }`}
+            >
+              {msg.text}
+            </div>
+            {/* User avatar spacer */}
+            {isUser && <div className="flex-shrink-0 w-1" />}
           </div>
-        </div>
-      ))}
-      {visibleCount < messages.length && (
-        <div className="flex justify-start">
-          <div className="flex items-center gap-1 px-3 py-2 text-claw-text-dim">
-            <span className="w-1 h-1 rounded-full bg-claw-text-dim animate-pulse" />
-            <span className="w-1 h-1 rounded-full bg-claw-text-dim animate-pulse [animation-delay:0.2s]" />
-            <span className="w-1 h-1 rounded-full bg-claw-text-dim animate-pulse [animation-delay:0.4s]" />
+        );
+      })}
+      {/* Typing indicator */}
+      {visibleCount < messages.length && visibleCount > 0 && (
+        <div className="flex items-end gap-2">
+          <div className="w-7" />
+          <div className="bg-claw-bg-elevated border border-claw-border rounded-2xl rounded-bl-md px-4 py-3 flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-claw-text-dim animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-claw-text-dim animate-pulse [animation-delay:0.15s]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-claw-text-dim animate-pulse [animation-delay:0.3s]" />
           </div>
         </div>
       )}
