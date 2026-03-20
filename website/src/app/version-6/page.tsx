@@ -386,6 +386,19 @@ function ShowcaseTabs() {
                 <div className="text-[10px] font-mono text-claw-text-dim mt-3">Based on 19 meals logged across 7 days &middot; next review: Mar 26</div>
               </div>
             </div>
+            {/* User reply */}
+            <div className="flex justify-end">
+              <div className="max-w-[75%] bg-claw-red/15 border border-claw-red/25 rounded-2xl rounded-br-md px-4 py-3 text-[14px] font-sans text-claw-coral leading-relaxed">
+                What should I eat for lunch to cover the calcium and carb gaps?
+              </div>
+            </div>
+            {/* Agent follow-up */}
+            <div className="flex items-end gap-2">
+              <div className="flex-shrink-0 w-7"><Logo size={28} /></div>
+              <div className="max-w-[90%] bg-claw-bg-elevated border border-claw-border rounded-2xl rounded-bl-md px-4 py-3 text-[14px] font-sans text-claw-text-muted leading-relaxed">
+                Sardine rice bowl &mdash; one can of sardines gets you 382 mg calcium, add a cup of rice for 45 g carbs. Drizzle sesame oil for fat-soluble vitamin absorption. Want me to log it now?
+              </div>
+            </div>
             </BubbleSequence>
           </div>
         )}
@@ -467,6 +480,19 @@ function ShowcaseTabs() {
                 </div>
               </div>
             </div>
+            {/* User reply */}
+            <div className="flex justify-end">
+              <div className="max-w-[75%] bg-claw-red/15 border border-claw-red/25 rounded-2xl rounded-br-md px-4 py-3 text-[14px] font-sans text-claw-coral leading-relaxed">
+                Let&apos;s do the caffeine one first. I travel too randomly to test that properly.
+              </div>
+            </div>
+            {/* Agent follow-up */}
+            <div className="flex items-end gap-2">
+              <div className="flex-shrink-0 w-7"><Logo size={28} /></div>
+              <div className="max-w-[90%] bg-claw-bg-elevated border border-claw-border rounded-2xl rounded-bl-md px-4 py-3 text-[14px] font-sans text-claw-text-muted leading-relaxed">
+                Done &mdash; caffeine cutoff experiment starts today. No caffeine after 2 PM for 14 days. I&apos;ll track your deep sleep and HRV delta each morning. Day 1/14.
+              </div>
+            </div>
             </BubbleSequence>
           </div>
         )}
@@ -529,6 +555,19 @@ function ShowcaseTabs() {
                   <button className="px-3 py-1.5 rounded-full bg-claw-red/15 border border-claw-red/30 text-claw-coral text-[10px] font-mono">Optimize fat profile plan</button>
                   <button className="px-3 py-1.5 rounded-full bg-claw-bg border border-claw-border text-claw-text-muted text-[10px] font-mono">Schedule next blood draw</button>
                 </div>
+              </div>
+            </div>
+            {/* User reply */}
+            <div className="flex justify-end">
+              <div className="max-w-[75%] bg-claw-red/15 border border-claw-red/25 rounded-2xl rounded-br-md px-4 py-3 text-[14px] font-sans text-claw-coral leading-relaxed">
+                That&apos;s wild. Set a reminder for bloods in 3 months &mdash; I want to see if the fat swap moves ApoB.
+              </div>
+            </div>
+            {/* Agent follow-up */}
+            <div className="flex items-end gap-2">
+              <div className="flex-shrink-0 w-7"><Logo size={28} /></div>
+              <div className="max-w-[90%] bg-claw-bg-elevated border border-claw-border rounded-2xl rounded-bl-md px-4 py-3 text-[14px] font-sans text-claw-text-muted leading-relaxed">
+                Reminder set for Mar 24. I&apos;ll start shifting your meal suggestions toward more monounsaturated fats this week. You probably won&apos;t even notice the swap.
               </div>
             </div>
             </BubbleSequence>
