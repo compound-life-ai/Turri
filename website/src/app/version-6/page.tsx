@@ -314,19 +314,19 @@ function ShowcaseTabs() {
   return (
     <div>
       {/* Tab bar */}
-      <div className="flex flex-wrap gap-1 p-1 rounded-lg bg-claw-bg-card border border-claw-border mb-6">
+      <div className="grid grid-cols-5 gap-1 p-1 rounded-lg bg-claw-bg-card border border-claw-border mb-6">
         {tabs.map((tab, i) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(i)}
-            className={`flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-md text-xs font-mono transition-all duration-200 ${
+            className={`w-full flex items-center justify-center gap-1.5 px-2 py-2.5 rounded-md text-xs font-mono transition-all duration-200 ${
               i === activeTab
                 ? "bg-claw-red/15 text-claw-coral border border-claw-red/30"
                 : "text-claw-text-muted hover:text-claw-text hover:bg-claw-bg-elevated border border-transparent"
             }`}
           >
             <span>{tab.icon}</span>
-            <span className="hidden sm:inline">{tab.label}</span>
+            <span className="truncate">{tab.label}</span>
           </button>
         ))}
       </div>
