@@ -313,11 +313,11 @@ function useInView(threshold = 0.15) {
 function ShowcaseTabs() {
   const [activeTab, setActiveTab] = useState(0);
   const tabs = [
-    { id: "nutrition", label: "Weekly Review", icon: <IconChart className="w-3.5 h-3.5" /> },
-    { id: "patterns", label: "Pattern Detection", icon: <IconSearch className="w-3.5 h-3.5" /> },
-    { id: "analysis", label: "Deep Analysis", icon: <IconDna className="w-3.5 h-3.5" /> },
-    { id: "ask-milk", label: "Ask Agent", icon: <IconCoffee className="w-3.5 h-3.5" /> },
-    { id: "ask-sleep", label: "Night Chat", icon: <IconMoon className="w-3.5 h-3.5" /> },
+    { id: "nutrition", label: "Your Week, Decoded", icon: <IconChart className="w-3.5 h-3.5" /> },
+    { id: "patterns", label: "Connecting the Dots", icon: <IconSearch className="w-3.5 h-3.5" /> },
+    { id: "analysis", label: "New Data, New Insight", icon: <IconDna className="w-3.5 h-3.5" /> },
+    { id: "ask-milk", label: "Just Ask", icon: <IconCoffee className="w-3.5 h-3.5" /> },
+    { id: "ask-sleep", label: "Always On", icon: <IconMoon className="w-3.5 h-3.5" /> },
   ];
 
   return (
@@ -583,7 +583,7 @@ function ShowcaseTabs() {
           </div>
         )}
 
-        {/* TAB 3: Ask Agent — Milk vs Oat Milk */}
+        {/* TAB 3: Just Ask — Sushi vs Italian + Bubble Tea */}
         {activeTab === 3 && (
           <div className="p-5 sm:p-6">
             <div className="flex items-center gap-2 mb-1">
@@ -592,17 +592,27 @@ function ShowcaseTabs() {
             </div>
             <div className="mt-4">
               <AnimatedChat
-                key="milk-chat"
+                key="ask-chat"
                 messages={[
                   {
                     role: "user",
-                    text: "Do you think I should have my coffee with regular milk or oat milk today?",
+                    text: "Grabbing lunch with a client - sushi or Italian?",
                     delay: 600,
                   },
                   {
                     role: "agent",
-                    text: "Your nutrition and metabolism coaches both reviewed this - go with regular milk. It has more protein and fat than oat milk, a lower glycemic impact, and should better blunt the post-meal glucose spikes you've been seeing. Most oat milk brands also contain added sugar, which could make your CGM readings jump and stress you out. Unless you're specifically craving that creamy texture or your lactose intolerance is acting up, pick regular milk.",
+                    text: "Sushi. You had pasta last night (high glycemic load, your CGM showed a 2-hr plateau at 155), and your fasting glucose this morning was 96 - slightly elevated for you. Go with sashimi-heavy, skip the rice or keep it to 1 small bowl. If you\u2019re ordering drinks, dry sake over wine - 40% less sugar.",
                     delay: 2400,
+                  },
+                  {
+                    role: "user",
+                    text: "Craving bubble tea - yes or no?",
+                    delay: 1200,
+                  },
+                  {
+                    role: "agent",
+                    text: "Not today. You\u2019re day 21 in your cycle, progesterone is peaking - insulin resistance is at its monthly high. Your last bubble tea on a similar cycle day spiked you to 185 for 90 min. If you really want it: go for less ice, no sugar, sub oat milk with almond or fresh milk, and walk after.",
+                    delay: 2800,
                   },
                 ]}
               />
@@ -610,7 +620,7 @@ function ShowcaseTabs() {
           </div>
         )}
 
-        {/* TAB 4: Night Chat — Can't Sleep */}
+        {/* TAB 4: Always On — Can't Sleep */}
         {activeTab === 4 && (
           <div className="p-5 sm:p-6">
             <div className="flex items-center gap-2 mb-1">
@@ -623,13 +633,23 @@ function ShowcaseTabs() {
                 messages={[
                   {
                     role: "user",
-                    text: "Uh oh, I don't think I can fall asleep.",
+                    text: "Uh oh, I can\u2019t fall asleep.",
                     delay: 600,
                   },
                   {
                     role: "agent",
-                    text: "Your timezone wasn't disrupted today, so your mind is probably just running too fast. Try 4-7-8 breathing - after three rounds, your parasympathetic system should start taking over. Fun fact: humans are the only animals that intentionally deprive themselves of sleep. Other animals sleep when they're tired; only humans say, 'just one more episode.' Evolution never prepared us for Netflix and TikTok.",
+                    text: "Your resting HR is 71 - 8 bpm above your sleep baseline. Probably the espresso at 4 pm still clearing. Playing Body Scan for Sleep - your favourite meditation (you fall asleep by minute 11 usually). Tomorrow I\u2019m flagging your caffeine cutoff back to 2 pm.\n\nOk I know you probably want to chat\u2026 You had dinner with K tonight, right? How\u2019d it go?",
                     delay: 2400,
+                  },
+                  {
+                    role: "user",
+                    text: "Nice but idk I\u2019ve been feeling kind of scattered lately. Like I\u2019m doing a lot but not sure what it\u2019s all for\u2026",
+                    delay: 1400,
+                  },
+                  {
+                    role: "agent",
+                    text: "Hey I noticed. Your body\u2019s been saying the same thing, actually. But it\u2019s normal - you don\u2019t need perfect HRV and RHR every night. We can talk more tomorrow when your prefrontal cortex is actually online.\n\nFor now, magnesium, lights off. Breath 4-7-8. Night, night.",
+                    delay: 2800,
                   },
                 ]}
               />
