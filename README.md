@@ -133,7 +133,7 @@ Use the following block as a copy-paste instruction for an OpenClaw agent that s
 7. Tell the user to verify that `/snap`, `/health`, `/news`, and `/insights` are available and usable.
 8. Tell the user to verify that `daily-coach` is loaded with `openclaw skills info daily-coach`.
 9. If needed, tell the user to configure the cron templates from the installed `cron/` directory with their Telegram DM chat id, including `cron/daily-health-coach.example.json` for proactive daily coaching.
-10. Ask the user if they would like to seed sample data into `longevityOS-data/` so they can explore the system immediately. If they say yes, run `cp -r seed/* longevityOS-data/` from the cloned repository root. If they decline, skip this step.
+10. Ask the user if they would like sample data so they can explore the system immediately. If they say yes, run `python3 scripts/install_bundle.py --seed-data` before they start using the installed skills. If they decline, skip this step.
 ```
 
 [Back to top](#top)
@@ -164,11 +164,17 @@ Verify the installed bundle:
 python3 scripts/install_bundle.py --verify
 ```
 
-Optionally seed sample data so you can explore immediately:
+Optionally seed sample data into the installed bundle so you can explore immediately:
 
 ```bash
-cp -r seed/* longevityOS-data/
+python3 scripts/install_bundle.py --seed-data
 ```
+
+The seed command is intentionally conservative:
+
+- it copies fixture data into `~/.openclaw/bundles/compound-clawskill/longevityOS-data`
+- it refuses to run if that installed data directory is already non-empty
+- for repo-local development instead of an installed bundle, you can still use `cp -r seed/* longevityOS-data/`
 
 The installer:
 

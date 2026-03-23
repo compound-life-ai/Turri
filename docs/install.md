@@ -40,6 +40,12 @@ Verify the installed bundle:
 python3 scripts/install_bundle.py --verify
 ```
 
+Optionally seed sample data into the installed bundle:
+
+```bash
+python3 scripts/install_bundle.py --seed-data
+```
+
 ## What Gets Installed
 
 The installer copies these directories into the managed bundle:
@@ -90,7 +96,8 @@ Then:
 1. Start a new OpenClaw session.
 2. Verify `/snap`, `/health`, `/news`, and `/insights` are available and usable.
 3. If a Telegram command does not appear in the slash picker, try typing it manually first.
-4. Configure the cron templates from the installed `cron/` directory with your Telegram DM chat id.
+4. If you want fixture data for exploration, run `python3 scripts/install_bundle.py --seed-data` before using the skills.
+5. Configure the cron templates from the installed `cron/` directory with your Telegram DM chat id and local timezone.
 
 ## Fresh Session Required
 
