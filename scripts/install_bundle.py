@@ -19,6 +19,7 @@ SKILLS = ["snap", "health", "news", "insights", "daily-coach"]
 BUNDLE_NAME = "compound-clawskill"
 DATA_DIR_NAME = "longevityOS-data"
 COPY_DIRS = ["skills", "scripts", "cron", "docs"]
+DATA_SUBDIRS = ["nutrition", "health", "insights", "news"]
 
 
 def default_openclaw_home() -> Path:
@@ -31,6 +32,14 @@ def bundle_root(openclaw_home: Path, bundle_name: str = BUNDLE_NAME) -> Path:
 
 def config_path(openclaw_home: Path) -> Path:
     return openclaw_home / "openclaw.json"
+
+
+def seed_root() -> Path:
+    return repo_root() / "seed"
+
+
+def data_root(bundle_dir: Path) -> Path:
+    return bundle_dir / DATA_DIR_NAME
 
 
 def load_or_init_config(path: Path) -> dict[str, Any]:
@@ -54,13 +63,35 @@ def ensure_extra_skill_dir(config: dict[str, Any], extra_dir: Path) -> dict[str,
 
 
 def ensure_runtime_dirs(bundle_dir: Path) -> None:
-    for relative in (
-        "longevityOS-data/nutrition",
-        "longevityOS-data/health",
-        "longevityOS-data/insights",
-        "longevityOS-data/news",
-    ):
-        ensure_dir(bundle_dir / relative)
+    root = data_root(bundle_dir)
+    for subdir in DATA_SUBDIRS:
+        ensure_dir(root / subdir)
+
+
+def data_root_is_empty(bundle_dir: Path) -> bool:
+    root = data_root(bundle_dir)
+    for subdir in DATA_SUBDIRS:
+        subdir_path = root / subdir
+        if subdir_path.exists() and any(subdir_path.iterdir()):
+            return False
+    return True
+
+
+def seed_bundle_data(bundle_dir: Path, source_root: Path) -> None:
+    if not source_root.is_dir():
+        raise FileNotFoundError(f"missing seed directory: {source_root}")
+    if not data_root_is_empty(bundle_dir):
+        raise ValueError(
+            "refusing to seed non-empty bundle data directory; "
+            "clear the installed longevityOS-data first if you want fixture data"
+        )
+
+    target_root = data_root(bundle_dir)
+    for subdir in DATA_SUBDIRS:
+        source = source_root / subdir
+        if not source.exists():
+            continue
+        shutil.copytree(source, target_root / subdir, dirs_exist_ok=True)
 
 
 def copy_bundle_contents(src_root: Path, dst_root: Path) -> None:
@@ -75,23 +106,33 @@ def copy_bundle_contents(src_root: Path, dst_root: Path) -> None:
     ensure_runtime_dirs(dst_root)
 
 
-def install_bundle(openclaw_home: Path, bundle_name: str = BUNDLE_NAME, dry_run: bool = False) -> dict[str, str]:
+def install_bundle(
+    openclaw_home: Path,
+    bundle_name: str = BUNDLE_NAME,
+    dry_run: bool = False,
+    seed_data: bool = False,
+) -> dict[str, str]:
     src_root = repo_root()
     dst_root = bundle_root(openclaw_home, bundle_name)
     skills_dir = dst_root / "skills"
+    installed_data_root = data_root(dst_root)
     cfg_path = config_path(openclaw_home)
     cfg = ensure_extra_skill_dir(load_or_init_config(cfg_path), skills_dir)
 
     if not dry_run:
         ensure_dir(openclaw_home)
         copy_bundle_contents(src_root, dst_root)
+        if seed_data:
+            seed_bundle_data(dst_root, seed_root())
         write_json(cfg_path, cfg)
 
     return {
         "openclaw_home": str(openclaw_home),
         "bundle_root": str(dst_root),
         "skills_dir": str(skills_dir),
+        "data_root": str(installed_data_root),
         "config_path": str(cfg_path),
+        "seeded": "dry-run requested" if dry_run and seed_data else "yes" if seed_data else "no",
     }
 
 
@@ -143,6 +184,11 @@ def main() -> int:
     parser.add_argument("--bundle-name", default=BUNDLE_NAME)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--verify", action="store_true")
+    parser.add_argument(
+        "--seed-data",
+        action="store_true",
+        help="Copy sample seed data into the installed bundle if its longevityOS-data is empty.",
+    )
     args = parser.parse_args()
 
     resolved_home = args.openclaw_home.expanduser().resolve()
@@ -168,6 +214,7 @@ def main() -> int:
         openclaw_home=resolved_home,
         bundle_name=args.bundle_name,
         dry_run=args.dry_run,
+        seed_data=args.seed_data,
     )
 
     if args.dry_run:
@@ -176,12 +223,15 @@ def main() -> int:
     print(f"- OpenClaw home: {result['openclaw_home']}")
     print(f"- Bundle root: {result['bundle_root']}")
     print(f"- Skills dir added to extraDirs: {result['skills_dir']}")
+    print(f"- Data root: {result['data_root']}")
     print(f"- Config path: {result['config_path']}")
+    if args.seed_data:
+        print(f"- Seed data: {result['seeded']}")
     print("")
     print("Next:")
     print("1. Start a new OpenClaw session so the skill snapshot refreshes.")
     print("2. Run `python3 scripts/install_bundle.py --verify` from this repo to confirm the skills are Ready.")
-    print("3. Add the cron jobs from the installed cron/ directory using your Telegram DM chat id.")
+    print("3. Add the cron jobs from the installed cron/ directory using your Telegram DM chat id and local timezone.")
     print("4. Verify /snap, /health, /news, and /insights are visible and usable.")
     return 0
 

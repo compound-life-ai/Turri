@@ -13,11 +13,15 @@ from scripts.install_bundle import (
     COPY_DIRS,
     bundle_root,
     config_path,
+    data_root,
     default_openclaw_home,
+    data_root_is_empty,
     ensure_extra_skill_dir,
     ensure_runtime_dirs,
     install_bundle,
     load_or_init_config,
+    seed_bundle_data,
+    seed_root,
     verify_install,
 )
 
@@ -78,6 +82,38 @@ class InstallBundleTests(unittest.TestCase):
                 str(installed_root / "skills"),
                 config["skills"]["load"]["extraDirs"],
             )
+            self.assertEqual(Path(result["data_root"]), data_root(installed_root))
+
+    def test_seed_bundle_data_copies_seed_files_into_empty_runtime_dirs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            bundle_dir = Path(tmp_dir) / BUNDLE_NAME
+            ensure_runtime_dirs(bundle_dir)
+            self.assertTrue(data_root_is_empty(bundle_dir))
+
+            seed_bundle_data(bundle_dir, seed_root())
+
+            self.assertTrue((data_root(bundle_dir) / "nutrition" / "meals.csv").is_file())
+            self.assertTrue((data_root(bundle_dir) / "health" / "profile.json").is_file())
+            self.assertFalse(data_root_is_empty(bundle_dir))
+
+    def test_seed_bundle_data_refuses_to_overwrite_non_empty_runtime_dirs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            bundle_dir = Path(tmp_dir) / BUNDLE_NAME
+            ensure_runtime_dirs(bundle_dir)
+            marker = data_root(bundle_dir) / "nutrition" / "meals.csv"
+            marker.write_text("existing", encoding="utf-8")
+
+            with self.assertRaises(ValueError):
+                seed_bundle_data(bundle_dir, seed_root())
+
+    def test_install_bundle_can_seed_data_during_install(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            openclaw_home = Path(tmp_dir) / ".openclaw"
+            result = install_bundle(openclaw_home, dry_run=False, seed_data=True)
+            installed_root = bundle_root(openclaw_home, BUNDLE_NAME)
+
+            self.assertEqual(result["seeded"], "yes")
+            self.assertTrue((data_root(installed_root) / "nutrition" / "meals.csv").is_file())
 
     def test_install_bundle_script_supports_dry_run(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -98,6 +134,27 @@ class InstallBundleTests(unittest.TestCase):
             self.assertIn("Dry run only. No files were changed.", result.stdout)
             self.assertFalse(bundle_root(openclaw_home, BUNDLE_NAME).exists())
             self.assertFalse(config_path(openclaw_home).exists())
+
+    def test_install_bundle_script_reports_seed_option(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            openclaw_home = Path(tmp_dir) / ".openclaw"
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    "scripts/install_bundle.py",
+                    "--openclaw-home",
+                    str(openclaw_home),
+                    "--seed-data",
+                ],
+                cwd=REPO_ROOT,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            self.assertIn("Seed data: yes", result.stdout)
+            self.assertTrue(
+                (bundle_root(openclaw_home, BUNDLE_NAME) / "longevityOS-data" / "nutrition" / "meals.csv").is_file()
+            )
 
     def test_verify_install_checks_ready_skills(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:

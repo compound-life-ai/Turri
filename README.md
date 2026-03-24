@@ -113,8 +113,8 @@ python3 scripts/install_bundle.py
 # verify
 python3 scripts/install_bundle.py --verify
 
-# optional: seed sample data
-cp -r seed/* longevityOS-data/
+# optional: seed sample data into the installed bundle
+python3 scripts/install_bundle.py --seed-data
 ```
 
 Start a **fresh OpenClaw session** after install — skills are snapshotted at session start.
@@ -131,7 +131,7 @@ Start a **fresh OpenClaw session** after install — skills are snapshotted at s
 6. Tell the user to start a new OpenClaw session.
 7. Tell the user to verify that `/snap`, `/health`, `/news`, and `/insights` are available.
 8. If needed, configure cron templates from `cron/` with their Telegram DM chat id.
-9. Ask if they'd like to seed sample data: `cp -r seed/* longevityOS-data/`.
+9. Ask if they'd like to seed sample data: `python3 scripts/install_bundle.py --seed-data`.
 ```
 </details>
 
