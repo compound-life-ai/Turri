@@ -1,0 +1,36 @@
+{
+  "records": [
+    {
+      "id": "3b2f9068-4938-4385-ac55-a77d290f805b",
+      "v1_id": null,
+      "user_id": 12345678,
+      "created_at": "2026-03-22T19:04:04.592Z",
+      "updated_at": "2026-03-22T19:06:30.596Z",
+      "start": "2026-03-22T18:33:00.520Z",
+      "end": "2026-03-22T18:49:29.550Z",
+      "timezone_offset": "-07:00",
+      "sport_name": "assault-bike",
+      "score_state": "SCORED",
+      "score": {
+        "strain": 4.892992,
+        "average_heart_rate": 114,
+        "max_heart_rate": 146,
+        "kilojoule": 299.17715,
+        "percent_recorded": 0.99996966,
+        "distance_meter": null,
+        "altitude_gain_meter": null,
+        "altitude_change_meter": null,
+        "zone_durations": {
+          "zone_zero_milli": 351020,
+          "zone_one_milli": 568010,
+          "zone_two_milli": 70000,
+          "zone_three_milli": 0,
+          "zone_four_milli": 0,
+          "zone_five_milli": 0
+        }
+      },
+      "sport_id": 126
+    }
+  ],
+  "next_token": null
+}

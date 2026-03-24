@@ -1,0 +1,69 @@
+{
+  "records": [
+    {
+      "cycle_id": 1388277186,
+      "sleep_id": "1c5ec6f3-3838-4af0-982c-647cb8962106",
+      "user_id": 12345678,
+      "created_at": "2026-03-24T18:07:03.189Z",
+      "updated_at": "2026-03-24T18:07:03.189Z",
+      "score_state": "SCORED",
+      "score": {
+        "user_calibrating": false,
+        "recovery_score": 60.0,
+        "resting_heart_rate": 59.0,
+        "hrv_rmssd_milli": 43.3454,
+        "spo2_percentage": 93.333336,
+        "skin_temp_celsius": 33.4255
+      }
+    },
+    {
+      "cycle_id": 1386259182,
+      "sleep_id": "fa5b6a6f-eb3f-453e-a689-1f38d443083d",
+      "user_id": 12345678,
+      "created_at": "2026-03-23T20:05:47.137Z",
+      "updated_at": "2026-03-23T20:05:49.126Z",
+      "score_state": "SCORED",
+      "score": {
+        "user_calibrating": true,
+        "recovery_score": 42.0,
+        "resting_heart_rate": 64.0,
+        "hrv_rmssd_milli": 34.841248,
+        "spo2_percentage": 95.4,
+        "skin_temp_celsius": 32.887585
+      }
+    },
+    {
+      "cycle_id": 1384053192,
+      "sleep_id": "f9867061-72d0-4754-862a-09c219d6bd9a",
+      "user_id": 12345678,
+      "created_at": "2026-03-22T16:37:04.625Z",
+      "updated_at": "2026-03-22T16:37:04.625Z",
+      "score_state": "SCORED",
+      "score": {
+        "user_calibrating": true,
+        "recovery_score": 36.0,
+        "resting_heart_rate": 62.0,
+        "hrv_rmssd_milli": 35.037434,
+        "spo2_percentage": 93.5,
+        "skin_temp_celsius": 32.784332
+      }
+    },
+    {
+      "cycle_id": 1382052792,
+      "sleep_id": "4d315a37-29f9-49a4-b828-eb563d3c0ef3",
+      "user_id": 12345678,
+      "created_at": "2026-03-21T16:41:35.122Z",
+      "updated_at": "2026-03-21T16:41:35.122Z",
+      "score_state": "SCORED",
+      "score": {
+        "user_calibrating": true,
+        "recovery_score": 32.0,
+        "resting_heart_rate": 61.0,
+        "hrv_rmssd_milli": 37.16381,
+        "spo2_percentage": 96.2,
+        "skin_temp_celsius": 34.11767
+      }
+    }
+  ],
+  "next_token": null
+}
