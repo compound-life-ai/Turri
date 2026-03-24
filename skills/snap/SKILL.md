@@ -22,6 +22,17 @@ Behavior rules:
   `Zn 3.2mg · Ca 58mg · VitD 16.4µg · Se 73mcg · Fe 1.8mg · Folate 57µg · Omega-3 1.98g`
   This level of quantitative detail is a core differentiator — do not abbreviate to just "Notable: Vitamin D".
 
+Meal-type inference rules:
+
+- **Always use the current wall-clock time** (not photo content) as the primary signal for `meal_type`:
+  - 05:00–10:29 → `breakfast`
+  - 10:30–14:29 → `lunch`
+  - 14:30–17:29 → `snack`
+  - 17:30–21:59 → `dinner`
+  - 22:00–04:59 → `snack`
+- If the user **explicitly states** a meal type (e.g. "this was my breakfast"), use their stated type regardless of the time.
+- **Never infer meal_type from the visual content of the photo** (e.g. do not classify eggs as "breakfast" if it is dinner time).
+
 Logging flow:
 
 1. Infer a meal-level estimate and decompose it into ingredients.

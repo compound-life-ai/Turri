@@ -118,12 +118,30 @@ def summarize_day(data_root: Path, date_str: str) -> dict[str, Any]:
     return totals
 
 
+def infer_meal_type_from_hour(hour: int) -> str:
+    """Infer meal type from the hour of day when no explicit type is given."""
+    if 5 <= hour < 11:
+        return "breakfast"
+    if 11 <= hour < 15:
+        return "lunch"
+    if 15 <= hour < 18:
+        return "snack"
+    if 18 <= hour < 22:
+        return "dinner"
+    return "snack"
+
+
 def log_payload(payload: dict[str, Any], data_root: Path) -> dict[str, Any]:
     timestamp = parse_timestamp(payload.get("timestamp"))
     date_str = slug_date(timestamp)
     meal_id = str(payload.get("meal_id") or uuid.uuid4())
     meal_confidence = to_float(payload.get("confidence"))
-    meal_type = str(payload.get("meal_type") or "unspecified")
+    raw_meal_type = payload.get("meal_type")
+    if raw_meal_type and raw_meal_type != "unspecified":
+        meal_type = str(raw_meal_type)
+    else:
+        hour = datetime.fromisoformat(timestamp).hour
+        meal_type = infer_meal_type_from_hour(hour)
     source = str(payload.get("source") or "manual")
     notes = str(payload.get("notes") or "")
     photo_ref = str(payload.get("photo_ref") or "")
