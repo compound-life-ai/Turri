@@ -125,38 +125,18 @@ Every morning, the daily coach cron gathers context from all data stores and dis
 
 <table>
 <tr>
-<td align="center" width="20%">
-🏥<br/><b>Imperial Physician</b><br/><sub>Orchestrator — synthesizes #1 priority</sub>
-</td>
-<td align="center" width="20%">
-🍚<br/><b>Diet Physician</b><br/><sub>Nutrition — macros, micros, food suggestions</sub>
-</td>
-<td align="center" width="20%">
-🏃<br/><b>Movement Master</b><br/><sub>Exercise — strain-adjusted training</sub>
-</td>
-<td align="center" width="20%">
-💓<br/><b>Pulse Reader</b><br/><sub>Body Metrics — RHR, HRV, SpO₂ trends</sub>
-</td>
-<td align="center" width="20%">
-🧪<br/><b>Formula Tester</b><br/><sub>Biomarkers — cross-domain pattern detection</sub>
-</td>
+<td align="center" width="20%"><img src="docs/characters/yuyi.svg" alt="Imperial Physician" width="80"/><br/><b>Imperial Physician</b><br/><sub>Orchestrator — synthesizes #1 priority</sub></td>
+<td align="center" width="20%"><img src="docs/characters/shiyi.svg" alt="Diet Physician" width="80"/><br/><b>Diet Physician</b><br/><sub>Nutrition — macros, micros, food suggestions</sub></td>
+<td align="center" width="20%"><img src="docs/characters/daoyin.svg" alt="Movement Master" width="80"/><br/><b>Movement Master</b><br/><sub>Exercise — strain-adjusted training</sub></td>
+<td align="center" width="20%"><img src="docs/characters/zhenmai.svg" alt="Pulse Reader" width="80"/><br/><b>Pulse Reader</b><br/><sub>Body Metrics — RHR, HRV, SpO₂ trends</sub></td>
+<td align="center" width="20%"><img src="docs/characters/yanfang.svg" alt="Formula Tester" width="80"/><br/><b>Formula Tester</b><br/><sub>Biomarkers — cross-domain patterns</sub></td>
 </tr>
 <tr>
-<td align="center" width="20%">
-🌿<br/><b>Herbalist</b><br/><sub>Supplements — micronutrient gap analysis</sub>
-</td>
-<td align="center" width="20%">
-📋<br/><b>Trial Monitor</b><br/><sub>Experiments — compliance tracking</sub>
-</td>
-<td align="center" width="20%">
-⚖️<br/><b>Court Magistrate</b><br/><sub>Trial Design — N-of-1 candidates</sub>
-</td>
-<td align="center" width="20%">
-🛡️<br/><b>Medical Censor</b><br/><sub>Safety Review — overtraining, decline flags</sub>
-</td>
-<td align="center" width="20%">
-📜<br/><b>Court Scribe</b><br/><sub>Reports — relevant research + literature</sub>
-</td>
+<td align="center" width="20%"><img src="docs/characters/bencao.svg" alt="Herbalist" width="80"/><br/><b>Herbalist</b><br/><sub>Supplements — micronutrient gap analysis</sub></td>
+<td align="center" width="20%"><img src="docs/characters/shixiao.svg" alt="Trial Monitor" width="80"/><br/><b>Trial Monitor</b><br/><sub>Experiments — compliance tracking</sub></td>
+<td align="center" width="20%"><img src="docs/characters/yuanpan.svg" alt="Court Magistrate" width="80"/><br/><b>Court Magistrate</b><br/><sub>Trial Design — N-of-1 candidates</sub></td>
+<td align="center" width="20%"><img src="docs/characters/yizheng.svg" alt="Medical Censor" width="80"/><br/><b>Medical Censor</b><br/><sub>Safety Review — overtraining, decline flags</sub></td>
+<td align="center" width="20%"><img src="docs/characters/baogao.svg" alt="Court Scribe" width="80"/><br/><b>Court Scribe</b><br/><sub>Reports — relevant research + literature</sub></td>
 </tr>
 </table>
 
