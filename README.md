@@ -14,6 +14,10 @@ All skills respond to natural language. Say "had salmon with rice for lunch" ins
 
 ## Architecture
 
+<p align="center">
+  <img src="docs/images/architecture-diagram.png" alt="System Architecture" width="100%" />
+</p>
+
 ```mermaid
 flowchart TB
     subgraph User["👤 User Input"]
@@ -119,6 +123,47 @@ sequenceDiagram
 
 Every morning, the daily coach cron gathers context from all data stores and dispatches 10 specialist subagents in parallel. Each delivers its own Telegram bubble as it completes.
 
+### The Specialists
+
+<table>
+<tr>
+<td align="center" width="20%">
+🏥<br/><b>Imperial Physician</b><br/><sub>Orchestrator — synthesizes #1 priority</sub>
+</td>
+<td align="center" width="20%">
+🍚<br/><b>Diet Physician</b><br/><sub>Nutrition — macros, micros, food suggestions</sub>
+</td>
+<td align="center" width="20%">
+🏃<br/><b>Movement Master</b><br/><sub>Exercise — strain-adjusted training</sub>
+</td>
+<td align="center" width="20%">
+💓<br/><b>Pulse Reader</b><br/><sub>Body Metrics — RHR, HRV, SpO₂ trends</sub>
+</td>
+<td align="center" width="20%">
+🧪<br/><b>Formula Tester</b><br/><sub>Biomarkers — cross-domain pattern detection</sub>
+</td>
+</tr>
+<tr>
+<td align="center" width="20%">
+🌿<br/><b>Herbalist</b><br/><sub>Supplements — micronutrient gap analysis</sub>
+</td>
+<td align="center" width="20%">
+📋<br/><b>Trial Monitor</b><br/><sub>Experiments — compliance tracking</sub>
+</td>
+<td align="center" width="20%">
+⚖️<br/><b>Court Magistrate</b><br/><sub>Trial Design — N-of-1 candidates</sub>
+</td>
+<td align="center" width="20%">
+🛡️<br/><b>Medical Censor</b><br/><sub>Safety Review — overtraining, decline flags</sub>
+</td>
+<td align="center" width="20%">
+📜<br/><b>Court Scribe</b><br/><sub>Reports — relevant research + literature</sub>
+</td>
+</tr>
+</table>
+
+### Dispatch Flow
+
 ```mermaid
 flowchart TB
     Cron["⏰ Cron (7:10am)"] --> Gather["Gather Context<br/>daily_health_coach.py<br/>weekly_summary.py"]
@@ -148,40 +193,11 @@ flowchart TB
     CS --> TG
 ```
 
-<details>
-<summary>Example Telegram output</summary>
+### Example Output
 
-```
-┌─────────────────────────────────────────────┐
-│ [Imperial Physician 🏥]                      │
-│ Recovery dropped 3 days straight (60% → 36%).│
-│ Today's priority is active recovery — skip   │
-│ strength, walk instead. Early bedtime.       │
-└─────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────┐
-│ [Diet Physician 🍚]                          │
-│ Protein averaged 95g/day (target 140g). Add  │
-│ 150g chicken breast at lunch for +47g.       │
-└─────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────┐
-│ [Pulse Reader 💓]                            │
-│ RHR 64 bpm (baseline 56), HRV 35ms (down    │
-│ 19%). Both trending worse — fatigue signal.  │
-└─────────────────────────────────────────────┘
-
-          ... 7 more specialist bubbles ...
-
-┌─────────────────────────────────────────────┐
-│ [Court Scribe 📜]                            │
-│ Study: dinner protein dose-dependently       │
-│ increases melatonin (Sutanto 2022). Relevant │
-│ to your low dinner protein pattern.          │
-└─────────────────────────────────────────────┘
-```
-
-</details>
+<p align="center">
+  <img src="docs/images/telegram-mockup.png" alt="Daily Coach Telegram Output" width="390" />
+</p>
 
 ## Install
 
