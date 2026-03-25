@@ -37,24 +37,24 @@ Questionnaire flow:
 }
 ```
 
-Whoop connect flow (first time):
+Whoop connect flow (first time only):
 
 1. Tell the user to visit the OAuth authorization page in their browser:
    `https://whoop-oauth-five.vercel.app/api/whoop/authorize`
 2. After authenticating, the user clicks "Copy Tokens for CLI" on the success page.
 3. Save the pasted JSON to `{baseDir}/../../longevityOS-data/health/whoop_tokens.json`.
-4. Call the `whoop_import` tool to fetch and normalize Whoop data:
+4. Call the `whoop_initiate` tool to validate the tokens and fetch initial data:
 
 ```json
 { }
 ```
 
-5. Merge the normalized summary into the profile by calling `health_profile`:
+5. Show the user what data was fetched, then merge into the profile by calling `health_profile`:
 
 ```json
 {
   "command": "merge_import",
-  "input_json": { /* paste the whoop_import output here */ }
+  "input_json": { /* paste the whoop_initiate output here */ }
 }
 ```
 
@@ -62,11 +62,13 @@ Whoop connect flow (first time):
 
 Whoop sync flow (already connected):
 
-Call the `whoop_sync` tool — it fetches new data and merges into the profile in one step:
+Always use the `whoop_sync` tool for ongoing data refreshes — it fetches new data and merges into the profile in one step:
 
 ```json
 { }
 ```
+
+**Never use `whoop_initiate` for routine syncs.** It is only for first-time onboarding.
 
 To inspect the current profile:
 

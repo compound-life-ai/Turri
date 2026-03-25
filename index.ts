@@ -125,10 +125,11 @@ export default definePluginEntry({
       },
     });
 
-    // ── whoop_import ──────────────────────────────────────────
+    // ── whoop_initiate ─────────────────────────────────────────
     api.registerTool({
-      name: "whoop_import",
-      description: "Fetch latest data from Whoop API and normalize into health profile format",
+      name: "whoop_initiate",
+      description:
+        "First-time Whoop setup: validate saved OAuth tokens and fetch initial data from the Whoop API. Use this only during onboarding after the user completes the OAuth flow and saves their tokens. For ongoing data sync, use whoop_sync instead.",
       parameters: Type.Object({}),
       async execute() {
         const tokenFile = join(dataRoot, "health/whoop_tokens.json");

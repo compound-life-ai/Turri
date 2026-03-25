@@ -256,7 +256,8 @@ This is a native [OpenClaw plugin](https://docs.openclaw.ai/plugins/building-plu
 |------|-------------|
 | `nutrition` | Log meals, daily totals, weekly summary vs RDA |
 | `health_profile` | Merge questionnaire/Whoop data, show profile |
-| `whoop_import` | Fetch and normalize Whoop API data |
+| `whoop_initiate` | First-time Whoop OAuth setup and token validation |
+| `whoop_sync` | Fetch latest Whoop data and merge into profile |
 | `experiments` | Create, check-in, analyze self-experiments |
 | `news_digest` | Fetch ranked health/longevity news |
 | `coaching_context` | Generate daily coaching context from all data |
