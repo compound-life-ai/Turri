@@ -14,9 +14,7 @@ All skills respond to natural language. Say "had salmon with rice for lunch" ins
 
 ## Architecture
 
-<p align="center">
   <img src="docs/images/architecture-diagram.png" alt="System Architecture" width="100%" />
-</p>
 
 ```mermaid
 flowchart TB
