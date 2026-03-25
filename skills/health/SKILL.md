@@ -23,14 +23,18 @@ Rules:
 Questionnaire flow:
 
 1. Ask only the missing structured questions needed to update goals, constraints, preferences, and baseline notes.
-2. Save a temp JSON file with fields such as `goals`, `constraints`, `preferences`, and `questionnaire`.
-3. Run:
+2. Call the `health_profile` tool with `command: "merge_questionnaire"` and the questionnaire payload:
 
-```bash
-python3 "{baseDir}/../../scripts/health/profile_store.py" \
-  --data-root "{baseDir}/../../longevityOS-data" \
-  merge-questionnaire \
-  --input-json /tmp/health_questionnaire.json
+```json
+{
+  "command": "merge_questionnaire",
+  "input_json": {
+    "goals": ["..."],
+    "constraints": ["..."],
+    "preferences": {},
+    "questionnaire": {}
+  }
+}
 ```
 
 Whoop connect flow (first time):
@@ -39,48 +43,30 @@ Whoop connect flow (first time):
    `https://whoop-oauth-five.vercel.app/api/whoop/authorize`
 2. After authenticating, the user clicks "Copy Tokens for CLI" on the success page.
 3. Save the pasted JSON to `{baseDir}/../../longevityOS-data/health/whoop_tokens.json`.
-4. Run the import to fetch and normalize Whoop data:
+4. Call the `whoop_import` tool to fetch and normalize Whoop data:
 
-```bash
-python3 "{baseDir}/../../scripts/health/import_whoop.py" \
-  --token-file "{baseDir}/../../longevityOS-data/health/whoop_tokens.json" \
-  > /tmp/whoop_summary.json
+```json
+{ }
 ```
 
-5. Merge the normalized summary into the profile:
+5. Merge the normalized summary into the profile by calling `health_profile`:
 
-```bash
-python3 "{baseDir}/../../scripts/health/profile_store.py" \
-  --data-root "{baseDir}/../../longevityOS-data" \
-  merge-import \
-  --input-json /tmp/whoop_summary.json
+```json
+{
+  "command": "merge_import",
+  "input_json": { /* paste the whoop_import output here */ }
+}
 ```
 
 6. Tell the user what profile context is now available for future recommendations.
 
 Whoop sync flow (already connected):
 
-1. Run the import (token refresh is automatic):
-
-```bash
-python3 "{baseDir}/../../scripts/health/import_whoop.py" \
-  --token-file "{baseDir}/../../longevityOS-data/health/whoop_tokens.json" \
-  > /tmp/whoop_summary.json
-```
-
-2. Merge into profile:
-
-```bash
-python3 "{baseDir}/../../scripts/health/profile_store.py" \
-  --data-root "{baseDir}/../../longevityOS-data" \
-  merge-import \
-  --input-json /tmp/whoop_summary.json
-```
+1. Call the `whoop_import` tool (token refresh is automatic).
+2. Call `health_profile` with `command: "merge_import"` passing the import output as `input_json`.
 
 To inspect the current profile:
 
-```bash
-python3 "{baseDir}/../../scripts/health/profile_store.py" \
-  --data-root "{baseDir}/../../longevityOS-data" \
-  show
+```json
+{ "command": "show" }
 ```

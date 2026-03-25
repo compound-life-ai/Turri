@@ -31,45 +31,53 @@ Rules:
 - Keep recommendations lifestyle-only.
 - If data is insufficient, do not improvise a strong recommendation. Run a gap analysis and ask for the missing data.
 
-Start every `/insights` session with:
+Start every `/insights` session by calling the `experiments` tool:
 
-```bash
-python3 "{baseDir}/../../scripts/insights/experiments.py" \
-  --data-root "{baseDir}/../../longevityOS-data" \
-  gap-report
+```json
+{ "command": "gap_report" }
 ```
 
 If the user wants to start an experiment:
 
-1. Build a JSON payload with `title`, `domain`, `hypothesis`, `null_hypothesis`, `intervention`, `primary_outcome`, and optional `secondary_outcomes`, windows, and questions.
-2. Run:
+1. Build the experiment payload with `title`, `domain`, `hypothesis`, `null_hypothesis`, `intervention`, `primary_outcome`, and optional `secondary_outcomes`, windows, and questions.
+2. Call the `experiments` tool:
 
-```bash
-python3 "{baseDir}/../../scripts/insights/experiments.py" \
-  --data-root "{baseDir}/../../longevityOS-data" \
-  create \
-  --input-json /tmp/insights_experiment.json
+```json
+{
+  "command": "create",
+  "input_json": {
+    "title": "...",
+    "domain": "...",
+    "hypothesis": "...",
+    "null_hypothesis": "...",
+    "intervention": "...",
+    "primary_outcome": "..."
+  }
+}
 ```
 
 For a daily check-in:
 
 1. Capture compliance, 1 to 2 primary outcome scores, confounders, and a short note.
-2. Run:
+2. Call the `experiments` tool:
 
-```bash
-python3 "{baseDir}/../../scripts/insights/experiments.py" \
-  --data-root "{baseDir}/../../longevityOS-data" \
-  checkin \
-  --input-json /tmp/insights_checkin.json
+```json
+{
+  "command": "checkin",
+  "input_json": {
+    "experiment_id": "<id>",
+    "compliance": 0.9,
+    "primary_outcome_scores": { "metric": 7 },
+    "confounders": [],
+    "note": "..."
+  }
+}
 ```
 
-For experiment review:
+For experiment review, call the `experiments` tool:
 
-```bash
-python3 "{baseDir}/../../scripts/insights/experiments.py" \
-  --data-root "{baseDir}/../../longevityOS-data" \
-  analyze \
-  --experiment-id <id>
+```json
+{ "command": "analyze", "experiment_id": "<id>" }
 ```
 
 When the script says more data is needed:

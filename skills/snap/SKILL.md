@@ -41,33 +41,26 @@ Logging flow:
    - either `amount_g` or `portion`
    - optional `confidence`
 3. Only include explicit nutrient fields if the user supplied a trustworthy label, barcode, or exact recipe and you want the script to preserve those values as `provided`.
-4. Write a JSON payload to a temp file.
-5. Run:
-
-```bash
-python3 "{baseDir}/../../scripts/nutrition/estimate_and_log.py" \
-  --data-root "{baseDir}/../../longevityOS-data" \
-  log \
-  --input-json /tmp/snap_payload.json
-```
-
-Payload shape:
+4. Call the `nutrition` tool with `command: "log"` and `input_json` containing the meal payload:
 
 ```json
 {
-  "timestamp": "2026-03-18T12:30:00-07:00",
-  "meal_type": "lunch",
-  "source": "photo",
-  "photo_ref": "telegram:file-id-or-message-ref",
-  "confidence": 0.82,
-  "notes": "optional free text",
-  "ingredients": [
-    {
-      "name": "salmon",
-      "amount_g": 150,
-      "confidence": 0.78
-    }
-  ]
+  "command": "log",
+  "input_json": {
+    "timestamp": "2026-03-18T12:30:00-07:00",
+    "meal_type": "lunch",
+    "source": "photo",
+    "photo_ref": "telegram:file-id-or-message-ref",
+    "confidence": 0.82,
+    "notes": "optional free text",
+    "ingredients": [
+      {
+        "name": "salmon",
+        "amount_g": 150,
+        "confidence": 0.78
+      }
+    ]
+  }
 }
 ```
 
@@ -88,13 +81,14 @@ After logging:
 
 Weekly nutrition review:
 
-When the user asks about weekly nutrition (e.g. "how's my nutrition looking this week?", "weekly summary"), run:
+When the user asks about weekly nutrition (e.g. "how's my nutrition looking this week?", "weekly summary"), call the `nutrition` tool:
 
-```bash
-python3 "{baseDir}/../../scripts/nutrition/weekly_summary.py" \
-  --data-root "{baseDir}/../../longevityOS-data" \
-  --end-date "YYYY-MM-DD" \
-  --rda-profile default
+```json
+{
+  "command": "weekly_summary",
+  "end_date": "YYYY-MM-DD",
+  "rda_profile": "default"
+}
 ```
 
 Present the results as:

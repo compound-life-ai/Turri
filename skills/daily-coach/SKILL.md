@@ -13,17 +13,21 @@ Use this skill when:
 
 ## Step 1: Gather context
 
-Run both scripts to build the shared context payload:
+Call both tools to build the shared context payload:
 
-```bash
-python3 "{baseDir}/../../scripts/coach/daily_health_coach.py" \
-  --data-root "{baseDir}/../../longevityOS-data"
+1. Call the `coaching_context` tool:
+
+```json
+{ }
 ```
 
-```bash
-python3 "{baseDir}/../../scripts/nutrition/weekly_summary.py" \
-  --data-root "{baseDir}/../../longevityOS-data" \
-  --end-date "YYYY-MM-DD"
+2. Call the `nutrition` tool for weekly summary:
+
+```json
+{
+  "command": "weekly_summary",
+  "end_date": "YYYY-MM-DD"
+}
 ```
 
 If `insufficient_data` is true: skip subagent dispatch. Instead say what is missing and what to log next.

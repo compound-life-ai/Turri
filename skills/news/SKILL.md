@@ -18,12 +18,10 @@ Rules:
 - Use the curated source list in the script, not open-ended web search, unless the user explicitly asks for research beyond the bundle.
 - Keep health claims cautious and tied to the article context.
 
-Run:
+Call the `news_digest` tool:
 
-```bash
-python3 "{baseDir}/../../scripts/news/fetch_digest.py" \
-  --data-root "{baseDir}/../../longevityOS-data" \
-  --limit 6
+```json
+{ "limit": 6 }
 ```
 
 Then:
