@@ -62,8 +62,11 @@ Whoop connect flow (first time):
 
 Whoop sync flow (already connected):
 
-1. Call the `whoop_import` tool (token refresh is automatic).
-2. Call `health_profile` with `command: "merge_import"` passing the import output as `input_json`.
+Call the `whoop_sync` tool — it fetches new data and merges into the profile in one step:
+
+```json
+{ }
+```
 
 To inspect the current profile:
 

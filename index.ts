@@ -140,6 +140,28 @@ export default definePluginEntry({
       },
     });
 
+    // ── whoop_sync ─────────────────────────────────────────────
+    api.registerTool({
+      name: "whoop_sync",
+      description:
+        "Fetch latest Whoop data and merge it into the health profile in one step",
+      parameters: Type.Object({}),
+      async execute() {
+        const tokenFile = join(dataRoot, "health/whoop_tokens.json");
+        const importOut = await run(py, [
+          join(root, "scripts/health/import_whoop.py"),
+          "--token-file", tokenFile,
+        ], root);
+        const mergeOut = await withTempJson(JSON.parse(importOut), (path) =>
+          run(py, [
+            join(root, "scripts/health/profile_store.py"),
+            "--data-root", dataRoot, "merge-import", "--input-json", path,
+          ], root),
+        );
+        return { content: [{ type: "text", text: mergeOut }] };
+      },
+    });
+
     // ── experiments ───────────────────────────────────────────
     api.registerTool({
       name: "experiments",
