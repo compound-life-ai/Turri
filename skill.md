@@ -43,8 +43,8 @@ Install summary:
 
 1. Clone `https://github.com/compound-life-ai/longClaw`.
 2. Change into the repository.
-3. Run `python3 scripts/install_bundle.py`.
-4. Run `python3 scripts/install_bundle.py --verify`.
+3. Run `openclaw plugins install -l .`.
+4. Run `openclaw plugins doctor` and `openclaw plugins inspect compound-clawskill` to verify.
 5. Start a fresh OpenClaw session.
 6. Verify that `/snap`, `/health`, `/news`, `/insights`, and `daily-coach` are available.
 

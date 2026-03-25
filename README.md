@@ -184,58 +184,60 @@ Every morning, the daily coach cron gathers context from all data stores and dis
 ## Install / Uninstall
 
 ### Install
-Tell your OpenClaw agent:
-
-```
-1. Clone `https://github.com/compound-life-ai/longClaw` to a stable local path.
-2. Change into the cloned repository.
-3. Run `python3 scripts/install_bundle.py`.
-4. Run `python3 scripts/install_bundle.py --verify`.
-5. Confirm that `~/.openclaw/openclaw.json` includes the installed bundle `skills/` path inside `skills.load.extraDirs`.
-6. Ensure `~/.openclaw/openclaw.json` has subagent limits for the 10-agent daily coach:
-   agents.defaults.subagents.maxChildrenPerAgent = 10
-   agents.defaults.subagents.maxConcurrent = 10
-7. Tell the user to start a new OpenClaw session.
-8. Tell the user to verify that `/snap`, `/health`, `/news`, and `/insights` are available.
-9. If needed, configure cron templates from `cron/` with their Telegram DM chat id.
-10. Ask if they'd like to seed sample data: `python3 scripts/install_bundle.py --seed-data`.
-```
-
-Start a **fresh OpenClaw session** after install — skills are snapshotted at session start.
-
-<details>
-<summary>Manual install</summary>
 
 ```bash
 git clone https://github.com/compound-life-ai/longClaw
 cd longClaw
+openclaw plugins install -l .
+```
 
-# preview
-python3 scripts/install_bundle.py --dry-run
+Verify the plugin loaded correctly:
 
-# install
-python3 scripts/install_bundle.py
+```bash
+openclaw plugins doctor
+openclaw plugins inspect compound-clawskill
+```
 
-# verify
-python3 scripts/install_bundle.py --verify
+Start a **fresh OpenClaw session** after install — skills are snapshotted at session start.
 
-# optional: seed sample data
+For the 10-subagent daily coach, add to `~/.openclaw/openclaw.json`:
+
+```json5
+{
+  agents: {
+    defaults: {
+      subagents: {
+        maxChildrenPerAgent: 10,
+        maxConcurrent: 10,
+      },
+    },
+  },
+}
+```
+
+<details>
+<summary>Seed sample data (optional)</summary>
+
+```bash
 python3 scripts/install_bundle.py --seed-data
 ```
 </details>
 
-<details>
 ### Uninstall
 
-<summary>Copy-paste uninstall instructions for an OpenClaw agent</summary>
-
-```text
-1. Remove any cron jobs referencing `health-brief`, `news-digest`, or `daily-health-coach`.
-2. Remove the bundle's `skills/` path from `skills.load.extraDirs` in `~/.openclaw/openclaw.json`.
-3. Delete `~/.openclaw/bundles/compound-clawskill`.
-4. Start a new OpenClaw session.
+```bash
+openclaw plugins uninstall compound-clawskill
 ```
-</details>
+
+This removes the plugin registration. The cloned repository and any data in `longevityOS-data/` remain on disk.
+
+To also remove cron jobs:
+
+```bash
+openclaw cron remove health-brief
+openclaw cron remove news-digest
+openclaw cron remove daily-health-coach
+```
 
 ## Cron Setup
 
@@ -258,16 +260,18 @@ Tests use real (sanitized) Whoop API response fixtures from `tests/fixtures/whoo
 ## Repo Layout
 
 ```
-skill.md            Root meta skill index (natural language routing)
-skills/             OpenClaw-facing skill definitions
-agents/             Specialist subagent prompts (10 files)
-scripts/            Deterministic Python helpers
-cron/               Example cron job configs
-seed/               Optional fixture data
-longevityOS-data/   Runtime data (gitignored)
-tests/              Unit and CLI tests
-docs/               Architecture and design notes
-website/            Next.js landing page
+openclaw.plugin.json   Plugin manifest (skills, config schema)
+package.json           Package metadata
+SKILL.md               Root meta skill (natural language routing)
+skills/                OpenClaw-facing skill definitions
+agents/                Specialist subagent prompts (10 files)
+scripts/               Deterministic Python helpers
+cron/                  Example cron job configs
+seed/                  Optional fixture data
+longevityOS-data/      Runtime data (gitignored)
+tests/                 Unit and CLI tests
+docs/                  Architecture and design notes
+website/               Next.js landing page
 ```
 
 ## Docs
