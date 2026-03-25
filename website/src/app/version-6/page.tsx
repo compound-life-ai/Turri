@@ -1095,6 +1095,33 @@ export default function Version6() {
         </div>
       </section>
 
+      {/* ── SUBSCRIBE ── */}
+      <section className="border-t border-claw-border py-16">
+        <div className="max-w-md mx-auto px-5 text-center">
+          <h3 className="text-lg font-semibold tracking-tight mb-2 font-sans">Subscribe to hear more from Compound</h3>
+          <p className="text-sm text-claw-text-muted mb-6 font-sans">Stay updated on LongevityOS, new agents, and longevity research.</p>
+          <form
+            action="https://formspree.io/f/mykbgdeg"
+            method="POST"
+            className="flex gap-2"
+          >
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="you@example.com"
+              className="flex-1 px-4 py-2.5 rounded-full bg-claw-card border border-claw-border text-sm text-claw-text placeholder:text-claw-text-dim focus:outline-none focus:border-claw-text-muted transition font-sans"
+            />
+            <button
+              type="submit"
+              className="px-6 py-2.5 rounded-full bg-claw-red text-white text-sm font-semibold hover:bg-claw-coral transition font-sans shrink-0"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </section>
+
       {/* ── FOOTER ── */}
       <footer className="border-t border-claw-border py-8">
         <div className="max-w-5xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-3">
