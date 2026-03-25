@@ -33,6 +33,15 @@ flowchart TB
         Coach["daily-coach<br/>(cron 7:10am)"]
     end
 
+    subgraph Tools["Tool Layer (index.ts)"]
+        TNutrition["nutrition"]
+        THealth["health_profile"]
+        TWhoop["whoop_import"]
+        TExperiments["experiments"]
+        TNews["news_digest"]
+        TCoach["coaching_context"]
+    end
+
     subgraph Scripts["Script Layer"]
         EL["estimate_and_log.py"]
         LK["lookup.py"]
@@ -58,23 +67,23 @@ flowchart TB
         RSS["RSS Feeds"]
     end
 
-    Photo --> Snap --> EL --> LK --> NCache
+    Photo --> Snap --> TNutrition --> EL --> LK --> NCache
     EL --> Meals
 
     Whoop --> WhoopAPI
-    Health --> IW --> WhoopAPI
+    Health --> TWhoop --> IW --> WhoopAPI
+    Health --> THealth --> PS --> Profile
     IW --> Tokens
-    IW --> PS --> Profile
-    QA --> Health --> PS
+    QA --> Health
 
-    News --> FD --> RSS
+    News --> TNews --> FD --> RSS
     FD --> NewsCache
 
-    CI --> Insights --> EX
+    CI --> Insights --> TExperiments --> EX
     EX --> Experiments
     EX --> Checkins
 
-    Coach --> DHC
+    Coach --> TCoach --> DHC
     DHC --> Meals
     DHC --> Profile
     DHC --> Experiments
@@ -241,10 +250,47 @@ openclaw cron add --from-file cron/news-digest.example.json
 openclaw cron add --from-file cron/daily-health-coach.example.json
 ```
 
+## Plugin & SDK
+
+This is a native [OpenClaw plugin](https://docs.openclaw.ai/plugins/building-plugins) that registers 6 tools via the [Plugin SDK](https://docs.openclaw.ai/plugins/sdk-overview):
+
+| Tool | Description |
+|------|-------------|
+| `nutrition` | Log meals, daily totals, weekly summary vs RDA |
+| `health_profile` | Merge questionnaire/Whoop data, show profile |
+| `whoop_import` | Fetch and normalize Whoop API data |
+| `experiments` | Create, check-in, analyze self-experiments |
+| `news_digest` | Fetch ranked health/longevity news |
+| `coaching_context` | Generate daily coaching context from all data |
+
+Each tool wraps the corresponding Python script in `scripts/` — the SDK entry point (`index.ts`) shells out to them via `execFile`.
+
+Skills in `skills/` provide agent-facing guidance (when to use each tool, how to present results). The tools provide the typed, inspectable interface that OpenClaw registers.
+
+**Relevant OpenClaw docs:**
+
+- [Plugin SDK Overview](https://docs.openclaw.ai/plugins/sdk-overview)
+- [Plugin Entry Points](https://docs.openclaw.ai/plugins/sdk-entrypoints)
+- [Plugin Manifest](https://docs.openclaw.ai/plugins/manifest)
+- [Plugin Architecture](https://docs.openclaw.ai/plugins/architecture)
+- [Plugin Setup & Config](https://docs.openclaw.ai/plugins/sdk-setup)
+- [Plugin Testing](https://docs.openclaw.ai/plugins/sdk-testing)
+
 ## Development
 
 ```bash
+# Run Python tests
 python3 -m unittest discover -s tests -v
+
+# Link plugin for local development
+openclaw plugins install -l .
+openclaw gateway restart
+
+# Inspect registered tools
+openclaw plugins inspect compound-clawskill
+
+# Diagnostics
+openclaw plugins doctor
 ```
 
 Tests use real (sanitized) Whoop API response fixtures from `tests/fixtures/whoop/`.
@@ -252,12 +298,13 @@ Tests use real (sanitized) Whoop API response fixtures from `tests/fixtures/whoo
 ## Repo Layout
 
 ```
+index.ts               SDK entry point — registers 6 tools
 openclaw.plugin.json   Plugin manifest (skills, config schema)
-package.json           Package metadata
+package.json           Package metadata + openclaw extensions
 SKILL.md               Root meta skill (natural language routing)
 skills/                OpenClaw-facing skill definitions
 agents/                Specialist subagent prompts (10 files)
-scripts/               Deterministic Python helpers
+scripts/               Deterministic Python helpers (called by tools)
 cron/                  Example cron job configs
 seed/                  Optional fixture data
 longevityOS-data/      Runtime data (gitignored)
