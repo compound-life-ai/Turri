@@ -1,6 +1,6 @@
 ---
 name: daily-coach
-description: Generate a personalized daily health coaching message by dispatching 10 specialist subagents that each review the user's data from their domain expertise.
+description: Generate a personalized daily health coaching message by dispatching 10 specialist subagents that each review the user's data from their domain expertise. Each subagent delivers its own message as a separate Telegram bubble.
 user-invocable: false
 ---
 
@@ -13,14 +13,12 @@ Use this skill when:
 
 ## Step 1: Gather context
 
-Run:
+Run both scripts to build the shared context payload:
 
 ```bash
 python3 "{baseDir}/../../scripts/coach/daily_health_coach.py" \
   --data-root "{baseDir}/../../longevityOS-data"
 ```
-
-For richer nutrition context, also run:
 
 ```bash
 python3 "{baseDir}/../../scripts/nutrition/weekly_summary.py" \
@@ -28,65 +26,77 @@ python3 "{baseDir}/../../scripts/nutrition/weekly_summary.py" \
   --end-date "YYYY-MM-DD"
 ```
 
-Collect the JSON outputs. These form the **shared context payload** for all subagents below.
+If `insufficient_data` is true: skip subagent dispatch. Instead say what is missing and what to log next.
 
-## Step 2: Spawn 10 specialist subagents
+## Step 2: Dispatch 10 specialist subagents
 
-Use `sessions_spawn` to spawn each of the following subagents **in parallel**. Pass each one the full context payload from Step 1, and instruct each to produce a **2-3 sentence** recommendation from their specialty.
+Read each agent prompt file from `{baseDir}/../../agents/` and spawn all 10 in parallel using `sessions_spawn`.
 
-Each subagent must format its response starting with its role header:
+### Agent Registry
 
-```
-[Role Emoji]
+| # | File | Role | Emoji |
+|---|------|------|-------|
+| 1 | `imperial-physician.md` | Orchestrator — #1 priority for today | 🏥 |
+| 2 | `diet-physician.md` | Nutrition — meals, macros, micros | 🍚 |
+| 3 | `movement-master.md` | Exercise — strain, training load | 🏃 |
+| 4 | `pulse-reader.md` | Body metrics — RHR, HRV, SpO2 | 💓 |
+| 5 | `formula-tester.md` | Cross-domain pattern detection | 🧪 |
+| 6 | `herbalist.md` | Supplement considerations | 🌿 |
+| 7 | `trial-monitor.md` | Experiment status + compliance | 📋 |
+| 8 | `court-magistrate.md` | Trial design candidates | ⚖️ |
+| 9 | `medical-censor.md` | Safety flags + warnings | 🛡️ |
+| 10 | `court-scribe.md` | Relevant news + literature | 📜 |
 
-suggestion
-```
+### Dispatch protocol
 
-### The 10 Specialists
+For each agent in the registry:
 
-| # | Role | Emoji | Focus | What to review |
-|---|------|-------|-------|----------------|
-| 1 | **Imperial Physician** | 🏥 | Orchestrator / overall | Synthesize the big picture: what is the single most important thing to focus on today based on all data |
-| 2 | **Diet Physician** | 🍚 | Nutrition | Yesterday's calorie/protein/fiber totals, micronutrient gaps, specific food suggestions |
-| 3 | **Movement Master** | 🏃 | Exercise | Whoop strain data, workout frequency, recovery-adjusted training suggestion |
-| 4 | **Pulse Reader** | 💓 | Body metrics | Resting HR trend, HRV (RMSSD) trend, SpO2, skin temp — flag anything off-baseline |
-| 5 | **Formula Tester** | 🧪 | Biomarkers | Any lab data in profile, cross-reference with diet/exercise patterns |
-| 6 | **Herbalist** | 🌿 | Supplements | Micronutrient gaps that food alone won't close, supplement timing considerations |
-| 7 | **Trial Monitor** | 📋 | Experiments | Active experiment status, compliance, whether a check-in is needed today |
-| 8 | **Court Magistrate** | ⚖️ | Trial design | If patterns are emerging, suggest whether a new N-of-1 trial is warranted |
-| 9 | **Medical Censor** | 🛡️ | Safety review | Flag any concerning trends (sleep decline, recovery dropping, overtraining signs) |
-| 10 | **Court Scribe** | 📜 | Reports & literature | Pick the single most relevant news item and explain why it matters for this user today |
-
-### Subagent task template
-
-For each subagent, use a task like:
+1. Read the agent prompt: `read("{baseDir}/../../agents/{file}")`
+2. Construct the task:
 
 ```
-You are the {Role} ({Emoji}), a specialist in {Focus}.
+{contents of the agent .md file}
 
-Review the following health context for today and provide your recommendation.
-Keep it to 2-3 sentences. Be specific, actionable, and grounded in the data provided.
-Do not overclaim from sparse data. If data for your domain is missing, say so briefly.
+---
 
-Start your response with:
-[{Role} {Emoji}]
+TODAY'S CONTEXT:
+{paste the full JSON context payload from Step 1}
 
-CONTEXT:
-{paste the JSON context payload here}
+WEEKLY NUTRITION:
+{paste the weekly summary JSON from Step 1}
 ```
 
-## Step 3: Assemble the daily message
+3. Spawn: `sessions_spawn(task=<constructed task>, label=<role name>)`
 
-Once all 10 subagents announce back, assemble the final daily coaching message:
+Spawn ALL 10 in parallel. Each subagent runs independently and announces its result back as a separate message.
 
-1. Start with today's date and a one-line status summary (e.g. "Recovery 60% · Sleep 7.2h · Strain 10.2")
-2. Include each specialist's response in order (Imperial Physician first, Court Scribe last)
-3. If `checkin_needed` is true, add an experiment check-in prompt at the end
-4. Keep the assembled message clean — do not add extra commentary between specialist responses
+## Step 3: No assembly needed
 
-Rules:
+Each subagent announces directly to the chat channel as a separate Telegram bubble. They arrive as each finishes. The main agent does NOT need to collect or reformat the results.
 
-- Reply in the user's language if it is obvious from stored profile context. Otherwise reply in English.
-- Keep recommendations conservative, lifestyle-only, and specific to the user's own data.
-- Do not overclaim from sparse data. If a subagent says "insufficient data," keep that response as-is.
-- If `insufficient_data` is true from Step 1, skip the subagent dispatch and instead say what is missing and what to log next.
+After all 10 have announced, if `checkin_needed` is true, send one final message prompting the user to log their experiment check-in.
+
+## Rules
+
+- Reply in the user's language if obvious from profile context. Otherwise English.
+- Each subagent produces 2-3 sentences starting with `[Role Emoji]`.
+- Recommendations must be conservative, lifestyle-only, grounded in the user's own data.
+- Do not overclaim from sparse data. Agents should say "insufficient data" when appropriate.
+- Subagents should NOT repeat each other's recommendations — each owns their domain.
+
+## OpenClaw config requirements
+
+For 10 parallel subagents, ensure:
+
+```json5
+{
+  agents: {
+    defaults: {
+      subagents: {
+        maxChildrenPerAgent: 10,  // default is 5, need 10
+        maxConcurrent: 10,        // default is 8, bump to 10
+      },
+    },
+  },
+}
+```
