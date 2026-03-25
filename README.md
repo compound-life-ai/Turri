@@ -202,13 +202,11 @@ git clone https://github.com/compound-life-ai/longClaw
 cd longClaw
 openclaw plugins install -l .
 
-# **Setup the daily cron jobs:**
+# **Setup the daily cron jobs (replace <CHAT_ID> with your Telegram DM chat ID):**
 
-# Replace `__TELEGRAM_DM_CHAT_ID__` in the templates, then:
-
-openclaw cron add --from-file cron/health-brief.example.json
-openclaw cron add --from-file cron/news-digest.example.json
-openclaw cron add --from-file cron/daily-health-coach.example.json
+openclaw cron add --name "Health Morning Brief" --cron "0 7 * * *" --tz "America/Los_Angeles" --session isolated --light-context --announce --best-effort-deliver --channel telegram --to "<CHAT_ID>" --message "Use the health and insights skills to create today's morning brief. Summarize yesterday's nutrition totals, the latest Apple Health sleep/activity context, 1-2 lifestyle recommendations, and include the active experiment check-in if relevant. Reply in the user's language and keep it compact."
+openclaw cron add --name "Health News Digest" --cron "5 7 * * *" --tz "America/Los_Angeles" --session isolated --light-context --announce --best-effort-deliver --channel telegram --to "<CHAT_ID>" --message "Use the news skill to fetch today's curated digest. Summarize only the highest-signal items for nutrition, sleep, exercise, aging, and self-experimentation. Keep the message concise and mention the source for each item."
+openclaw cron add --name "Daily Health Coach" --cron "10 7 * * *" --tz "America/Los_Angeles" --session isolated --light-context --announce --best-effort-deliver --channel telegram --to "<CHAT_ID>" --message "Use the daily-coach skill to generate today's personalized health coaching message. Keep it compact, conservative, and grounded in local health, nutrition, experiment, and cached-news context."
 
 # Verify the plugin loaded correctly:
 
@@ -238,12 +236,10 @@ openclaw plugins uninstall compound-clawskill
 
 This removes the plugin registration. The cloned repository and any data in `longevityOS-data/` remain on disk.
 
-To also remove cron jobs:
+To also remove cron jobs, find their IDs with `openclaw cron list`, then:
 
 ```bash
-openclaw cron remove health-brief
-openclaw cron remove news-digest
-openclaw cron remove daily-health-coach
+openclaw cron remove <job-id>
 ```
 
 ## Plugin & SDK
