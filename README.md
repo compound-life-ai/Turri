@@ -142,22 +142,29 @@ Every morning, the daily coach cron gathers context from all data stores and dis
 
 ### Dispatch Flow
 
-<p align="center">
-  <img src="docs/images/dispatch-flow-diagram.png" alt="Daily Coach Subagent Dispatch Flow" width="100%" />
-</p>
+![Daily Coach Subagent Dispatch Flow](docs/images/dispatch-flow-diagram.png)
 
-### Example Output
+### Example Usecase
 
 <p align="center">
   <img src="docs/images/telegram-mockup.png" alt="Daily Coach Telegram Output" width="390" />
 </p>
 
-## Install
+## Install / Uninstall
 
+### Install
 Tell your OpenClaw agent:
 
 ```
-Install the compound-clawskill bundle from https://github.com/compound-life-ai/longClaw
+1. Clone `https://github.com/compound-life-ai/longClaw` to a stable local path.
+2. Change into the cloned repository.
+3. Run `python3 scripts/install_bundle.py`.
+4. Run `python3 scripts/install_bundle.py --verify`.
+5. Confirm that `~/.openclaw/openclaw.json` includes the installed bundle `skills/` path inside `skills.load.extraDirs`.
+6. Tell the user to start a new OpenClaw session.
+7. Tell the user to verify that `/snap`, `/health`, `/news`, and `/insights` are available.
+8. If needed, configure cron templates from `cron/` with their Telegram DM chat id.
+9. Ask if they'd like to seed sample data: `python3 scripts/install_bundle.py --seed-data`.
 ```
 
 Start a **fresh OpenClaw session** after install — skills are snapshotted at session start.
@@ -184,22 +191,8 @@ python3 scripts/install_bundle.py --seed-data
 </details>
 
 <details>
-<summary>Full install instructions for an OpenClaw agent</summary>
+### Uninstall
 
-```text
-1. Clone `https://github.com/compound-life-ai/longClaw` to a stable local path.
-2. Change into the cloned repository.
-3. Run `python3 scripts/install_bundle.py`.
-4. Run `python3 scripts/install_bundle.py --verify`.
-5. Confirm that `~/.openclaw/openclaw.json` includes the installed bundle `skills/` path inside `skills.load.extraDirs`.
-6. Tell the user to start a new OpenClaw session.
-7. Tell the user to verify that `/snap`, `/health`, `/news`, and `/insights` are available.
-8. If needed, configure cron templates from `cron/` with their Telegram DM chat id.
-9. Ask if they'd like to seed sample data: `python3 scripts/install_bundle.py --seed-data`.
-```
-</details>
-
-<details>
 <summary>Copy-paste uninstall instructions for an OpenClaw agent</summary>
 
 ```text
