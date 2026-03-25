@@ -8,98 +8,180 @@ OpenClaw skill bundle for a personal health companion.
 - `/health` — Whoop data import + structured health profile
 - `/news` — curated health/longevity digest
 - `/insights` — structured self-experiments with gap-aware recommendations
-- `daily-coach` — cron-driven personalized daily coaching
+- `daily-coach` — cron-driven personalized daily coaching via 10 specialist subagents
 
 All skills respond to natural language. Say "had salmon with rice for lunch" instead of `/snap`, or "how did I sleep?" instead of `/health`.
 
 ## Architecture
 
-```
- User (in OpenClaw)
-  │
-  ├─ "/snap" or meal photo ──────> estimate_and_log.py ──> meals.csv
-  │                                  └─ lookup.py ──> nutrition_cache.json
-  │
-  ├─ "/health" ──────────────────> import_whoop.py ───┐
-  │   (Whoop connect or sync)        (token refresh)  │
-  │                                                    │
-  │   Whoop API v2 endpoints:                          │
-  │   ├─ /v2/recovery ─── recovery score, resting HR,  │
-  │   │                    HRV (RMSSD), SpO2, skin temp│
-  │   ├─ /v2/activity/sleep ── stage breakdown (light, │
-  │   │                    deep/SWS, REM, awake),      │
-  │   │                    efficiency, performance,    │
-  │   │                    consistency, respiratory    │
-  │   │                    rate, disturbances          │
-  │   ├─ /v2/cycle ─────── day strain (0-21), kJ,     │
-  │   │                    avg/max heart rate          │
-  │   ├─ /v2/activity/workout ── sport type, strain,   │
-  │   │                    HR zones, distance, duration│
-  │   └─ /v2/user/measurement/body ── height, weight,  │
-  │                        max heart rate              │
-  │                                                    ▼
-  ├─ questionnaire answers ──────> profile_store.py ──> profile.json
-  │
-  ├─ "/news" ────────────────────> fetch_digest.py ──> cache.json
-  │                                  └─ RSS feeds
-  │
-  ├─ "/insights" ────────────────> experiments.py ───> experiments.json
-  │   (check-ins, analysis)                            checkins.json
-  │
-  └─ daily-coach (cron) ────────> daily_health_coach.py
-                                    │  reads all stores:
-                                    ├─ profile.json (whoop data)
-                                    ├─ meals.csv
-                                    ├─ experiments.json
-                                    └─ cache.json
-                                    │
-                                    ▼
-                              focus areas + actions
-                              → Telegram / CLI
+```mermaid
+flowchart TB
+    subgraph User["👤 User Input"]
+        Photo["📸 Food Photo / Text"]
+        Whoop["⌚ Whoop Strap"]
+        QA["📝 Questionnaire"]
+        CI["✅ Check-in Data"]
+    end
+
+    subgraph Skills["Skill Layer"]
+        Snap["/snap"]
+        Health["/health"]
+        News["/news"]
+        Insights["/insights"]
+        Coach["daily-coach<br/>(cron 7:10am)"]
+    end
+
+    subgraph Scripts["Script Layer"]
+        EL["estimate_and_log.py"]
+        LK["lookup.py"]
+        IW["import_whoop.py"]
+        PS["profile_store.py"]
+        FD["fetch_digest.py"]
+        EX["experiments.py"]
+        DHC["daily_health_coach.py"]
+    end
+
+    subgraph Data["longevityOS-data/"]
+        Meals["nutrition/meals.csv"]
+        NCache["nutrition/nutrition_cache.json"]
+        Profile["health/profile.json"]
+        Tokens["health/whoop_tokens.json"]
+        Experiments["insights/experiments.json"]
+        Checkins["insights/checkins.json"]
+        NewsCache["news/cache.json"]
+    end
+
+    subgraph External["External APIs"]
+        WhoopAPI["Whoop API v2"]
+        RSS["RSS Feeds"]
+    end
+
+    Photo --> Snap --> EL --> LK --> NCache
+    EL --> Meals
+
+    Whoop --> WhoopAPI
+    Health --> IW --> WhoopAPI
+    IW --> Tokens
+    IW --> PS --> Profile
+    QA --> Health --> PS
+
+    News --> FD --> RSS
+    FD --> NewsCache
+
+    CI --> Insights --> EX
+    EX --> Experiments
+    EX --> Checkins
+
+    Coach --> DHC
+    DHC --> Meals
+    DHC --> Profile
+    DHC --> Experiments
+    DHC --> Checkins
+    DHC --> NewsCache
 ```
 
 ## Whoop Integration
 
-```
- One-time auth                              Each /health sync
- ──────────────                              ───────────────
+```mermaid
+sequenceDiagram
+    participant U as User (Browser)
+    participant O as OAuth Server
+    participant W as Whoop API
+    participant S as import_whoop.py
+    participant P as profile.json
 
- Browser                                     import_whoop.py
-   │                                           │
-   │  whoop-oauth-five.vercel.app              │ read whoop_tokens.json
-   │  /api/whoop/authorize                     │ refresh if expired
-   │         │                                 │
-   │         ▼                                 ├─ GET /v2/recovery
-   │  Whoop login → callback → tokens         ├─ GET /v2/activity/sleep
-   │         │                                 ├─ GET /v2/cycle
-   │  "Copy Tokens for CLI"                    ├─ GET /v2/activity/workout
-   │         │                                 └─ GET /v2/user/measurement/body
-   │         ▼                                     │
-   │  paste into OpenClaw                          ▼
-   │         │                                 normalize + aggregate
-   │         ▼                                     │
-   │  whoop_tokens.json                            ▼
-   │  (longevityOS-data/health/)               profile.json (under "whoop" key)
+    Note over U,W: One-time OAuth flow
+    U->>O: Visit /api/whoop/authorize
+    O->>W: Redirect to Whoop login
+    W-->>O: Callback with auth code
+    O->>W: Exchange code for tokens
+    W-->>O: access_token + refresh_token
+    O-->>U: "Copy Tokens for CLI"
+    U->>S: Paste tokens → whoop_tokens.json
+
+    Note over S,W: Each /health sync
+    S->>S: Read whoop_tokens.json
+    S->>W: GET /v2/recovery
+    W-->>S: score, RHR, HRV, SpO2, skin temp
+    S->>W: GET /v2/activity/sleep
+    W-->>S: stages, efficiency, respiratory rate
+    S->>W: GET /v2/cycle
+    W-->>S: strain (0-21), kJ, avg/max HR
+    S->>W: GET /v2/activity/workout
+    W-->>S: sport, HR zones, distance
+    S->>W: GET /v2/user/measurement/body
+    W-->>S: height, weight, max HR
+    S->>S: Normalize + aggregate
+    S->>P: Merge under "whoop" key
 ```
 
-The Whoop profile feeds into the daily coach:
+## Daily Coach — 10 Specialist Subagents
+
+Every morning, the daily coach cron gathers context from all data stores and dispatches 10 specialist subagents in parallel. Each delivers its own Telegram bubble as it completes.
+
+```mermaid
+flowchart TB
+    Cron["⏰ Cron (7:10am)"] --> Gather["Gather Context<br/>daily_health_coach.py<br/>weekly_summary.py"]
+
+    Gather --> Dispatch["Read agents/*.md<br/>+ spawn 10 subagents"]
+
+    Dispatch --> IP["🏥 Imperial Physician<br/><i>Overall #1 priority</i>"]
+    Dispatch --> DP["🍚 Diet Physician<br/><i>Macros, micros, food suggestions</i>"]
+    Dispatch --> MM["🏃 Movement Master<br/><i>Strain-adjusted training</i>"]
+    Dispatch --> PR["💓 Pulse Reader<br/><i>RHR, HRV, SpO2 trends</i>"]
+    Dispatch --> FT["🧪 Formula Tester<br/><i>Cross-domain patterns</i>"]
+    Dispatch --> HB["🌿 Herbalist<br/><i>Supplement considerations</i>"]
+    Dispatch --> TM["📋 Trial Monitor<br/><i>Experiment compliance</i>"]
+    Dispatch --> CM["⚖️ Court Magistrate<br/><i>New trial candidates</i>"]
+    Dispatch --> MC["🛡️ Medical Censor<br/><i>Safety flags</i>"]
+    Dispatch --> CS["📜 Court Scribe<br/><i>Relevant research</i>"]
+
+    IP --> TG["📱 Telegram<br/>(10 separate bubbles)"]
+    DP --> TG
+    MM --> TG
+    PR --> TG
+    FT --> TG
+    HB --> TG
+    TM --> TG
+    CM --> TG
+    MC --> TG
+    CS --> TG
+```
+
+<details>
+<summary>Example Telegram output</summary>
 
 ```
- profile.json                 daily-coach reads
- ┌──────────────────────┐     ┌────────────────────────────────────┐
- │ whoop:               │     │ whoop.recovery.recovery_score_avg  │
- │   recovery:          │────>│ whoop.sleep.daily_sleep_hours_avg  │
- │     score, HRV, RHR  │     │ whoop.strain.day_strain_avg        │
- │   sleep:             │     │                                    │
- │     hours, stages    │     │ → focus areas:                     │
- │   strain:            │     │   "sleep consistency"              │
- │     day strain, kJ   │     │   "recovery attention"             │
- │   workouts:          │     │   "experiment checkin"             │
- │     by sport         │     │                                    │
- │   body:              │     │ → suggested actions:               │
- │     height, weight   │     │   "Protect sleep timing tonight…"  │
- └──────────────────────┘     └────────────────────────────────────┘
+┌─────────────────────────────────────────────┐
+│ [Imperial Physician 🏥]                      │
+│ Recovery dropped 3 days straight (60% → 36%).│
+│ Today's priority is active recovery — skip   │
+│ strength, walk instead. Early bedtime.       │
+└─────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────┐
+│ [Diet Physician 🍚]                          │
+│ Protein averaged 95g/day (target 140g). Add  │
+│ 150g chicken breast at lunch for +47g.       │
+└─────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────┐
+│ [Pulse Reader 💓]                            │
+│ RHR 64 bpm (baseline 56), HRV 35ms (down    │
+│ 19%). Both trending worse — fatigue signal.  │
+└─────────────────────────────────────────────┘
+
+          ... 7 more specialist bubbles ...
+
+┌─────────────────────────────────────────────┐
+│ [Court Scribe 📜]                            │
+│ Study: dinner protein dose-dependently       │
+│ increases melatonin (Sutanto 2022). Relevant │
+│ to your low dinner protein pattern.          │
+└─────────────────────────────────────────────┘
 ```
+
+</details>
 
 ## Install
 
@@ -156,6 +238,21 @@ openclaw cron add --from-file cron/news-digest.example.json
 openclaw cron add --from-file cron/daily-health-coach.example.json
 ```
 
+For the 10-subagent daily coach, add to `~/.openclaw/openclaw.json`:
+
+```json5
+{
+  agents: {
+    defaults: {
+      subagents: {
+        maxChildrenPerAgent: 10,
+        maxConcurrent: 10,
+      },
+    },
+  },
+}
+```
+
 ## Development
 
 ```bash
@@ -169,6 +266,7 @@ Tests use real (sanitized) Whoop API response fixtures from `tests/fixtures/whoo
 ```
 skill.md            Root meta skill index (natural language routing)
 skills/             OpenClaw-facing skill definitions
+agents/             Specialist subagent prompts (10 files)
 scripts/            Deterministic Python helpers
 cron/               Example cron job configs
 seed/               Optional fixture data
