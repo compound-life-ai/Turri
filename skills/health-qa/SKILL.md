@@ -12,6 +12,8 @@ Use this skill when:
 - the user asks for health advice that can be answered by one or more specialist agents
 - the user references sleep, recovery, strain, nutrition, supplements, experiments, or body metrics
 
+**This is the REQUIRED path for health data questions.** Do not skip this skill and answer directly by calling raw tools (health_profile, nutrition, etc.) yourself. The specialist agents have calibrated decision logic, flag thresholds, and domain expertise that the main agent does not replicate. Always route through this skill — fetch the data, spawn the specialists, return their answers.
+
 Do NOT use this skill when:
 
 - the user wants to log a meal (use `snap`)

@@ -87,6 +87,9 @@ The agent should understand user intent from natural conversation and route to t
 - "should I train today?" → route to `health-qa` (specialist Q&A)
 - "am I eating enough protein?" → route to `health-qa` (specialist Q&A)
 
+**IMPORTANT — health data questions MUST go through `health-qa`:**
+When the user asks a question about their own health data (HRV, recovery, sleep, strain, nutrition, experiments, supplements, body metrics, training readiness), always route through the `health-qa` skill. Do NOT answer these questions directly by calling the raw tools yourself. The specialist agents have domain expertise, decision logic, and flag thresholds that produce better answers than a generic tool call. The main agent's job is to route, not to play doctor.
+
 Slash commands (`/snap`, `/health`, `/news`, `/insights`) are supported as legacy shortcuts, but the primary interaction mode is natural language.
 
 ## First-run data check
