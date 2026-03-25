@@ -69,6 +69,11 @@ For each selected agent:
 
 ---
 
+IMPORTANT: You are answering a specific user question, not giving a daily briefing.
+- Answer the user's question directly using your domain expertise and the data below.
+- Your response MUST start with your role tag (e.g. [Pulse Reader 💓]) on its own line.
+- Keep it to 2-3 sentences, grounded in the data.
+
 USER'S QUESTION:
 {the user's original question}
 
