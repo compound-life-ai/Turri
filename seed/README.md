@@ -14,13 +14,9 @@ Fixture files that mirror `longevityOS-data/` for development and testing.
 
 ## Usage
 
-For an installed OpenClaw bundle, use the installer so the data lands in the managed bundle path:
+On first use, the agent will detect empty data directories and offer to load seed data automatically.
 
-```bash
-python3 scripts/install_bundle.py --seed-data
-```
-
-For repo-local development, copy the seed files into the repo data directory:
+For manual seeding:
 
 ```bash
 cp -r seed/* longevityOS-data/

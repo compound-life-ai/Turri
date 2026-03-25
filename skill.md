@@ -48,6 +48,30 @@ Install summary:
 5. Start a fresh OpenClaw session.
 6. Verify that `/snap`, `/health`, `/news`, `/insights`, and `daily-coach` are available.
 
+First-run data check:
+
+Before routing to any sub-skill, check whether the data directory has content:
+
+```bash
+ls "{baseDir}/longevityOS-data/nutrition/" "{baseDir}/longevityOS-data/health/" "{baseDir}/longevityOS-data/insights/" 2>/dev/null | head -5
+```
+
+If all directories are empty or missing, ask the user:
+"It looks like you have no data yet. Would you like to load sample data so you can try the skills right away?"
+
+If the user agrees, copy the seed fixtures:
+
+```bash
+mkdir -p "{baseDir}/longevityOS-data/nutrition" "{baseDir}/longevityOS-data/health" "{baseDir}/longevityOS-data/insights" "{baseDir}/longevityOS-data/news"
+cp "{baseDir}/seed/nutrition/meals.csv" "{baseDir}/longevityOS-data/nutrition/"
+cp "{baseDir}/seed/health/profile.json" "{baseDir}/longevityOS-data/health/"
+cp "{baseDir}/seed/insights/experiments.json" "{baseDir}/longevityOS-data/insights/"
+cp "{baseDir}/seed/insights/checkins.json" "{baseDir}/longevityOS-data/insights/"
+cp "{baseDir}/seed/news/cache.json" "{baseDir}/longevityOS-data/news/"
+```
+
+If the user declines, proceed normally — the skills will start with an empty dataset.
+
 Bundle map:
 
 - `snap`: meal logging from food photos or meal text, with ingredient-level decomposition and deterministic nutrition enrichment

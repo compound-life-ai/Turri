@@ -1,83 +1,21 @@
 # Installation
 
-This bundle is intended to be installed as a managed OpenClaw bundle under:
-
-- `~/.openclaw/bundles/compound-clawskill`
-
-The installer also registers:
-
-- `~/.openclaw/bundles/compound-clawskill/skills`
-
-inside `skills.load.extraDirs` in:
-
-- `~/.openclaw/openclaw.json`
-
-## Dry Run
-
-Preview what the installer will do:
+This bundle is an OpenClaw native plugin. Install it by linking the cloned repository:
 
 ```bash
-python3 scripts/install_bundle.py --dry-run
+git clone https://github.com/compound-life-ai/longClaw
+cd longClaw
+openclaw plugins install -l .
 ```
 
-## Install
-
-Install into the default OpenClaw home:
+## Verify
 
 ```bash
-python3 scripts/install_bundle.py
+openclaw plugins doctor
+openclaw plugins inspect compound-clawskill
 ```
 
-Install into a custom OpenClaw home:
-
-```bash
-python3 scripts/install_bundle.py --openclaw-home /path/to/.openclaw
-```
-
-Verify the installed bundle:
-
-```bash
-python3 scripts/install_bundle.py --verify
-```
-
-Optionally seed sample data into the installed bundle:
-
-```bash
-python3 scripts/install_bundle.py --seed-data
-```
-
-## What Gets Installed
-
-The installer copies these directories into the managed bundle:
-
-- `skills/`
-- `scripts/`
-- `cron/`
-- `docs/`
-
-It also initializes these runtime directories:
-
-- `longevityOS-data/nutrition/`
-- `longevityOS-data/health/`
-- `longevityOS-data/insights/`
-- `longevityOS-data/news/`
-
-## After Install
-
-Checking `~/.openclaw/openclaw.json` is necessary, but not sufficient.
-
-Verify config:
-
-```bash
-python3 - <<'PY'
-import json, pathlib
-p = pathlib.Path.home()/'.openclaw'/'openclaw.json'
-obj = json.loads(p.read_text())
-print(obj.get('skills', {}).get('load', {}).get('extraDirs', []))
-PY
-```
-
-Verify OpenClaw sees the skills as real ready skills:
+Verify OpenClaw sees the skills:
 
 ```bash
 openclaw skills info snap
@@ -91,13 +29,13 @@ Expected result:
 
 - each skill shows `Ready`
 
-Then:
+## After Install
 
 1. Start a new OpenClaw session.
 2. Verify `/snap`, `/health`, `/news`, and `/insights` are available and usable.
 3. If a Telegram command does not appear in the slash picker, try typing it manually first.
-4. If you want fixture data for exploration, run `python3 scripts/install_bundle.py --seed-data` before using the skills.
-5. Configure the cron templates from the installed `cron/` directory with your Telegram DM chat id and local timezone.
+4. On first use, the agent will offer to load sample data if the data directories are empty.
+5. Configure the cron templates from `cron/` with your Telegram DM chat id and local timezone.
 
 ## Fresh Session Required
 
@@ -149,3 +87,11 @@ If you prefer manual extraction, extract `apple_health_export/export.xml` from t
 4. Run `/health`.
 5. Run `/insights`.
 6. Enable `cron/daily-health-coach.example.json` if you want the personalized daily coaching message.
+
+## Uninstall
+
+```bash
+openclaw plugins uninstall compound-clawskill
+```
+
+This removes the plugin registration. The cloned repository and data remain on disk.

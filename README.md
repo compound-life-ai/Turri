@@ -215,14 +215,6 @@ For the 10-subagent daily coach, add to `~/.openclaw/openclaw.json`:
 }
 ```
 
-<details>
-<summary>Seed sample data (optional)</summary>
-
-```bash
-python3 scripts/install_bundle.py --seed-data
-```
-</details>
-
 ### Uninstall
 
 ```bash
