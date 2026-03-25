@@ -15,6 +15,11 @@
   50% { opacity: 0.8; }
 }
 
+@keyframes agentFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
 @utility animate-blink {
   animation: blink 1s step-end infinite;
 }

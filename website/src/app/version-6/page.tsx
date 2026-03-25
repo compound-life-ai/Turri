@@ -373,6 +373,116 @@ function BiomarkerRow({ name, oct, dec, unit, trend, status }: { name: string; o
 }
 
 /* Glow divider — adapted from V1's "blue glow strip" with V6 palette */
+/* ─────────────────────────────────────────────
+   MOCKUP CAROUSEL (Proposal A)
+   ───────────────────────────────────────────── */
+
+const mockups = [
+  { id: "daily-coach", label: "Daily Coaching", desc: "10 specialists review your data every morning", src: "/mockups/daily-coach.png" },
+  { id: "nutrition", label: "Nutrition Review", desc: "Macros, micros, and personalized food suggestions", src: "/mockups/nutrition.png" },
+  { id: "patterns", label: "Pattern Detection", desc: "Caffeine, sleep, and travel correlations", src: "/mockups/patterns.png" },
+  { id: "bloodwork", label: "Blood Work", desc: "Biomarker trends and optimization advice", src: "/mockups/bloodwork.png" },
+  { id: "sleep", label: "Always On", desc: "Late night chat — empathetic and human", src: "/mockups/sleep.png" },
+];
+
+function MockupCarousel() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => setActive((p) => (p + 1) % mockups.length), 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center">
+      {/* Phone frame */}
+      <div className="relative w-[280px] sm:w-[320px] mx-auto">
+        {/* Glow behind phone */}
+        <div className="absolute -inset-8 bg-claw-red/[0.04] rounded-full blur-3xl" />
+        <div className="relative rounded-[2rem] border-2 border-claw-border bg-claw-bg-card overflow-hidden shadow-2xl shadow-black/30">
+          {/* Notch */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-black rounded-b-2xl z-10" />
+          {/* Screen */}
+          <div className="relative aspect-[9/19.5] overflow-hidden">
+            {mockups.map((m, i) => (
+              <img
+                key={m.id}
+                src={m.src}
+                alt={m.label}
+                className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ${
+                  i === active ? "opacity-100 scale-100" : "opacity-0 scale-105"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Tab pills */}
+      <div className="flex flex-wrap justify-center gap-2 mt-8">
+        {mockups.map((m, i) => (
+          <button
+            key={m.id}
+            onClick={() => setActive(i)}
+            className={`px-3 py-1.5 rounded-full text-[11px] font-sans transition-all duration-300 ${
+              i === active
+                ? "bg-claw-red/15 text-claw-coral border border-claw-red/30"
+                : "text-claw-text-dim hover:text-claw-text border border-claw-border hover:border-claw-text-muted"
+            }`}
+          >
+            {m.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Description */}
+      <p className="text-sm text-claw-text-muted font-sans mt-4 text-center h-5 transition-all duration-300">
+        {mockups[active].desc}
+      </p>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   AGENT TEAM STRIP (Proposal B)
+   ───────────────────────────────────────────── */
+
+const specialists = [
+  { id: "yuyi", name: "Imperial Physician", role: "Orchestrator", src: "/characters/yuyi.svg" },
+  { id: "shiyi", name: "Diet Physician", role: "Nutrition", src: "/characters/shiyi.svg" },
+  { id: "daoyin", name: "Movement Master", role: "Exercise", src: "/characters/daoyin.svg" },
+  { id: "zhenmai", name: "Pulse Reader", role: "Body Metrics", src: "/characters/zhenmai.svg" },
+  { id: "yanfang", name: "Formula Tester", role: "Biomarkers", src: "/characters/yanfang.svg" },
+  { id: "bencao", name: "Herbalist", role: "Supplements", src: "/characters/bencao.svg" },
+  { id: "shixiao", name: "Trial Monitor", role: "Experiments", src: "/characters/shixiao.svg" },
+  { id: "yuanpan", name: "Court Magistrate", role: "Trial Design", src: "/characters/yuanpan.svg" },
+  { id: "yizheng", name: "Medical Censor", role: "Safety", src: "/characters/yizheng.svg" },
+  { id: "baogao", name: "Court Scribe", role: "Research", src: "/characters/baogao.svg" },
+];
+
+function AgentTeamStrip() {
+  return (
+    <div className="flex flex-wrap justify-center gap-5 sm:gap-6">
+      {specialists.map((agent, i) => (
+        <div key={agent.id} className="group flex flex-col items-center gap-2 w-[72px] sm:w-[80px]">
+          <div
+            className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-claw-bg-card border border-claw-border p-1.5 group-hover:border-claw-red/30 transition-all duration-300 group-hover:-translate-y-1"
+            style={{ animation: `agentFloat 3s ease-in-out ${i * 0.3}s infinite` }}
+          >
+            <img src={agent.src} alt={agent.name} className="w-full h-full" />
+            {/* Active dot */}
+            <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-claw-green border-2 border-claw-bg opacity-0 group-hover:opacity-100 transition-opacity" />
+          </div>
+          <div className="text-center opacity-60 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="text-[10px] font-sans font-semibold text-claw-text truncate">{agent.name}</div>
+            <div className="text-[9px] font-sans text-claw-text-dim">{agent.role}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function GlowDivider() {
   return (
     <div className="relative z-10 w-full max-w-3xl mx-auto pointer-events-none">
@@ -1055,6 +1165,21 @@ export default function Version6() {
 
       <GlowDivider />
 
+      {/* ── MEET YOUR AGENTS ── */}
+      <section className="py-24 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-claw-red/[0.01] to-transparent" />
+        <div className="max-w-5xl mx-auto px-5 relative z-10">
+          <p className="text-[10px] font-sans uppercase tracking-widest text-claw-red mb-2 text-center">your team</p>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-center mb-3 font-sans">Meet Your Agents</h2>
+          <p className="text-claw-text-muted text-center mb-12 text-sm max-w-md mx-auto font-sans">
+            10 specialists with independent reasoning. Each one watches a different dimension of your health.
+          </p>
+          <AgentTeamStrip />
+        </div>
+      </section>
+
+      <GlowDivider />
+
       {/* ── EVIDENCE ── */}
       <section className="py-16">
         <div
@@ -1075,6 +1200,21 @@ export default function Version6() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <GlowDivider />
+
+      {/* ── REAL CONVERSATIONS ── */}
+      <section className="py-24 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-claw-red/[0.01] to-transparent" />
+        <div className="max-w-5xl mx-auto px-5 relative z-10">
+          <p className="text-[10px] font-sans uppercase tracking-widest text-claw-red mb-2 text-center">real output</p>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-center mb-3 font-sans">Real Conversations</h2>
+          <p className="text-claw-text-muted text-center mb-12 text-sm max-w-md mx-auto font-sans">
+            Not mockups &mdash; actual agent output delivered to Telegram every day.
+          </p>
+          <MockupCarousel />
         </div>
       </section>
 
