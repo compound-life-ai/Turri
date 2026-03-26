@@ -1,6 +1,6 @@
 > **Best experience:** Use the latest frontier model (GPT-5.4, Opus 4.6). This guide assumes a working [OpenClaw](https://docs.openclaw.ai) installation.
 
-# compound-clawskill
+# Turri
 
 A personal agentic longevity system.
 Cross-analyzes your sleep, nutrition, biomarkers, activities, and more. Finds hidden patterns. Proposes actionable insights. Validates scientific evidence. Designs self-experiments.
@@ -207,8 +207,8 @@ Copy and paste the following commands into your openclaw chat session.
 
 ```bash
 # **Install the skills and plugins:**
-git clone https://github.com/compound-life-ai/longClaw
-cd longClaw
+git clone https://github.com/compound-life-ai/Turri
+cd Turri
 openclaw plugins install -l .
 
 # **Setup the daily cron jobs (replace <CHAT_ID> with your Telegram DM chat ID):**
