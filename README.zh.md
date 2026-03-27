@@ -6,7 +6,7 @@
 
 <h1 align="center">Turri</h1>
 
-<p align="center"><strong>一个以 agent 为核心的个人长寿系统。</strong></p>
+<p align="center"><strong>专属健康Agent：10位专家，全为您服务</strong></p>
 <p align="center">交叉分析你的睡眠、营养、生物标志物、活动和更多长期数据。发现隐藏模式。提出可执行建议。校验科学证据。设计自我实验。</p>
 <p align="center">Compound 出品的个人健康 Agent · 兼容 Claude Code 与 OpenClaw</p>
 
