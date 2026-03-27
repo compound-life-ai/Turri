@@ -6,7 +6,7 @@
 
 <h1 align="center">Turri</h1>
 
-<p align="center"><strong>YOUR REAL HEALTH AGENT: 10 AI SPECIALISTS, ALL YOURS.</strong></p>
+<p align="center"><strong>THE REAL HEALTH AGENT: 10 AI SPECIALISTS, ALL YOURS.</strong></p>
 <p align="center">Turri brings 10 specialist agents to cross-analyze your sleep, meals, biomarkers, and activities, find hidden patterns, design science-based protocols, and run health self-experiments.</p>
 <p align="center">Personal Health Agent by Compound · Works with Claude Code &amp; OpenClaw</p>
 
