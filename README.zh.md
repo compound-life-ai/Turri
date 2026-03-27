@@ -7,7 +7,7 @@
 <h1 align="center">Turri</h1>
 
 <p align="center"><strong>专属健康Agent：10位专家，全为您服务</strong></p>
-<p align="center">交叉分析你的睡眠、营养、生物标志物、活动和更多长期数据。发现隐藏模式。提出可执行建议。校验科学证据。设计自我实验。</p>
+<p align="center">Turri是你的「专属太医院」，十位AI御医各司其职，实时「专家会诊」交叉分析你的生理指标、饮食营养、睡眠节律、血液标志物、运动负荷等。发现隐藏关联和趋势、提出可执行建议、校验科学证据、并设计属于你的自我实验。 </p>
 <p align="center">Compound 出品的个人健康 Agent · 兼容 Claude Code 与 OpenClaw</p>
 
 <p align="center">
